@@ -283,7 +283,8 @@ body.touch .touchkeys{display:grid}
   <h1>PAUSA</h1>
   <div style="margin-top:22px">
     <button class="btn primary" onclick="togglePause()">RIPRENDI</button><br>
-    <button class="btn" onclick="resetGame()">RICOMINCIA LA MISSIONE</button>
+    <button class="btn" onclick="resetGame()">RICOMINCIA LA MISSIONE</button><br>
+    <button class="btn" onclick="goHome()">MENU PRINCIPALE</button>
   </div>
 </div>
 
@@ -298,7 +299,8 @@ body.touch .touchkeys{display:grid}
     MISSILI LANCIATI <span id="fshots">0</span> — PRECISIONE <span id="facc">0%</span>
   </div>
   <div style="margin-top:22px">
-    <button class="btn primary" onclick="resetGame()">NUOVA SESSIONE</button>
+    <button class="btn primary" onclick="resetGame()">NUOVA SESSIONE</button><br>
+    <button class="btn" onclick="goHome()">MENU PRINCIPALE</button>
   </div>
 </div>
 
@@ -1057,20 +1059,40 @@ function startGame(level){
   hud();
 }
 
-function resetGame(){
+/* Svuota il settore e riporta comandi e pannelli allo stato neutro:
+   serve sia al riavvio della missione sia al rientro al menu.            */
+function clearField(){
   [...jets,...missiles,...bullets,...bombs,...aams,...flares].forEach(o=>scene.remove(o));
   fx.forEach(f=>scene.remove(f.m));
   jets=[]; missiles=[]; bullets=[]; bombs=[]; aams=[]; flares=[]; fx=[]; boss=null;
   AU.lock(false); AU.jets(0);
-  yaw = 0; pitch = .12;
-  zoomToggle = false;
+  yaw = 0; pitch = .12; zoomToggle = false;
   for(const k in keys) keys[k] = false;
   document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('on','hot'));
   document.getElementById('over').style.display = 'none';
   document.getElementById('pause').style.display = 'none';
   document.getElementById('bossbar').style.display = 'none';
+  document.getElementById('reloadbar').style.display = 'none';
+  document.getElementById('alert').style.display = 'none';
+  document.getElementById('banner').style.opacity = 0;
   document.getElementById('feed').innerHTML = '';
-  startGame(S ? S.level : 'easy');
+  if(document.pointerLockElement) document.exitPointerLock();
+}
+
+function resetGame(){
+  const lvl = S ? S.level : 'easy';
+  clearField();
+  startGame(lvl);
+}
+
+/* Torna alla schermata iniziale: la partita in corso viene abbandonata. */
+function goHome(){
+  if(S){ S.running = false; S.paused = false; }
+  clearField();
+  S = null;
+  camera.position.copy(PLAYER);
+  camera.rotation.set(pitch, yaw, 0);
+  document.getElementById('menu').style.display = 'flex';
 }
 
 function togglePause(){
