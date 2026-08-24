@@ -142,7 +142,13 @@ body.touch #touch{display:block}
 /* ---------- adattamenti per schermi piccoli ---------- */
 body.touch #mission,body.touch #score,body.touch #weapon{font-size:11px;padding:7px 11px;line-height:1.45}
 body.touch #score .big{font-size:21px}
-body.touch #weapon{bottom:auto;top:112px;right:12px;min-width:0;text-align:right}
+body.touch #weapon{bottom:auto;top:106px;right:12px;min-width:0;max-width:232px;
+  text-align:right;font-size:10.5px;padding:6px 9px;line-height:1.5}
+body.touch #weapon .tag{font-size:9px;margin-bottom:2px}
+body.touch #lockline{font-size:11.5px;line-height:1.25;white-space:normal}
+body.touch #procmini{font-size:10px;margin-top:2px}
+body.touch #coolbar,body.touch #reloadbar{height:4px;margin-top:4px}
+body.touch #tPause{width:44px;height:32px;font-size:10px;opacity:.75}
 body.touch #mission{top:12px;left:calc(12px + env(safe-area-inset-left))}
 body.touch #score{top:12px;right:calc(12px + env(safe-area-inset-right))}
 body.touch #weapon{right:calc(12px + env(safe-area-inset-right))}
@@ -795,7 +801,7 @@ function grassTexture(){
     const bh = 26 + Math.random()*34;
     const lean = (Math.random()-.5)*16;
     const g = x.createLinearGradient(0,64,0,64-bh);
-    g.addColorStop(0,'rgba(58,64,32,1)'); g.addColorStop(1,'rgba(128,132,70,1)');
+    g.addColorStop(0,'rgba(84,86,52,1)'); g.addColorStop(1,'rgba(158,152,101,1)');
     x.strokeStyle = g; x.lineWidth = 1.6 + Math.random()*1.4; x.lineCap = 'round';
     x.beginPath(); x.moveTo(bx,64);
     x.quadraticCurveTo(bx+lean*.4, 64-bh*.6, bx+lean, 64-bh); x.stroke();
@@ -855,8 +861,8 @@ function buildWorld(){
   const pos = geo.attributes.position;
   const col = new Float32Array(pos.count*3);
 
-  const cGrass = new THREE.Color(0x4e5733), cDry = new THREE.Color(0x7c7448),
-        cRock  = new THREE.Color(0x565349), cDirt = new THREE.Color(0x6d5b41),
+  const cGrass = new THREE.Color(0x454e2c), cDry = new THREE.Color(0x6b6440),
+        cRock  = new THREE.Color(0x4e4b42), cDirt = new THREE.Color(0x60513a),
         cSnow  = new THREE.Color(0xbfcbd2), tmp = new THREE.Color();
 
   // prima passata: quote sulla griglia (la pendenza si ricava dai vicini, non da altre 4 valutazioni)
@@ -892,7 +898,7 @@ function buildWorld(){
 
   /* ---------- rocce sparse (instanced) ---------- */
   const rockGeo = new THREE.DodecahedronGeometry(1,0);
-  const rockMat = new THREE.MeshStandardMaterial({color:0x6a6659, roughness:.95, flatShading:true});
+  const rockMat = new THREE.MeshStandardMaterial({color:0x635b4b, roughness:.95, flatShading:true});
   const NR = LOW ? 190 : 520;
   const rocks = new THREE.InstancedMesh(rockGeo, rockMat, NR);
   rocks.castShadow = true; rocks.receiveShadow = true;
@@ -901,7 +907,7 @@ function buildWorld(){
   while(n < NR){
     const a = Math.random()*Math.PI*2, r = 25 + Math.pow(Math.random(),.6)*900;
     const x = Math.cos(a)*r, z = Math.sin(a)*r;
-    const s = .6 + Math.random()*3.4;
+    const s = .5 + Math.random()*2.2;
     dummy.position.set(x, terrainH(x,z) + s*.35, z);
     dummy.rotation.set(Math.random()*3, Math.random()*3, Math.random()*3);
     dummy.scale.set(s, s*(.55+Math.random()*.5), s*(.8+Math.random()*.5));
@@ -950,12 +956,16 @@ function buildWorld(){
     new THREE.MeshStandardMaterial({map:gTex, transparent:false, alphaTest:.4, side:THREE.DoubleSide, roughness:1}),
     LOW ? 3000 : 9000);
   let gi = 0;
+  const GR = LOW ? 72 : 115;
   while(gi < grass.count){
-    const a = Math.random()*Math.PI*2, r = 3.4 + Math.pow(Math.random(),.5)*(LOW?46:100);
+    const u = Math.random();
+    const a = Math.random()*Math.PI*2, r = 3.4 + Math.sqrt(u)*GR;
     const x = Math.cos(a)*r, z = Math.sin(a)*r;
-    const s = .34 + Math.random()*.42;                 // ciuffi alti 30-80 cm, non cespugli
+    // i ciuffi rimpiccioliscono verso il limite: il bordo del campo non si nota
+    const fade = 1 - .5*(r/GR);
+    const s = (.32 + Math.random()*.40)*fade;
     dummy.position.set(x, terrainH(x,z)-.05, z);
-    dummy.rotation.set(0, Math.random()*3, 0);
+    dummy.rotation.set((Math.random()-.5)*.12, Math.random()*3, 0);
     dummy.scale.set(s, s*(.9+Math.random()*.7), s);
     dummy.updateMatrix(); grass.setMatrixAt(gi++, dummy.matrix);
   }
@@ -984,14 +994,14 @@ function buildWorld(){
     new THREE.MeshStandardMaterial({color:0x5c5238, roughness:1}));
   berm.rotation.x = -Math.PI/2; berm.position.y = -.4; berm.receiveShadow = true; scene.add(berm);
 
-  const sandMat = new THREE.MeshStandardMaterial({color:0x746d4c, roughness:1});
+  const sandMat = new THREE.MeshStandardMaterial({color:0x5a553c, roughness:1});
   for(let i=0;i<30;i++){
     const a = (i/30)*Math.PI*2;
     if(a > 1.0 && a < 2.25) continue;                    // varco frontale libero
     for(let l=0;l<2;l++){
-      const b = new THREE.Mesh(new THREE.SphereGeometry(.62,8,6), sandMat);
-      b.scale.set(1,.42,.55);
-      b.position.set(Math.cos(a)*3.15, .95 + l*.46, Math.sin(a)*3.15);
+      const b = new THREE.Mesh(new THREE.SphereGeometry(.55,10,7), sandMat);
+      b.scale.set(1,.40,.55);
+      b.position.set(Math.cos(a)*3.25, .78 + l*.42, Math.sin(a)*3.25);
       b.rotation.y = -a + (l?.2:0);
       b.castShadow = b.receiveShadow = true; scene.add(b);
     }
@@ -1042,11 +1052,11 @@ function initEngine(){
   renderer.shadowMap.enabled = !LOW;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.12;
+  renderer.toneMappingExposure = 0.97;
   document.body.insertBefore(renderer.domElement, document.getElementById('fx2d'));
 
-  scene.add(new THREE.HemisphereLight(0xa9c8e8, 0x55502f, .85));
-  const sun = new THREE.DirectionalLight(0xfff1d4, 2.3);
+  scene.add(new THREE.HemisphereLight(0x9dbcdd, 0x4a4529, .72));
+  const sun = new THREE.DirectionalLight(0xfff1d4, 1.85);
   sun.position.copy(SUNDIR).multiplyScalar(600);
   sun.castShadow = !LOW;
   sun.shadow.mapSize.set(2048,2048);
@@ -1083,7 +1093,12 @@ function resize(){
   camera.aspect = wCam.aspect = innerWidth/innerHeight;
   camera.updateProjectionMatrix(); wCam.updateProjectionMatrix();
   renderer.setSize(innerWidth, innerHeight);
-  fx2d.width = innerWidth; fx2d.height = innerHeight;
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  fx2d.width  = Math.round(innerWidth  * dpr);
+  fx2d.height = Math.round(innerHeight * dpr);
+  fx2d.style.width  = innerWidth  + 'px';
+  fx2d.style.height = innerHeight + 'px';
+  fxc.setTransform(dpr, 0, 0, dpr, 0, 0);      // si continua a disegnare in pixel CSS
 }
 
 /* =========================================================================
@@ -1938,7 +1953,7 @@ function drawRadar(){
 
 // riquadri di puntamento e frecce fuori campo
 function drawOverlay(){
-  const w = fx2d.width, h = fx2d.height;
+  const w = innerWidth, h = innerHeight;
   fxc.clearRect(0,0,w,h);
   if(!S || !S.running || S.paused) return;
 
