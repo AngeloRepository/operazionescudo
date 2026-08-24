@@ -96,7 +96,9 @@ canvas{display:block}
   background:
     linear-gradient(rgba(6,10,7,.90),rgba(6,10,7,.96)),
     repeating-linear-gradient(0deg,rgba(207,227,208,.05) 0 1px,transparent 1px 3px);
-  cursor:default}
+  cursor:default;
+  overflow-y:auto; touch-action:pan-y; -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain}
 .screen h1{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.26em;font-size:44px;color:#fff}
 .screen h2{font-family:'Oswald',sans-serif;letter-spacing:.3em;font-size:12px;color:var(--amber);margin-bottom:10px}
 .screen p{color:var(--dim);max-width:620px;margin-top:14px;line-height:1.7;font-size:14px}
@@ -192,7 +194,9 @@ body.touch .touchkeys{display:grid}
 
 #dossier{
   position:relative; z-index:2; height:100%; width:min(590px, 56vw);
-  padding:28px 34px 30px 34px; overflow-y:auto; scrollbar-width:thin;
+  padding:28px 34px 30px 34px; scrollbar-width:thin;
+  overflow-y:auto; -webkit-overflow-scrolling:touch;
+  touch-action:pan-y; overscroll-behavior:contain;
   border-right:1px solid rgba(242,165,22,.28);
   box-shadow:34px 0 60px -30px rgba(0,0,0,.9);
   text-align:left;
@@ -247,7 +251,7 @@ body.touch .touchkeys{display:grid}
 body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{display:none}
 
 @media (max-width:900px), (orientation:portrait){
-  #dossier{width:100%;border-right:none;padding:20px 20px 26px 20px}
+  #dossier{width:100%;max-height:100%;border-right:none;padding:20px 20px 26px 20px}
   #menu::before{background:linear-gradient(180deg, rgba(5,9,6,.93) 0%, rgba(5,9,6,.97) 45%)}
   #crestRow .stamp{display:none}
 }
@@ -1122,7 +1126,9 @@ function bindInput(){
   /* ---------- trascinamento per ruotare il lanciatore ----------
      Si segue un solo dito, identificato dal suo id, così l'altro pollice
      può restare sui pulsanti senza disturbare la mira.                  */
-  const onBtn = t => t.target && t.target.closest && t.target.closest('button');
+  // un tocco che nasce su un pulsante o dentro una schermata (home, pausa,
+  // fine partita) non muove la mira: serve a premere o a scorrere il testo
+  const onBtn = t => t.target && t.target.closest && t.target.closest('button, .screen');
   let lookId = null, lx = 0, ly = 0;
 
   addEventListener('touchstart', e=>{
