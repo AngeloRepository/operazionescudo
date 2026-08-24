@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>OPERAZIONE SCUDO — Difesa Antiaerea Stinger</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +19,9 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:100%;height:100%;overflow:hidden;background:#000;color:var(--data);
-  font-family:'Share Tech Mono',ui-monospace,Consolas,monospace;user-select:none;cursor:crosshair}
+  font-family:'Share Tech Mono',ui-monospace,Consolas,monospace;user-select:none;cursor:crosshair;
+  touch-action:none;overscroll-behavior:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+body.touch{cursor:default}
 canvas{display:block}
 #fx2d{position:absolute;inset:0;z-index:8;pointer-events:none}
 
@@ -108,6 +110,67 @@ canvas{display:block}
 .keys b{color:var(--data);font-weight:400}
 .stats{margin-top:18px;font-size:14px;color:var(--dim);line-height:1.9}
 .stats span{color:#fff}
+/* ---------- comandi tattili ---------- */
+#touch{position:absolute;inset:0;z-index:22;pointer-events:none;display:none}
+body.touch #touch{display:block}
+.tbtn{position:absolute;pointer-events:auto;padding:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.15;
+  font-family:'Oswald',sans-serif;letter-spacing:.08em;font-size:11px;color:var(--data);
+  background:rgba(10,16,11,.62);border:1px solid var(--line);border-radius:50%;
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);cursor:pointer;
+  transition:background .1s,color .1s,border-color .1s}
+.tbtn small{font-size:9px;opacity:.6;letter-spacing:.04em}
+.tbtn.on{background:rgba(242,165,22,.9);color:#0d120e;border-color:var(--amber)}
+.tbtn.hot{border-color:var(--amber);color:var(--amber)}
+#tFire{right:16px;bottom:16px;width:98px;height:98px;font-size:15px;
+  border-color:var(--red);color:var(--red);background:rgba(40,8,6,.55)}
+#tFire.on{background:rgba(255,59,48,.9);color:#fff;border-color:var(--red)}
+#tUncage{right:122px;bottom:26px;width:64px;height:64px}
+#tBcu{right:122px;bottom:100px;width:64px;height:64px}
+#tZoom{right:32px;bottom:124px;width:56px;height:56px}
+#tCrouch{left:126px;bottom:16px;width:70px;height:70px}
+#tPause{top:12px;left:50%;transform:translateX(-50%);width:52px;height:38px;border-radius:3px;font-size:11px}
+
+#procmini{display:none;font-size:11px;color:var(--amber);letter-spacing:.06em;margin-top:3px}
+
+#rotate{position:absolute;inset:0;z-index:70;display:none;align-items:center;justify-content:center;
+  background:#060907;text-align:center;padding:30px;letter-spacing:.2em;font-size:13px;color:var(--amber)}
+@media (orientation:portrait){ body.touch #rotate{display:flex} }
+
+/* ---------- adattamenti per schermi piccoli ---------- */
+body.touch #mission,body.touch #score,body.touch #weapon{font-size:11px;padding:7px 11px;line-height:1.45}
+body.touch #score .big{font-size:21px}
+body.touch #weapon{bottom:auto;top:112px;right:12px;min-width:0;text-align:right}
+body.touch #mission{top:12px;left:12px}
+body.touch #score{top:12px;right:12px}
+body.touch #proc{display:none}
+body.touch #procmini{display:block}
+body.touch #radarwrap{width:104px;height:104px;left:12px;bottom:12px}
+body.touch #radarlabel{font-size:8px}
+body.touch #banner{font-size:21px;top:26%}
+body.touch #banner small{font-size:10px}
+body.touch #alert{font-size:14px;top:60%}
+body.touch #feed{top:auto;bottom:126px;right:auto;left:50%;transform:translateX(-50%);
+  text-align:center;font-size:11px;width:60vw}
+body.touch #bossbar{width:min(360px,64vw);top:14px}
+body.touch .keys{display:none}
+body.touch .touchkeys{display:grid}
+.touchkeys{display:none}
+@media (min-width:960px){
+  body.touch #proc{display:block}
+  body.touch #procmini{display:none}
+  body.touch #weapon{top:auto;bottom:16px}
+}
+@media (max-height:540px){
+  .screen{justify-content:flex-start;padding-top:16px;overflow-y:auto}
+  .screen h1{font-size:25px}
+  .screen h2{font-size:10px}
+  .screen p{font-size:12px;margin-top:8px;line-height:1.55}
+  .btn{padding:11px 18px;font-size:13px;width:min(300px,80vw);margin:5px}
+  .keys,.touchkeys{margin-top:12px;font-size:11px;gap:3px 12px}
+  .stats{font-size:12px;line-height:1.6}
+}
+
 #loading{position:absolute;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;
   background:#060907;letter-spacing:.3em;font-size:13px;color:var(--amber)}
 @media (max-width:700px){.screen h1{font-size:28px}#radarwrap{width:130px;height:130px}#bossbar{width:280px}}
@@ -151,6 +214,7 @@ canvas{display:block}
     <span class="k">BCU</span> <span class="v" id="bcuval">ASSENTE</span>
     <div id="coolbar"><div id="coolfill"></div></div>
     <div id="reloadbar"><div id="reloadfill"></div></div>
+    <div id="procmini">FASE 1 · AVVISTAMENTO</div>
   </div>
 
   <div id="bossbar">
@@ -162,6 +226,17 @@ canvas{display:block}
   <div id="alert"></div>
   <div id="banner"></div>
 </div>
+
+<div id="touch">
+  <button class="tbtn" id="tPause">II</button>
+  <button class="tbtn" id="tBcu">BCU<small>argon</small></button>
+  <button class="tbtn" id="tUncage">SBLOCCO<small>sensore</small></button>
+  <button class="tbtn" id="tZoom">ZOOM</button>
+  <button class="tbtn" id="tCrouch">RIPARO<small>tieni</small></button>
+  <button class="tbtn" id="tFire">FUOCO</button>
+</div>
+
+<div id="rotate">RUOTA IL DISPOSITIVO IN ORIZZONTALE PER GIOCARE</div>
 
 <div id="radarwrap">
   <canvas id="radar" width="186" height="186"></canvas>
@@ -182,12 +257,19 @@ canvas{display:block}
     <button class="btn primary" onclick="startGame('easy')">ADDESTRAMENTO</button><br>
     <button class="btn" onclick="startGame('hard')">OPERATIVO — DIFFICILE</button>
   </div>
+  <div class="keys touchkeys">
+    <b>TRASCINA</b><span>ruota il lanciatore (ovunque sullo schermo)</span>
+    <b>BCU</b><span>attiva la cartuccia e raffredda il sensore</span>
+    <b>SBLOCCO</b><span>libera il sensore dopo l'aggancio</span>
+    <b>FUOCO</b><span>lancia il missile</span>
+    <b>RIPARO</b><span>tieni premuto per stare in trincea</span>
+  </div>
   <div class="keys">
     <b>FRECCE</b><span>brandeggio e alzo del lanciatore</span>
     <b>MOUSE</b><span>allontana il puntatore dal centro per ruotare</span>
     <b>CLIC</b><span>lancia il missile</span>
     <b>SPAZIO</b><span>lancia il missile</span>
-    <b>E</b><span>inserisci e attiva la BCU (argon)</span>
+    <b>E</b><span>inserisci e attiva la BCU — serve a ogni lancio</span>
     <b>C</b><span>sblocca il sensore prima del fuoco</span>
     <b>SHIFT</b><span>riparati nella trincea</span>
     <b>Z</b><span>ingrandimento ottica</span>
@@ -237,10 +319,10 @@ const lerp  = THREE.MathUtils.lerp;
 const DIFF = {
   easy:{ lockCone:0.20, lockTime:0.40, hitRadius:36, missileTurn:2.9, ammo:14,
          bulletDmg:6,  bombDmg:12, aamDmg:22, jetSpeed:.85, aggro:.55, decoy:.45, bossHP:4,
-         bcuCool:1.1, coolant:65, leadTol:.11, autoBCU:true,  autoUncage:true,  gimbal:1.15, keepRound:true },
+         bcuCool:1.1, coolant:70, leadTol:.11, uncageWin:14, strict:false, gimbal:1.15, keepRound:true },
   hard:{ lockCone:0.115,lockTime:0.75, hitRadius:23, missileTurn:1.9, ammo:9,
          bulletDmg:11, bombDmg:22, aamDmg:34, jetSpeed:1.15, aggro:1.0, decoy:.85, bossHP:6,
-         bcuCool:1.8, coolant:38, leadTol:.055, autoBCU:false, autoUncage:false, gimbal:0.85, keepRound:false }
+         bcuCool:1.8, coolant:38, leadTol:.055, uncageWin:7, strict:true,  gimbal:0.85, keepRound:false }
 };
 
 /* ---------- ondate ---------- */
@@ -262,6 +344,12 @@ let weapon = null, boss = null;
 let fx2d, fxc, radar, rctx;
 let yaw = 0, pitch = 0.12, sweep = 0;
 let mouse = { x:0, y:0, active:false, mode:'auto' };   // auto | locked | cursor
+let zoomToggle = false;
+/* Su schermi tattili si usano i comandi a tocco e si alleggerisce la scena:
+   meno vertici, meno vegetazione, niente ombre proiettate.                    */
+const TOUCH = (navigator.maxTouchPoints > 0 && matchMedia('(pointer: coarse)').matches) || 'ontouchstart' in window;
+const LOW = TOUCH;
+if(TOUCH) document.body.classList.add('touch');
 
 /* =========================================================================
    AUDIO — sintetizzato con WebAudio (nessun file esterno)
@@ -607,7 +695,7 @@ function buildWorld(){
   scene.add(new THREE.Mesh(new THREE.SphereGeometry(6800,40,24), skyMat));
 
   /* ---------- terreno: rilievo + colorazione per pendenza e quota ---------- */
-  const SEG = 210, SIZE = 8000;
+  const SEG = LOW ? 120 : 210, SIZE = 8000;
   const geo = new THREE.PlaneGeometry(SIZE,SIZE,SEG,SEG);
   const pos = geo.attributes.position;
   const col = new Float32Array(pos.count*3);
@@ -650,11 +738,12 @@ function buildWorld(){
   /* ---------- rocce sparse (instanced) ---------- */
   const rockGeo = new THREE.DodecahedronGeometry(1,0);
   const rockMat = new THREE.MeshStandardMaterial({color:0x6a6659, roughness:.95, flatShading:true});
-  const rocks = new THREE.InstancedMesh(rockGeo, rockMat, 520);
+  const NR = LOW ? 190 : 520;
+  const rocks = new THREE.InstancedMesh(rockGeo, rockMat, NR);
   rocks.castShadow = true; rocks.receiveShadow = true;
   const dummy = new THREE.Object3D();
   let n = 0;
-  while(n < 520){
+  while(n < NR){
     const a = Math.random()*Math.PI*2, r = 25 + Math.pow(Math.random(),.6)*900;
     const x = Math.cos(a)*r, z = Math.sin(a)*r;
     const s = .6 + Math.random()*3.4;
@@ -666,7 +755,7 @@ function buildWorld(){
   scene.add(rocks);
 
   /* ---------- conifere sui pendii (instanced: tronco + chioma) ---------- */
-  const NT = 340;
+  const NT = LOW ? 150 : 340;
   const trunk = new THREE.InstancedMesh(
     new THREE.CylinderGeometry(.22,.36,3.4,6),
     new THREE.MeshStandardMaterial({color:0x3a2c20, roughness:1}), NT);
@@ -704,9 +793,9 @@ function buildWorld(){
   gGeo.computeVertexNormals();
   const grass = new THREE.InstancedMesh(gGeo,
     new THREE.MeshStandardMaterial({map:gTex, transparent:false, alphaTest:.4, side:THREE.DoubleSide, roughness:1}),
-    4200);
+    LOW ? 1100 : 4200);
   let gi = 0;
-  while(gi < 4200){
+  while(gi < grass.count){
     const a = Math.random()*Math.PI*2, r = 4 + Math.pow(Math.random(),.5)*130;
     const x = Math.cos(a)*r, z = Math.sin(a)*r;
     const s = .7 + Math.random()*1.5;
@@ -720,8 +809,9 @@ function buildWorld(){
   /* ---------- nuvole a più strati, in deriva lenta ---------- */
   const cTex = cloudTexture();
   const clouds = [];
-  for(let i=0;i<46;i++){
-    const far = i > 26;
+  const NC = LOW ? 22 : 46;
+  for(let i=0;i<NC;i++){
+    const far = i > NC*.58;
     const s = new THREE.Sprite(new THREE.SpriteMaterial({
       map:cTex, transparent:true, opacity:far?.42:.62, depthWrite:false, fog:false
     }));
@@ -784,17 +874,17 @@ function initEngine(){
   TEX.cloud = softTexture(240,244,250);
 
   scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(0xb3bcb6, 1500, 6000);   // prospettiva aerea
+  scene.fog = new THREE.Fog(0xb3bcb6, 1500, LOW ? 4800 : 6000);   // prospettiva aerea
 
   camera = new THREE.PerspectiveCamera(62, innerWidth/innerHeight, .5, 9000);
   camera.rotation.order = 'YXZ';
   camera.position.copy(PLAYER);
 
-  renderer = new THREE.WebGLRenderer({antialias:true, powerPreference:'high-performance'});
-  renderer.setPixelRatio(Math.min(devicePixelRatio,1.8));
+  renderer = new THREE.WebGLRenderer({antialias:!LOW, powerPreference:'high-performance'});
+  renderer.setPixelRatio(Math.min(devicePixelRatio, LOW ? 1.15 : 1.8));
   renderer.setSize(innerWidth, innerHeight);
   renderer.autoClear = false;
-  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.enabled = !LOW;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.12;
@@ -803,7 +893,7 @@ function initEngine(){
   scene.add(new THREE.HemisphereLight(0xa9c8e8, 0x55502f, .85));
   const sun = new THREE.DirectionalLight(0xfff1d4, 2.3);
   sun.position.copy(SUNDIR).multiplyScalar(600);
-  sun.castShadow = true;
+  sun.castShadow = !LOW;
   sun.shadow.mapSize.set(2048,2048);
   const sc = sun.shadow.camera;
   sc.left = -70; sc.right = 70; sc.top = 70; sc.bottom = -70;
@@ -841,9 +931,10 @@ function bindInput(){
   addEventListener('keydown', e=>{
     AU.init();
     keys[e.code] = true;
-    if(e.code === 'KeyP') togglePause();
-    if(e.code === 'KeyE') activateBCU();
-    if(e.code === 'KeyC') uncage();
+    const ch = (e.key||'').toLowerCase();
+    if(e.code === 'KeyP' || ch === 'p') togglePause();
+    if(e.code === 'KeyE' || ch === 'e') activateBCU();
+    if(e.code === 'KeyC' || ch === 'c') uncage();
     if(e.code === 'Space'){ e.preventDefault(); fire(); }
     if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code)){
       e.preventDefault();
@@ -860,7 +951,7 @@ function bindInput(){
       const sens = S && S.zoom > .5 ? .0009 : .0021;
       yaw   -= e.movementX * sens;
       pitch  = clamp(pitch - e.movementY*sens, -.35, 1.30);
-    } else {
+    } else if(!TOUCH){
       mouse.x = e.clientX; mouse.y = e.clientY; mouse.active = true;
     }
   });
@@ -870,6 +961,7 @@ function bindInput(){
   // il clic lancia SEMPRE; il blocco del puntatore e' solo un tentativo in piu'
   addEventListener('mousedown', e=>{
     AU.init();
+    if(TOUCH) return;                       // sul tocco ci pensano i pulsanti
     if(!S || !S.running || S.paused) return;
     if(e.target.closest && e.target.closest('button')) return;
     if(e.button !== 0) return;
@@ -885,6 +977,55 @@ function bindInput(){
     mouse.mode = 'cursor';
     feed('MIRA A CURSORE: ALLONTANA IL PUNTATORE DAL CENTRO','#f2a516');
   });
+  /* ---------- trascinamento per ruotare il lanciatore ----------
+     Si segue un solo dito, identificato dal suo id, così l'altro pollice
+     può restare sui pulsanti senza disturbare la mira.                  */
+  const onBtn = t => t.target && t.target.closest && t.target.closest('button');
+  let lookId = null, lx = 0, ly = 0;
+
+  addEventListener('touchstart', e=>{
+    AU.init();
+    for(const t of e.changedTouches){
+      if(onBtn(t)) continue;
+      if(lookId === null){ lookId = t.identifier; lx = t.clientX; ly = t.clientY; e.preventDefault(); }
+    }
+  }, {passive:false});
+
+  addEventListener('touchmove', e=>{
+    let used = false;
+    for(const t of e.changedTouches){
+      if(t.identifier !== lookId) continue;
+      used = true;
+      const sens = (S && S.zoom > .5) ? .0016 : .0038;   // più fine con l'ottica ingrandita
+      yaw   -= (t.clientX - lx)*sens;
+      pitch  = clamp(pitch - (t.clientY - ly)*sens, -.35, 1.30);
+      lx = t.clientX; ly = t.clientY;
+    }
+    if(used) e.preventDefault();
+  }, {passive:false});
+
+  const endTouch = e=>{ for(const t of e.changedTouches) if(t.identifier === lookId) lookId = null; };
+  addEventListener('touchend', endTouch);
+  addEventListener('touchcancel', endTouch);
+
+  const btn = (id, down, up)=>{
+    const el = document.getElementById(id); if(!el) return;
+    const d = e=>{ e.preventDefault(); AU.init(); el.classList.add('on'); if(down) down(); };
+    const u = e=>{ e.preventDefault(); el.classList.remove('on'); if(up) up(); };
+    el.addEventListener('touchstart', d, {passive:false});
+    el.addEventListener('touchend', u);  el.addEventListener('touchcancel', u);
+    el.addEventListener('mousedown', d); el.addEventListener('mouseup', u); el.addEventListener('mouseleave', u);
+  };
+  btn('tFire',   fire);
+  btn('tBcu',    activateBCU);
+  btn('tUncage', uncage);
+  btn('tPause',  togglePause);
+  btn('tCrouch', ()=>{ keys['ShiftLeft'] = true; }, ()=>{ keys['ShiftLeft'] = false; });
+  const zb = document.getElementById('tZoom');
+  btn('tZoom', ()=>{ zoomToggle = !zoomToggle; }, ()=>{ if(zb) zb.classList.toggle('on', zoomToggle); });
+
+  addEventListener('orientationchange', ()=> setTimeout(resize, 250));
+
   function tryPointerLock(){
     try{
       const r = renderer.domElement.requestPointerLock();
@@ -909,7 +1050,6 @@ function startGame(level){
     bcu:'none', coolT:0, coolant:0, uncaged:false, uncageT:0,
     lead:null, leadErr:9, leadQ:0, blast:0
   };
-  if(cfg.autoBCU) activateBCU();
   boss = null;
   document.getElementById('bossbar').style.display = 'none';
   banner('PRONTI ALL\'INGAGGIO','SETTORE KILO-7 — LIBERO DI FARE FUOCO');
@@ -923,6 +1063,9 @@ function resetGame(){
   jets=[]; missiles=[]; bullets=[]; bombs=[]; aams=[]; flares=[]; fx=[]; boss=null;
   AU.lock(false); AU.jets(0);
   yaw = 0; pitch = .12;
+  zoomToggle = false;
+  for(const k in keys) keys[k] = false;
+  document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('on','hot'));
   document.getElementById('over').style.display = 'none';
   document.getElementById('pause').style.display = 'none';
   document.getElementById('bossbar').style.display = 'none';
@@ -981,7 +1124,7 @@ function nextWave(){
   banner(w.title, w.sub);
   S.ammo = cfg.ammo; S.loaded = true; S.reload = 0;
   S.bcu = 'none'; S.coolant = 0; S.uncaged = false; S.lockT = 0;
-  if(cfg.autoBCU) activateBCU();
+  alertMsg('PREMI [E] PER ATTIVARE LA BCU', 3);
   S.waveActive = true;
   if(w.boss){ spawnBoss(); }
   else { S.spawnQueue = w.count; S.spawnTimer = 0; }
@@ -1024,8 +1167,8 @@ function spawnBoss(){
    raffredda il cercatore a infrarossi: senza, il missile non parte.          */
 function activateBCU(){
   if(!S || !S.running || S.paused) return;
-  if(S.bcu === 'cooling') return;
-  if(S.bcu === 'ready'){ feed('BCU GIÀ IN FUNZIONE'); return; }
+  if(S.bcu === 'cooling'){ feed('RAFFREDDAMENTO GIÀ IN CORSO'); return; }
+  if(S.bcu === 'ready'){ feed('BCU IN FUNZIONE — ANCORA '+Math.ceil(S.coolant)+' s'); return; }
   if(!S.loaded){ feed('ATTENDI IL COMPLESSO DI LANCIO','#f2a516'); AU.deny(); return; }
   if(S.ammo <= 0){ feed('NESSUN COMPLESSO DISPONIBILE','#f2a516'); AU.deny(); return; }
   S.bcu = 'cooling'; S.coolT = cfg.bcuCool;
@@ -1037,9 +1180,10 @@ function activateBCU(){
    insegue il bersaglio da solo e libera il consenso al lancio.               */
 function uncage(){
   if(!S || !S.running || S.paused) return;
-  if(S.uncaged) return;
+  if(S.uncaged){ feed('SENSORE GIÀ SBLOCCATO — FUOCO [SPAZIO]'); return; }
+  if(S.bcu !== 'ready'){ feed('SBLOCCO NEGATO: BCU NON ATTIVA [E]','#ff3b30'); AU.deny(); return; }
   if(S.lockT < 1){ feed('SBLOCCO NEGATO: NESSUN AGGANCIO','#ff3b30'); AU.deny(); return; }
-  S.uncaged = true; S.uncageT = 7;
+  S.uncaged = true; S.uncageT = cfg.uncageWin;
   AU.beep(1650,.14,.07); feed('SENSORE SBLOCCATO — CENTRA L\'ANTICIPO','#f2a516');
 }
 
@@ -1068,6 +1212,10 @@ function fire(){
   }
 
   const guided = (S.lockT >= 1 && S.uncaged);
+  if(!guided && !cfg.strict){
+    feed('CONSENSO MANCANTE — SBLOCCA IL SENSORE [C]','#ff3b30'); AU.deny();
+    alertMsg('PREMI [C]: SBLOCCA IL SENSORE PRIMA DEL FUOCO', 2); return;
+  }
   if(!guided) feed('LANCIO SENZA CONSENSO — MISSILE NON GUIDATO','#f2a516');
   else if(S.leadErr < cfg.leadTol) feed('PARAMETRI DI LANCIO OTTIMALI','#cfe3d0');
   else if(S.leadErr > cfg.leadTol*3) feed('ANTICIPO INSUFFICIENTE — TRAIETTORIA LUNGA','#f2a516');
@@ -1498,12 +1646,11 @@ function updateLock(dt){
     const to = S.lead.point.clone().sub(camera.position).normalize();
     S.leadErr = fwd.angleTo(to);
     S.leadQ = clamp(1 - S.leadErr/(cfg.leadTol*3.2), 0, 1);
-    if(cfg.autoUncage && !S.uncaged){ S.uncaged = true; S.uncageT = 7; }
   } else { S.lead = null; S.leadErr = 9; S.leadQ = 0; }
 
   if(S.uncaged){
     S.uncageT -= dt;
-    if(S.uncageT <= 0){ S.uncaged = false; feed('SENSORE RIBLOCCATO — RIPETI LO SBLOCCO','#f2a516'); }
+    if(S.uncageT <= 0){ S.uncaged = false; feed('SENSORE RIBLOCCATO — RIPETI LO SBLOCCO [C]','#f2a516'); }
   }
 
   if(S.lockT >= 1) AU.lock(true);
@@ -1706,7 +1853,7 @@ function animate(){
     /* --- trincea e ottica --- */
     const wantCrouch = (keys['ShiftLeft']||keys['ShiftRight']) ? 1 : 0;
     S.crouch = lerp(S.crouch, wantCrouch, dt*9);
-    S.zoom = lerp(S.zoom, keys['KeyZ'] ? 1 : 0, dt*8);
+    S.zoom = lerp(S.zoom, (keys['KeyZ'] || zoomToggle) ? 1 : 0, dt*8);
     camera.fov = lerp(62, 30, S.zoom);
     camera.updateProjectionMatrix();
 
@@ -1729,7 +1876,7 @@ function animate(){
       document.getElementById('reloadfill').style.width = clamp((1 - S.reload/2.4)*100,0,100)+'%';
       if(S.reload <= 0){
         S.loaded = true; bar.style.display = 'none'; AU.beep(880,.09,.05);
-        if(cfg.autoBCU) activateBCU();
+        feed('NUOVO COMPLESSO IN SPALLA — ATTIVA LA BCU [E]');
       }
     }
 
@@ -1825,9 +1972,23 @@ function animate(){
     if(S.bcu === 'ready') step = 3;
     if(S.lockT >= 1) step = 4;
     if(S.uncaged && S.leadQ > .5) step = 5;
+    const waiting = (step === 2 && S.bcu === 'none' && S.loaded) ||
+                    (step === 4 && S.lockT >= 1 && !S.uncaged);
     for(let i=1;i<=5;i++){
       const el = document.getElementById('p'+i);
-      el.className = 'step' + (i < step ? ' done' : (i === step ? ' on' : ''));
+      let c = 'step' + (i < step ? ' done' : (i === step ? ' on' : ''));
+      if(i === step && waiting && Math.sin(performance.now()*.008) > 0) c += ' done';
+      el.className = c;
+    }
+    const STEPNAME = ['','AVVISTAMENTO','BCU / ARGON','AGGANCIO IR','ANTICIPO','SBLOCCO · FUOCO'];
+    document.getElementById('procmini').textContent = 'FASE ' + step + ' · ' + STEPNAME[step];
+
+    // i pulsanti a schermo si accendono quando tocca a loro
+    if(TOUCH){
+      const hot = (id,c)=>{ const el = document.getElementById(id); if(el) el.classList.toggle('hot', c); };
+      hot('tBcu',    S.loaded && S.bcu === 'none');
+      hot('tUncage', S.lockT >= 1 && !S.uncaged);
+      hot('tFire',   S.uncaged && S.leadQ > .5);
     }
 
     /* --- spia del mirino e vampa di coda --- */
