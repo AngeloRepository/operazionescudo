@@ -171,6 +171,94 @@ body.touch .touchkeys{display:grid}
   .stats{font-size:12px;line-height:1.6}
 }
 
+
+/* ══════════════ HOME PAGE ══════════════
+   Il menu non copre più la scena: il mondo 3D continua a girare in modalità
+   cinematica dietro il fascicolo, che occupa solo la colonna di sinistra. */
+#menu{
+  display:block; padding:0; background:none; overflow:hidden;
+}
+#menu::before{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(96deg, rgba(5,9,6,.97) 0%, rgba(5,9,6,.94) 34%,
+             rgba(5,9,6,.55) 56%, rgba(5,9,6,.10) 78%, rgba(5,9,6,.35) 100%);
+}
+#homeGrain{position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background:repeating-linear-gradient(0deg, rgba(207,227,208,.05) 0 1px, transparent 1px 3px)}
+#homeSweep{position:absolute;left:0;right:0;height:150px;pointer-events:none;opacity:.35;
+  background:linear-gradient(180deg, transparent, rgba(169,220,180,.10), transparent);
+  animation:sweep 9s linear infinite}
+@keyframes sweep{ from{ top:-160px } to{ top:100% } }
+
+#dossier{
+  position:relative; z-index:2; height:100%; width:min(590px, 56vw);
+  padding:28px 34px 30px 34px; overflow-y:auto; scrollbar-width:thin;
+  border-right:1px solid rgba(242,165,22,.28);
+  box-shadow:34px 0 60px -30px rgba(0,0,0,.9);
+  text-align:left;
+}
+#dossier::-webkit-scrollbar{width:5px}
+#dossier::-webkit-scrollbar-thumb{background:rgba(242,165,22,.4)}
+
+#crestRow{display:flex;align-items:center;gap:13px;padding-bottom:14px;
+  border-bottom:1px solid var(--line);margin-bottom:20px}
+#crestRow .crest{width:48px;height:48px;flex:none}
+#crestRow .crestText{display:flex;flex-direction:column;font-size:10.5px;letter-spacing:.17em;line-height:1.7}
+#crestRow .crestText .dim{color:var(--dim)}
+#crestRow .stamp{margin-left:auto;font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.24em;
+  color:#ff5b52;border:1.5px solid rgba(255,91,82,.65);padding:4px 8px;transform:rotate(-7deg);
+  opacity:.85;white-space:nowrap}
+
+.hometitle{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.16em;
+  font-size:clamp(34px,4.6vw,56px);line-height:.98;color:#fff;text-align:left;margin-bottom:12px}
+.hometitle em{font-style:normal;color:var(--amber);
+  text-shadow:0 0 34px rgba(242,165,22,.45)}
+.tagline{color:var(--data);font-size:13px;letter-spacing:.1em;max-width:none;margin:0 0 22px 0;
+  padding-left:12px;border-left:2px solid var(--amber)}
+
+.story p{color:var(--dim);font-size:13px;line-height:1.8;margin-bottom:11px;max-width:none}
+.story b{color:var(--data)}
+.story .pull{color:var(--amber);font-size:14px;letter-spacing:.06em;border-top:1px solid var(--line);
+  padding-top:12px;margin-top:15px}
+
+.brief{margin:22px 0;border:1px solid var(--line);background:rgba(10,16,11,.5)}
+.brief > div{display:flex;gap:14px;padding:8px 13px;border-bottom:1px solid rgba(207,227,208,.10);font-size:12px}
+.brief > div:last-child{border-bottom:none}
+.brief dt{font-family:'Oswald',sans-serif;letter-spacing:.16em;color:var(--amber);width:96px;flex:none;font-size:11px}
+.brief dd{color:var(--data)}
+
+.pillars{margin:24px 0 26px 0;display:flex;flex-direction:column;gap:15px}
+.pillar{display:grid;grid-template-columns:34px 1fr;gap:4px 12px;align-items:baseline}
+.pillar span{font-family:'Oswald',sans-serif;font-size:19px;color:rgba(242,165,22,.55);grid-row:span 2}
+.pillar b{font-family:'Oswald',sans-serif;font-weight:400;letter-spacing:.1em;font-size:14px;color:#fff}
+.pillar i{font-style:normal;color:var(--dim);font-size:12px;line-height:1.7}
+
+.cta{display:flex;flex-direction:column;gap:9px;margin-bottom:24px}
+.cta .btn{width:100%;margin:0;text-align:left;padding:14px 18px;line-height:1.25}
+.cta .btn small{display:block;font-family:'Share Tech Mono',monospace;font-size:10px;
+  letter-spacing:.08em;opacity:.62;margin-top:4px;text-transform:none}
+
+#dossier .keys{margin-top:0;margin-bottom:18px;font-size:11.5px;gap:5px 16px;justify-content:start}
+#dossier .keys b{color:var(--amber)}
+.homefoot{font-size:10px;color:rgba(207,227,208,.35);letter-spacing:.1em;
+  border-top:1px solid var(--line);padding-top:12px}
+
+/* durante la home la strumentazione di bordo resta spenta */
+body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{display:none}
+
+@media (max-width:900px), (orientation:portrait){
+  #dossier{width:100%;border-right:none;padding:20px 20px 26px 20px}
+  #menu::before{background:linear-gradient(180deg, rgba(5,9,6,.93) 0%, rgba(5,9,6,.97) 45%)}
+  #crestRow .stamp{display:none}
+}
+@media (max-height:540px){
+  #dossier{padding:16px 22px}
+  #crestRow{padding-bottom:9px;margin-bottom:12px}
+  .hometitle{font-size:30px}
+  .story p{font-size:12px;line-height:1.65;margin-bottom:8px}
+  .pillars{gap:10px;margin:16px 0 18px}
+}
+
 #loading{position:absolute;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;
   background:#060907;letter-spacing:.3em;font-size:13px;color:var(--amber)}
 @media (max-width:700px){.screen h1{font-size:28px}#radarwrap{width:130px;height:130px}#bossbar{width:280px}}
@@ -243,38 +331,89 @@ body.touch .touchkeys{display:grid}
   <div id="radarlabel">RADAR 3 KM</div>
 </div>
 
-<!-- SCHERMATA INIZIALE -->
+<!-- ══════════════ HOME PAGE ══════════════ -->
 <div class="screen" id="menu">
-  <h2>POSTAZIONE ANTIAEREA MANPADS</h2>
-  <h1>OPERAZIONE SCUDO</h1>
-  <p>Sei l'operatore di un lanciamissili spalleggiabile FIM-92 Stinger in una piazzola scavata sulla cresta.
-     Ondate di caccia nemici attraverseranno il tuo settore: agganciali con il cercatore a infrarossi, lancia,
-     e resta vivo. L'ultima ondata porta un F-35 stealth che rilascia flare per ingannare i tuoi missili.</p>
-  <p style="color:var(--amber)">Il lancio segue la procedura reale in cinque fasi: avvistamento, attivazione della BCU
-     all'argon che raffredda il sensore, aggancio a infrarossi, correzione dell'anticipo di tiro e infine sblocco
-     del sensore più fuoco. Il pannello a sinistra ti dice sempre a che punto sei.</p>
-  <div style="margin-top:26px">
-    <button class="btn primary" onclick="startGame('easy')">ADDESTRAMENTO</button><br>
-    <button class="btn" onclick="startGame('hard')">OPERATIVO — DIFFICILE</button>
-  </div>
-  <div class="keys touchkeys">
-    <b>TRASCINA</b><span>ruota il lanciatore (ovunque sullo schermo)</span>
-    <b>BCU</b><span>attiva la cartuccia e raffredda il sensore</span>
-    <b>SBLOCCO</b><span>libera il sensore dopo l'aggancio</span>
-    <b>FUOCO</b><span>lancia il missile</span>
-    <b>RIPARO</b><span>tieni premuto per stare in trincea</span>
-  </div>
-  <div class="keys">
-    <b>FRECCE</b><span>brandeggio e alzo del lanciatore</span>
-    <b>MOUSE</b><span>allontana il puntatore dal centro per ruotare</span>
-    <b>CLIC</b><span>lancia il missile</span>
-    <b>SPAZIO</b><span>lancia il missile</span>
-    <b>E</b><span>inserisci e attiva la BCU — serve a ogni lancio</span>
-    <b>C</b><span>sblocca il sensore prima del fuoco</span>
-    <b>SHIFT</b><span>riparati nella trincea</span>
-    <b>Z</b><span>ingrandimento ottica</span>
-    <b>P</b><span>pausa</span>
-  </div>
+  <div id="homeGrain"></div>
+  <div id="homeSweep"></div>
+
+  <aside id="dossier">
+    <header id="crestRow">
+      <svg class="crest" viewBox="0 0 64 64" aria-hidden="true">
+        <polygon points="32,3 58,17 58,45 32,60 6,45 6,17" fill="none" stroke="#f2a516" stroke-width="1.6"/>
+        <circle cx="32" cy="32" r="15" fill="none" stroke="#cfe3d0" stroke-width=".9" stroke-dasharray="3 4" opacity=".8"/>
+        <path d="M19 45 L44 20" stroke="#cfe3d0" stroke-width="3.2" stroke-linecap="round"/>
+        <path d="M45 19 l-7 1.4 5.6 5.6z" fill="#f2a516"/>
+        <path d="M24 40 l-5.6 -1.4 1.4 5.6z" fill="#cfe3d0" opacity=".75"/>
+        <line x1="32" y1="7" x2="32" y2="15" stroke="#f2a516" stroke-width="1"/>
+        <line x1="32" y1="49" x2="32" y2="57" stroke="#f2a516" stroke-width="1"/>
+      </svg>
+      <div class="crestText">
+        <span>SEZIONE DIFESA AEREA · 3° BATTAGLIONE</span>
+        <span class="dim">FASCICOLO OPS-77 · SETTORE KILO-7</span>
+      </div>
+      <span class="stamp">CLASSIFICATO</span>
+    </header>
+
+    <h1 class="hometitle">OPERAZIONE<br><em>SCUDO</em></h1>
+    <p class="tagline">Un operatore. Un tubo di lancio. L'ultimo corridoio della valle.</p>
+
+    <div class="story">
+      <p><b>CRESTA DI KILO-7 — ORE 04:50.</b> La valle sotto di te è la sola strada rimasta per far
+         arrivare i rifornimenti alla città. Le batterie a lungo raggio sono state spazzate via in tre
+         minuti, la notte scorsa. I radar di scoperta non rispondono più.</p>
+      <p>Quello che resta della difesa aerea del settore è una piazzola scavata nella roccia, una cassa
+         di complessi di lancio ai tuoi piedi e tu.</p>
+      <p>All'alba passeranno. Prima i caccia, a ondate, convinti di trovare un cielo vuoto. Poi arriverà
+         <b>lui</b>: un F-35A in configurazione stealth, che guiderà l'attacco finale e semina flare
+         capaci di ingannare un cercatore a infrarossi.</p>
+      <p class="pull">Hai trentotto secondi di argon per ogni missile. Usali bene.</p>
+    </div>
+
+    <dl class="brief">
+      <div><dt>OBIETTIVO</dt><dd>Negare il cielo sopra il corridoio per quattro ondate</dd></div>
+      <div><dt>MINACCIA</dt><dd>Caccia da attacco al suolo, poi un F-35A stealth</dd></div>
+      <div><dt>DOTAZIONE</dt><dd>FIM-92 Stinger · ottica · BCU all'argon</dd></div>
+    </dl>
+
+    <div class="pillars">
+      <div class="pillar"><span>01</span>
+        <b>La procedura è quella vera</b>
+        <i>Inserisci la BCU, aspetta che l'argon raffreddi il sensore, aggancia, correggi l'anticipo,
+           sblocca il cercatore. Solo allora il grilletto risponde.</i></div>
+      <div class="pillar"><span>02</span>
+        <b>Balistica, non magia</b>
+        <i>Il missile viene espulso a nove metri prima di accendere il motore, poi vola su rotta di
+           collisione e consuma energia a ogni manovra. Un lancio impreciso si paga.</i></div>
+      <div class="pillar"><span>03</span>
+        <b>L'ultimo aereo è il più difficile</b>
+        <i>L'F-35 rilascia flare appena ti sente addosso. Devi lanciare nella finestra fra un'esca
+           e l'altra, con i cannoni che ti cercano.</i></div>
+    </div>
+
+    <div class="cta">
+      <button class="btn primary" onclick="startGame('easy')">ADDESTRAMENTO<small>procedura assistita · nemici prudenti</small></button>
+      <button class="btn" onclick="startGame('hard')">OPERATIVO<small>procedura manuale · argon scarso · nemici reattivi</small></button>
+    </div>
+
+    <div class="keys touchkeys">
+      <b>TRASCINA</b><span>ruota il lanciatore, ovunque sullo schermo</span>
+      <b>BCU</b><span>attiva la cartuccia e raffredda il sensore</span>
+      <b>SBLOCCO</b><span>libera il cercatore dopo l'aggancio</span>
+      <b>FUOCO</b><span>lancia il missile</span>
+      <b>RIPARO</b><span>tieni premuto per stare in trincea</span>
+    </div>
+    <div class="keys">
+      <b>FRECCE / MOUSE</b><span>brandeggio e alzo del lanciatore</span>
+      <b>E</b><span>inserisci e attiva la BCU — serve a ogni lancio</span>
+      <b>C</b><span>sblocca il sensore prima del fuoco</span>
+      <b>SPAZIO / CLIC</b><span>grilletto di lancio</span>
+      <b>SHIFT</b><span>riparati nella trincea</span>
+      <b>Z</b><span>ingrandimento ottica</span>
+      <b>P</b><span>pausa</span>
+    </div>
+
+    <footer class="homefoot">Velivoli, unità e settore sono di fantasia. Nessun dato tecnico reale è riprodotto.</footer>
+  </aside>
 </div>
 
 <!-- PAUSA -->
@@ -916,6 +1055,7 @@ function initEngine(){
   resize(); addEventListener('resize', resize);
   bindInput();
   document.getElementById('loading').style.display = 'none';
+  startAttract();
   animate();
 }
 function resize(){
@@ -1038,10 +1178,57 @@ function bindInput(){
 }
 
 /* =========================================================================
+   VETRINA DELLA HOME — la scena resta viva dietro il fascicolo: telecamera
+   cinematica attorno alla piazzola e passaggi di caccia in quota.
+   ========================================================================= */
+const demo = { t:0, jets:[], on:false };
+
+function startAttract(){
+  demo.on = true; demo.t = Math.random()*40;
+  document.body.classList.add('home');
+  if(weapon) weapon.visible = false;
+  camera.fov = 44; camera.updateProjectionMatrix();
+}
+function stopAttract(){
+  demo.on = false;
+  document.body.classList.remove('home');
+  if(weapon) weapon.visible = true;
+  demo.jets.forEach(j=>scene.remove(j)); demo.jets = [];
+  fx.forEach(f=>scene.remove(f.m)); fx = [];
+  camera.fov = 62; camera.updateProjectionMatrix();
+}
+function updateAttract(dt){
+  demo.t += dt;
+  const a = demo.t*.055, r = 52 + Math.sin(demo.t*.09)*11;
+  camera.position.set(Math.cos(a)*r, 9 + Math.sin(demo.t*.13)*4.5, Math.sin(a)*r);
+  camera.lookAt(new V3(Math.cos(a+2.4)*14, 15 + Math.sin(demo.t*.21)*13, Math.sin(a+2.4)*14));
+
+  if(demo.jets.length < 2 && Math.random() < dt*.6){
+    const j = buildJet();
+    const ang = Math.random()*Math.PI*2;
+    const d = new V3(Math.cos(ang), 0, Math.sin(ang));
+    j.position.copy(d).multiplyScalar(-950); j.position.y = 150 + Math.random()*130;
+    j.userData.v = d.multiplyScalar(200 + Math.random()*70);
+    scene.add(j); demo.jets.push(j);
+  }
+  for(let i=demo.jets.length-1;i>=0;i--){
+    const j = demo.jets[i];
+    j.position.add(j.userData.v.clone().multiplyScalar(dt));
+    j.lookAt(j.position.clone().add(j.userData.v));
+    j.rotateZ(Math.sin(demo.t*.5 + i)*.28);
+    if(j.userData.burner) j.userData.burner.scale.setScalar(.8 + Math.sin(performance.now()*.02)*.2);
+    if(Math.random() < dt*20) puff(j.position, .7, TEX.smoke, .16, 7, 2.4);
+    if(j.position.length() > 1150){ scene.remove(j); demo.jets.splice(i,1); }
+  }
+  updateFX(dt);
+}
+
+/* =========================================================================
    FLUSSO DI GIOCO
    ========================================================================= */
 function startGame(level){
   AU.init();
+  stopAttract();
   cfg = DIFF[level];
   document.getElementById('menu').style.display = 'none';
   S = {
@@ -1092,7 +1279,8 @@ function goHome(){
   S = null;
   camera.position.copy(PLAYER);
   camera.rotation.set(pitch, yaw, 0);
-  document.getElementById('menu').style.display = 'flex';
+  document.getElementById('menu').style.display = 'block';
+  startAttract();
 }
 
 function togglePause(){
@@ -1607,7 +1795,7 @@ function explode(pos, size){
       vel:new V3((Math.random()-.5)*90,Math.random()*70,(Math.random()-.5)*90),
       spin:new V3(Math.random()*8,Math.random()*8,Math.random()*8)});
   }
-  if(pos.distanceTo(PLAYER) < 400) S.shake = Math.max(S.shake, clamp(1 - pos.distanceTo(PLAYER)/400, 0, 1)*.6);
+  if(S && pos.distanceTo(PLAYER) < 400) S.shake = Math.max(S.shake, clamp(1 - pos.distanceTo(PLAYER)/400, 0, 1)*.6);
 }
 function updateFX(dt){
   for(let i=fx.length-1;i>=0;i--){
@@ -2044,6 +2232,8 @@ function animate(){
     );
     S.recoil = Math.max(0, S.recoil - dt*3.2);
     hud();
+  } else if(demo.on){
+    updateAttract(dt);
   }
 
   drawOverlay();
