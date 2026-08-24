@@ -143,22 +143,28 @@ body.touch #touch{display:block}
 body.touch #mission,body.touch #score,body.touch #weapon{font-size:11px;padding:7px 11px;line-height:1.45}
 body.touch #score .big{font-size:21px}
 body.touch #weapon{bottom:auto;top:112px;right:12px;min-width:0;text-align:right}
-body.touch #mission{top:12px;left:12px}
-body.touch #score{top:12px;right:12px}
+body.touch #mission{top:12px;left:calc(12px + env(safe-area-inset-left))}
+body.touch #score{top:12px;right:calc(12px + env(safe-area-inset-right))}
+body.touch #weapon{right:calc(12px + env(safe-area-inset-right))}
+body.touch #radarwrap{left:calc(12px + env(safe-area-inset-left))}
+body.touch #tFire{right:calc(16px + env(safe-area-inset-right))}
+body.touch #tUncage,body.touch #tBcu{right:calc(122px + env(safe-area-inset-right))}
+body.touch #tZoom{right:calc(32px + env(safe-area-inset-right))}
+body.touch #tCrouch{left:calc(126px + env(safe-area-inset-left))}
 body.touch #proc{display:none}
 body.touch #procmini{display:block}
 body.touch #radarwrap{width:104px;height:104px;left:12px;bottom:12px}
 body.touch #radarlabel{font-size:8px}
 body.touch #banner{font-size:21px;top:26%}
 body.touch #banner small{font-size:10px}
-body.touch #alert{font-size:14px;top:60%}
-body.touch #feed{top:auto;bottom:126px;right:auto;left:50%;transform:translateX(-50%);
-  text-align:center;font-size:11px;width:60vw}
+body.touch #alert{font-size:12.5px;top:58px;letter-spacing:.16em}
+body.touch #feed{top:auto;bottom:100px;right:auto;left:50%;transform:translateX(-50%);
+  text-align:center;font-size:11px;width:44vw}
 body.touch #bossbar{width:min(360px,64vw);top:14px}
 body.touch .keys{display:none}
 body.touch .touchkeys{display:grid}
 .touchkeys{display:none}
-@media (min-width:960px){
+@media (min-width:1000px) and (min-height:660px){
   body.touch #proc{display:block}
   body.touch #procmini{display:none}
   body.touch #weapon{top:auto;bottom:16px}
@@ -490,6 +496,7 @@ let fx2d, fxc, radar, rctx;
 let yaw = 0, pitch = 0.12, sweep = 0;
 let mouse = { x:0, y:0, active:false, mode:'auto' };   // auto | locked | cursor
 let zoomToggle = false;
+let vmScale = 1, vmDX = 0, vmDY = 0;      // taratura del modello in prima persona
 /* Su schermi tattili si usano i comandi a tocco e si alleggerisce la scena:
    meno vertici, meno vegetazione, niente ombre proiettate.                    */
 const TOUCH = (navigator.maxTouchPoints > 0 && matchMedia('(pointer: coarse)').matches) || 'ontouchstart' in window;
@@ -648,7 +655,7 @@ function buildLauncher(){
     bar.position.y = -.075 + i*.037; sight.add(bar);
   }
   sight.position.set(.075,.105,-.24); sight.rotation.z = -.14; g.add(sight);
-  P(new THREE.Mesh(new THREE.CylinderGeometry(.006,.006,.34,6), MAT.darkSteel), -.07,.13,-.10).rotation.z = .35;
+  P(new THREE.Mesh(new THREE.CylinderGeometry(.005,.005,.20,6), MAT.darkSteel), .085,.16,-.13).rotation.set(.25,0,-.30);
   // spia di aggancio nel mirino (fase 3)
   const lamp = P(new THREE.Mesh(new THREE.SphereGeometry(.017,10,8),
     new THREE.MeshBasicMaterial({color:0x1a1a14})), .075,.205,-.235);
@@ -776,6 +783,7 @@ function groundTexture(){
   x.putImageData(img,0,0);
   const t = new THREE.CanvasTexture(c);
   t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(150,150);
+  if(renderer) t.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
   return t;
 }
 /* --- ciuffo d'erba in alpha --- */
@@ -834,20 +842,22 @@ function buildWorld(){
       '  col += vec3(1.0,0.92,0.75) * pow(sd, 900.0) * 2.2;'+       /* disco */
       '  col += vec3(1.0,0.80,0.55) * pow(sd, 14.0) * 0.30;'+       /* alone */
       '  col += vec3(1.0,0.86,0.68) * pow(sd, 3.0) * 0.10 * (1.0-smoothstep(0.0,0.35,h));'+
+      '  float dither = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898,78.233)))*43758.5453);'+
+      '  col += (dither - 0.5) / 220.0;'+          /* rompe le fasce di banding */
       '  gl_FragColor = vec4(col, 1.0);'+
       '}'
   });
   scene.add(new THREE.Mesh(new THREE.SphereGeometry(6800,40,24), skyMat));
 
   /* ---------- terreno: rilievo + colorazione per pendenza e quota ---------- */
-  const SEG = LOW ? 120 : 210, SIZE = 8000;
+  const SEG = LOW ? 165 : 210, SIZE = 8000;      // meno sfaccettature sul crinale
   const geo = new THREE.PlaneGeometry(SIZE,SIZE,SEG,SEG);
   const pos = geo.attributes.position;
   const col = new Float32Array(pos.count*3);
 
   const cGrass = new THREE.Color(0x4e5733), cDry = new THREE.Color(0x7c7448),
         cRock  = new THREE.Color(0x565349), cDirt = new THREE.Color(0x6d5b41),
-        cSnow  = new THREE.Color(0xdde5e8), tmp = new THREE.Color();
+        cSnow  = new THREE.Color(0xbfcbd2), tmp = new THREE.Color();
 
   // prima passata: quote sulla griglia (la pendenza si ricava dai vicini, non da altre 4 valutazioni)
   const W = SEG+1, step = SIZE/SEG, H = new Float32Array(pos.count);
@@ -866,7 +876,7 @@ function buildWorld(){
     tmp.copy(cGrass).lerp(cDry, clamp(patch*1.6-.15,0,1));
     tmp.lerp(cDirt, clamp((fbm(x*.011+7, z*.011+7, 2)-.55)*2.4, 0, .7));
     tmp.lerp(cRock, clamp((slope-.30)*2.2, 0, 1));                    // roccia sui pendii
-    tmp.lerp(cSnow, clamp((h-430)/260, 0, 1) * clamp(1-slope*.8,0,1)); // neve sulle cime
+    tmp.lerp(cSnow, clamp((h-600)/300, 0, 1) * clamp(1-slope*1.15,0,1)); // neve solo sulle vette
     tmp.multiplyScalar(.92 + fbm(x*.06, z*.06, 2)*.18);               // grana fine
     col[i*3] = tmp.r; col[i*3+1] = tmp.g; col[i*3+2] = tmp.b;
   }
@@ -938,15 +948,15 @@ function buildWorld(){
   gGeo.computeVertexNormals();
   const grass = new THREE.InstancedMesh(gGeo,
     new THREE.MeshStandardMaterial({map:gTex, transparent:false, alphaTest:.4, side:THREE.DoubleSide, roughness:1}),
-    LOW ? 1100 : 4200);
+    LOW ? 3000 : 9000);
   let gi = 0;
   while(gi < grass.count){
-    const a = Math.random()*Math.PI*2, r = 4 + Math.pow(Math.random(),.5)*130;
+    const a = Math.random()*Math.PI*2, r = 3.4 + Math.pow(Math.random(),.5)*(LOW?46:100);
     const x = Math.cos(a)*r, z = Math.sin(a)*r;
-    const s = .7 + Math.random()*1.5;
-    dummy.position.set(x, terrainH(x,z)-.1, z);
+    const s = .34 + Math.random()*.42;                 // ciuffi alti 30-80 cm, non cespugli
+    dummy.position.set(x, terrainH(x,z)-.05, z);
     dummy.rotation.set(0, Math.random()*3, 0);
-    dummy.scale.set(s, s*(.8+Math.random()*.8), s);
+    dummy.scale.set(s, s*(.9+Math.random()*.7), s);
     dummy.updateMatrix(); grass.setMatrixAt(gi++, dummy.matrix);
   }
   scene.add(grass);
@@ -999,10 +1009,10 @@ function buildWorld(){
     tu.castShadow = true; scene.add(tu);
   }
   const mast = new THREE.Mesh(new THREE.CylinderGeometry(.09,.12,7,8), MAT.gear);
-  mast.position.set(4.6,3.3,-1.2); mast.castShadow = true; scene.add(mast);
+  mast.position.set(-9.5,3.3,7.4); mast.castShadow = true; scene.add(mast);   // dietro l'operatore
   const dish = new THREE.Mesh(new THREE.SphereGeometry(1.4,16,12,0,Math.PI*2,0,Math.PI/2),
     new THREE.MeshStandardMaterial({color:0x8a8c76, roughness:.65, metalness:.3, side:THREE.DoubleSide}));
-  dish.position.set(4.6,6.6,-1.2); dish.rotation.x = -1.1; dish.castShadow = true; scene.add(dish);
+  dish.position.set(-9.5,6.6,7.4); dish.rotation.x = -1.1; dish.castShadow = true; scene.add(dish);
   scene.userData.dish = dish;
 
   return SUN;
@@ -1019,14 +1029,14 @@ function initEngine(){
   TEX.cloud = softTexture(240,244,250);
 
   scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(0xb3bcb6, 1500, LOW ? 4800 : 6000);   // prospettiva aerea
+  scene.fog = new THREE.Fog(0xa2ada9, 1400, LOW ? 5200 : 6000);   // prospettiva aerea
 
   camera = new THREE.PerspectiveCamera(62, innerWidth/innerHeight, .5, 9000);
   camera.rotation.order = 'YXZ';
   camera.position.copy(PLAYER);
 
-  renderer = new THREE.WebGLRenderer({antialias:!LOW, powerPreference:'high-performance'});
-  renderer.setPixelRatio(Math.min(devicePixelRatio, LOW ? 1.15 : 1.8));
+  renderer = new THREE.WebGLRenderer({antialias:true, powerPreference:'high-performance'});
+  renderer.setPixelRatio(Math.min(devicePixelRatio, LOW ? 1.35 : 1.8));
   renderer.setSize(innerWidth, innerHeight);
   renderer.autoClear = false;
   renderer.shadowMap.enabled = !LOW;
@@ -1048,8 +1058,9 @@ function initEngine(){
   // scena separata per l'arma: evita il z-fighting col mondo lontano
   wScene = new THREE.Scene();
   wCam = new THREE.PerspectiveCamera(58, innerWidth/innerHeight, .01, 12);
-  wScene.add(new THREE.HemisphereLight(0xdfe8ff, 0x33351f, 1.5));
-  const wl = new THREE.DirectionalLight(0xffffff, 1.5); wl.position.set(-1,2,1); wScene.add(wl);
+  wScene.add(new THREE.HemisphereLight(0xbcd0e8, 0x2a2c18, .95));
+  const wl = new THREE.DirectionalLight(0xfff2dc, 1.15); wl.position.set(-1,2,1); wScene.add(wl);
+  const wf = new THREE.DirectionalLight(0x9fb6cc, .35); wf.position.set(1,-.6,-1); wScene.add(wf);
   weapon = buildLauncher(); wScene.add(weapon);
 
   buildWorld();
@@ -1063,6 +1074,12 @@ function initEngine(){
   animate();
 }
 function resize(){
+  // su schermi larghi e bassi il lanciatore va rimpicciolito e spinto nell'angolo
+  const wide = innerWidth/innerHeight;
+  vmScale = TOUCH ? (wide > 2.0 ? .70 : .80) : (wide > 2.1 ? .90 : 1);
+  vmDX = TOUCH ? .07 : 0;
+  vmDY = TOUCH ? -.03 : 0;
+  if(weapon) weapon.scale.setScalar(vmScale);
   camera.aspect = wCam.aspect = innerWidth/innerHeight;
   camera.updateProjectionMatrix(); wCam.updateProjectionMatrix();
   renderer.setSize(innerWidth, innerHeight);
@@ -2227,8 +2244,8 @@ function animate(){
     const bob = Math.sin(performance.now()*.0016)*.008;
     const kick = S.recoil;
     weapon.position.set(
-      lerp(.30, .12, aimPose),
-      lerp(-.24, -.16, aimPose) + bob - cr*.55 - (S.loaded?0:.12),
+      lerp(.30, .12, aimPose) + vmDX*(1-aimPose),
+      lerp(-.24, -.16, aimPose) + vmDY + bob - cr*.55 - (S.loaded?0:.12),
       lerp(-.34, -.44, aimPose) + kick*.45
     );
     weapon.rotation.set(
