@@ -195,7 +195,11 @@ body.touch .touchkeys{display:grid}
 /* ══════════════ CONSOLE C4ISR ══════════════
    Ogni pannello è opaco; le fessure fra i pannelli lasciano intravedere la
    scena 3D, e il riquadro "feed ottico" è una finestra vera su di essa.   */
-#menu{display:block;padding:0;background:none;overflow:hidden}
+#menu{display:block;padding:0;background:none;
+  overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;
+  touch-action:pan-y;overscroll-behavior:contain}
+/* su schermo ampio la console entra tutta: niente barra di scorrimento */
+@media (min-width:1001px) and (orientation:landscape){ #menu{overflow:hidden} }
 #menu::before{content:'';position:absolute;inset:0;pointer-events:none;
   background:radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 45%, rgba(0,0,0,.6) 100%)}
 #homeGrain{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:.45;
@@ -304,9 +308,13 @@ body.touch .touchkeys{display:grid}
 @media (max-width:1000px), (orientation:portrait){
   #console{grid-template-columns:1fr;grid-template-rows:auto auto auto auto auto;
     grid-template-areas:"head" "center" "right" "left" "foot";
-    height:auto;min-height:100%;overflow-y:auto;touch-action:pan-y}
-  #cCenter{grid-template-rows:190px 230px}
-  .col{max-height:none}
+    height:auto;min-height:100%;overflow:visible}
+  #cCenter{grid-template-rows:190px 224px}
+  .col{max-height:none;overflow:visible;touch-action:pan-y}
+  /* grana e riga di scansione restano ancorate allo schermo, non al contenuto */
+  #homeGrain,#homeSweep{position:fixed}
+  #msgs{height:auto;max-height:132px}
+  #boot{position:fixed;padding:5vh 6vw}
   #cHead{flex-wrap:wrap;gap:8px}
   .hClass{margin-left:0;order:3;width:100%;text-align:center}
   .hTime{margin-left:auto}
@@ -1144,6 +1152,7 @@ function initEngine(){
   renderer = new THREE.WebGLRenderer({antialias:true, powerPreference:'high-performance'});
   renderer.setPixelRatio(Math.min(devicePixelRatio, LOW ? 1.35 : 1.8));
   renderer.setSize(innerWidth, innerHeight);
+  renderer.setSize(innerWidth, innerHeight);
   renderer.autoClear = false;
   renderer.shadowMap.enabled = !LOW;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -1559,7 +1568,7 @@ const AO = {
            solo l'interrogatore IFF può farlo.</p>` }
 };
 let selAO = 'ridge';
-let tacCv, tacX, tacHit = [], tacT = 0, conT = 0, msgT = 3, booted = false;
+let tacCv, tacX, tacHit = [], tacT = 0, conT = 0, msgT = 3, booted = false, tacSkip = 0;
 
 const MSGS = [
   ['c','DATALINK: sincronizzazione quadro completata'],
@@ -1751,9 +1760,15 @@ function startAttract(){
   document.body.classList.add('home');
   if(weapon) weapon.visible = false;
   camera.fov = 44; camera.updateProjectionMatrix();
+  // nella console il 3D si vede solo nella finestra del feed: rendere a piena
+  // risoluzione sarebbe sprecato, e sul telefono pesa sullo scorrimento
+  renderer.setPixelRatio(Math.min(devicePixelRatio, LOW ? .75 : 1.2));
+  renderer.setSize(innerWidth, innerHeight);
+  tacSkip = 0;
 }
 function stopAttract(){
   demo.on = false;
+  renderer.setPixelRatio(Math.min(devicePixelRatio, LOW ? 1.35 : 1.8));
   document.body.classList.remove('home');
   if(weapon) weapon.visible = true;
   demo.jets.forEach(j=>scene.remove(j)); demo.jets = [];
@@ -1767,7 +1782,9 @@ function updateAttract(dt){
   if(conT > .5){ conT = 0; conClock(); }
   msgT -= dt;
   if(msgT <= 0){ msgT = 4 + Math.random()*5; conMsg(); }
-  drawTac(dt);
+  // il quadro tattico non ha bisogno di 60 fotogrammi al secondo
+  tacSkip += dt;
+  if(tacSkip > (LOW ? .055 : .022)){ drawTac(tacSkip); tacSkip = 0; }
   const a = demo.t*.055, r = 52 + Math.sin(demo.t*.09)*11;
   camera.position.set(Math.cos(a)*r, 9 + Math.sin(demo.t*.13)*4.5, Math.sin(a)*r);
   camera.lookAt(new V3(Math.cos(a+2.4)*14, 15 + Math.sin(demo.t*.21)*13, Math.sin(a+2.4)*14));
@@ -2903,6 +2920,9 @@ function animate(){
     hud();
   } else if(demo.on){
     updateAttract(dt);
+    // durante la console si disegna a cadenza dimezzata: la finestra del feed
+    // è piccola e il telefono deve restare libero di scorrere
+    if(LOW){ demo.half = !demo.half; if(demo.half){ drawOverlay(); return; } }
   }
 
   drawOverlay();
