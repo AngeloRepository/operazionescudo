@@ -192,83 +192,131 @@ body.touch .touchkeys{display:grid}
 }
 
 
-/* ══════════════ HOME PAGE ══════════════
-   Il menu non copre più la scena: il mondo 3D continua a girare in modalità
-   cinematica dietro il fascicolo, che occupa solo la colonna di sinistra. */
-#menu{
-  display:block; padding:0; background:none; overflow:hidden;
-}
-#menu::before{
-  content:''; position:absolute; inset:0;
-  background:linear-gradient(96deg, rgba(5,9,6,.97) 0%, rgba(5,9,6,.94) 34%,
-             rgba(5,9,6,.55) 56%, rgba(5,9,6,.10) 78%, rgba(5,9,6,.35) 100%);
-}
-#homeGrain{position:absolute;inset:0;pointer-events:none;opacity:.5;
-  background:repeating-linear-gradient(0deg, rgba(207,227,208,.05) 0 1px, transparent 1px 3px)}
-#homeSweep{position:absolute;left:0;right:0;height:150px;pointer-events:none;opacity:.35;
-  background:linear-gradient(180deg, transparent, rgba(169,220,180,.10), transparent);
-  animation:sweep 9s linear infinite}
-@keyframes sweep{ from{ top:-160px } to{ top:100% } }
+/* ══════════════ CONSOLE C4ISR ══════════════
+   Ogni pannello è opaco; le fessure fra i pannelli lasciano intravedere la
+   scena 3D, e il riquadro "feed ottico" è una finestra vera su di essa.   */
+#menu{display:block;padding:0;background:none;overflow:hidden}
+#menu::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 45%, rgba(0,0,0,.6) 100%)}
+#homeGrain{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:.45;
+  background:repeating-linear-gradient(0deg, rgba(207,227,208,.055) 0 1px, transparent 1px 3px)}
+#homeSweep{position:absolute;left:0;right:0;height:170px;z-index:4;pointer-events:none;opacity:.30;
+  background:linear-gradient(180deg, transparent, rgba(169,220,180,.11), transparent);
+  animation:sweep 8s linear infinite}
+@keyframes sweep{ from{ top:-180px } to{ top:100% } }
 
-#dossier{
-  position:relative; z-index:2; height:100%; width:min(590px, 56vw);
-  padding:28px 34px 30px 34px; scrollbar-width:thin;
-  overflow-y:auto; -webkit-overflow-scrolling:touch;
-  touch-action:pan-y; overscroll-behavior:contain;
-  border-right:1px solid rgba(242,165,22,.28);
-  box-shadow:34px 0 60px -30px rgba(0,0,0,.9);
+#console{position:relative;z-index:2;height:100%;display:grid;gap:7px;padding:7px;
+  grid-template-columns:246px 1fr 306px;
+  grid-template-rows:auto 1fr auto;
+  grid-template-areas:"head head head" "left center right" "foot foot foot";
   text-align:left;
+  padding-left:calc(7px + env(safe-area-inset-left));
+  padding-right:calc(7px + env(safe-area-inset-right))}
+
+#console section,#console header,#console footer{
+  background:rgba(8,13,10,.94);border:1px solid var(--line);position:relative}
+#cHead{grid-area:head;display:flex;align-items:center;gap:14px;padding:8px 12px;
+  border-top:2px solid var(--amber)}
+#cLeft{grid-area:left}#cRight{grid-area:right}#cFoot{grid-area:foot}
+#cCenter{grid-area:center;display:grid;grid-template-rows:1fr 232px;gap:7px;
+  background:none!important;border:none!important}
+
+/* --- intestazione --- */
+.hUnit{display:flex;align-items:center;gap:10px}
+.hUnit .crest{width:38px;height:38px;flex:none}
+.hName b{font-family:'Oswald',sans-serif;font-size:19px;letter-spacing:.26em;color:#fff;display:block;line-height:1}
+.hName span{font-size:9.5px;letter-spacing:.17em;color:var(--dim)}
+.hClass{margin-left:auto;font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.22em;
+  color:#ffb84d;border:1px solid rgba(242,165,22,.5);background:rgba(242,165,22,.09);padding:5px 12px}
+.hTime{display:flex;gap:16px;text-align:right}
+.hTime b{font-family:'Share Tech Mono',monospace;font-size:17px;color:var(--data);display:block;line-height:1.1}
+.hTime span{font-size:8.5px;letter-spacing:.2em;color:var(--dim)}
+
+/* --- colonne --- */
+.col{padding:11px 13px;overflow-y:auto;touch-action:pan-y}
+.col h3{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.22em;color:var(--amber);
+  margin:0 0 7px 0;padding-bottom:5px;border-bottom:1px solid var(--line);font-weight:400}
+.col h3:not(:first-child){margin-top:16px}
+.sys,.kv{list-style:none;font-size:11px}
+.sys li,.kv li{display:flex;align-items:center;gap:7px;padding:3px 0;color:var(--dim);letter-spacing:.05em}
+.sys li b,.kv li b{margin-left:auto;color:var(--data);font-weight:400}
+.led{width:7px;height:7px;flex:none;border-radius:50%;background:#7fd8ff;box-shadow:0 0 7px #7fd8ff;
+  animation:pulse 2.4s infinite}
+.led.warn{background:var(--amber);box-shadow:0 0 7px var(--amber);animation-duration:1.3s}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* --- finestra sul mondo 3D --- */
+#feedwin{position:relative;border:1px solid rgba(207,227,208,.35);background:transparent;overflow:hidden}
+#feedwin .lbl,#tac .lbl{position:absolute;left:9px;top:7px;font-size:9.5px;letter-spacing:.18em;
+  color:var(--dim);text-shadow:0 0 6px #000;pointer-events:none}
+#feedwin .rec{position:absolute;right:9px;top:7px;font-size:9.5px;letter-spacing:.16em;color:#ff6a60;
+  text-shadow:0 0 6px #000;animation:pulse 1.8s infinite}
+#feedwin .tele{position:absolute;left:9px;bottom:7px;font-size:9.5px;letter-spacing:.14em;color:var(--dim);
+  text-shadow:0 0 6px #000}
+#feedwin .c{position:absolute;width:16px;height:16px;border:1px solid rgba(242,165,22,.75)}
+#feedwin .c.tl{left:8px;top:24px;border-right:none;border-bottom:none}
+#feedwin .c.tr{right:8px;top:24px;border-left:none;border-bottom:none}
+#feedwin .c.bl{left:8px;bottom:24px;border-right:none;border-top:none}
+#feedwin .c.br{right:8px;bottom:24px;border-left:none;border-top:none}
+
+/* --- quadro tattico --- */
+#tac{position:relative;background:rgba(6,12,9,.95);border:1px solid var(--line)}
+#tacCanvas{width:100%;height:100%;display:block;cursor:pointer}
+#tac .lbl{top:auto;bottom:7px}
+
+/* --- traffico messaggi e briefing --- */
+#msgs{font-size:10.5px;line-height:1.75;color:var(--dim);height:150px;overflow:hidden}
+#msgs div{margin-bottom:2px;animation:msgin .45s ease-out}
+#msgs .t{color:rgba(207,227,208,.42)}
+#msgs .a{color:var(--amber)}
+#msgs .c{color:#7fd8ff}
+#msgs .r{color:#ff6a60}
+@keyframes msgin{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
+#brief p{font-size:11.5px;line-height:1.75;color:var(--dim);margin-bottom:8px}
+#brief b{color:var(--data)}
+#brief .pull{color:var(--amber);border-top:1px solid var(--line);padding-top:8px}
+
+/* --- barra di comando --- */
+#cFoot{display:flex;align-items:center;gap:16px;padding:9px 13px;border-bottom:2px solid var(--amber)}
+.fSel span{font-size:9px;letter-spacing:.2em;color:var(--dim);display:block}
+.fSel b{font-family:'Oswald',sans-serif;font-size:18px;letter-spacing:.16em;color:#fff}
+.fBtns{margin-left:auto;display:flex;gap:9px}
+.gobtn{font-family:'Oswald',sans-serif;letter-spacing:.16em;font-size:13px;padding:9px 20px;
+  background:transparent;color:var(--data);border:1px solid var(--line);cursor:pointer;line-height:1.2;
+  transition:background .16s,color .16s,border-color .16s}
+.gobtn small{display:block;font-family:'Share Tech Mono',monospace;font-size:8.5px;
+  letter-spacing:.06em;opacity:.6;margin-top:3px}
+.gobtn:hover{background:var(--data);color:#0d120e;border-color:var(--data)}
+.gobtn.hot{border-color:var(--amber);color:var(--amber)}
+.gobtn.hot:hover{background:var(--amber);color:#0d120e}
+.fHint{font-size:9.5px;letter-spacing:.1em;color:var(--dim);max-width:230px;text-align:right}
+.fHint b{color:var(--amber);font-weight:400}
+
+/* --- avvio del sistema --- */
+#boot{position:absolute;inset:0;z-index:9;background:#050807;padding:6vh 8vw;
+  display:flex;flex-direction:column;justify-content:center}
+#bootlog{font-family:'Share Tech Mono',monospace;font-size:12.5px;line-height:2;color:#8fdcae;
+  white-space:pre-wrap;text-shadow:0 0 9px rgba(143,220,174,.35)}
+#bootbar{height:2px;background:rgba(143,220,174,.18);margin-top:22px}
+#bootbar i{display:block;height:100%;width:0;background:#8fdcae;transition:width .18s linear}
+#boot.done{opacity:0;pointer-events:none;transition:opacity .7s}
+
+@media (max-width:1000px), (orientation:portrait){
+  #console{grid-template-columns:1fr;grid-template-rows:auto auto auto auto auto;
+    grid-template-areas:"head" "center" "right" "left" "foot";
+    height:auto;min-height:100%;overflow-y:auto;touch-action:pan-y}
+  #cCenter{grid-template-rows:190px 230px}
+  .col{max-height:none}
+  #cHead{flex-wrap:wrap;gap:8px}
+  .hClass{margin-left:0;order:3;width:100%;text-align:center}
+  .hTime{margin-left:auto}
+  #cFoot{flex-wrap:wrap;gap:10px}
+  .fBtns{width:100%;margin-left:0}
+  .gobtn{flex:1}
+  .fHint{display:none}
+  #msgs{height:118px}
 }
-#dossier::-webkit-scrollbar{width:5px}
-#dossier::-webkit-scrollbar-thumb{background:rgba(242,165,22,.4)}
-
-#crestRow{display:flex;align-items:center;gap:13px;padding-bottom:14px;
-  border-bottom:1px solid var(--line);margin-bottom:20px}
-#crestRow .crest{width:48px;height:48px;flex:none}
-#crestRow .crestText{display:flex;flex-direction:column;font-size:10.5px;letter-spacing:.17em;line-height:1.7}
-#crestRow .crestText .dim{color:var(--dim)}
-#crestRow .stamp{margin-left:auto;font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.24em;
-  color:#ff5b52;border:1.5px solid rgba(255,91,82,.65);padding:4px 8px;transform:rotate(-7deg);
-  opacity:.85;white-space:nowrap}
-
-.hometitle{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.16em;
-  font-size:clamp(34px,4.6vw,56px);line-height:.98;color:#fff;text-align:left;margin-bottom:12px}
-.hometitle em{font-style:normal;color:var(--amber);
-  text-shadow:0 0 34px rgba(242,165,22,.45)}
-.tagline{color:var(--data);font-size:13px;letter-spacing:.1em;max-width:none;margin:0 0 22px 0;
-  padding-left:12px;border-left:2px solid var(--amber)}
-
-.story p{color:var(--dim);font-size:13px;line-height:1.8;margin-bottom:11px;max-width:none}
-.story b{color:var(--data)}
-.story .pull{color:var(--amber);font-size:14px;letter-spacing:.06em;border-top:1px solid var(--line);
-  padding-top:12px;margin-top:15px}
-
-.brief{margin:22px 0;border:1px solid var(--line);background:rgba(10,16,11,.5)}
-.brief > div{display:flex;gap:14px;padding:8px 13px;border-bottom:1px solid rgba(207,227,208,.10);font-size:12px}
-.brief > div:last-child{border-bottom:none}
-.brief dt{font-family:'Oswald',sans-serif;letter-spacing:.16em;color:var(--amber);width:96px;flex:none;font-size:11px}
-.brief dd{color:var(--data)}
-
-.pillars{margin:24px 0 26px 0;display:flex;flex-direction:column;gap:15px}
-.pillar{display:grid;grid-template-columns:34px 1fr;gap:4px 12px;align-items:baseline}
-.pillar span{font-family:'Oswald',sans-serif;font-size:19px;color:rgba(242,165,22,.55);grid-row:span 2}
-.pillar b{font-family:'Oswald',sans-serif;font-weight:400;letter-spacing:.1em;font-size:14px;color:#fff}
-.pillar i{font-style:normal;color:var(--dim);font-size:12px;line-height:1.7}
-
-.cta{display:flex;flex-direction:column;gap:9px;margin-bottom:24px}
-.cta .btn{width:100%;margin:0;text-align:left;padding:14px 18px;line-height:1.25}
-.cta .btn small{display:block;font-family:'Share Tech Mono',monospace;font-size:10px;
-  letter-spacing:.08em;opacity:.62;margin-top:4px;text-transform:none}
-
-.misshead{font-family:'Oswald',sans-serif;letter-spacing:.2em;font-size:14px;color:#fff;
-  margin:0 0 12px 0;padding-bottom:8px;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:baseline}
-.misshead span{font-size:10px;color:var(--amber);letter-spacing:.24em}
-.misshead.second{margin-top:30px}
-
-#dossier .keys{margin-top:0;margin-bottom:18px;font-size:11.5px;gap:5px 16px;justify-content:start}
-#dossier .keys b{color:var(--amber)}
-.homefoot{font-size:10px;color:rgba(207,227,208,.35);letter-spacing:.1em;
-  border-top:1px solid var(--line);padding-top:12px}
+@media (max-height:460px){ #bootlog{font-size:10.5px;line-height:1.7} }
 
 /* durante la home la strumentazione di bordo resta spenta */
 body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{display:none}
@@ -364,109 +412,97 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
   <div id="radarlabel">RADAR 3 KM</div>
 </div>
 
-<!-- ══════════════ HOME PAGE ══════════════ -->
+<!-- ══════════════ CONSOLE C4ISR — LANDING ══════════════ -->
 <div class="screen" id="menu">
   <div id="homeGrain"></div>
   <div id="homeSweep"></div>
 
-  <aside id="dossier">
-    <header id="crestRow">
-      <svg class="crest" viewBox="0 0 64 64" aria-hidden="true">
-        <polygon points="32,3 58,17 58,45 32,60 6,45 6,17" fill="none" stroke="#f2a516" stroke-width="1.6"/>
-        <circle cx="32" cy="32" r="15" fill="none" stroke="#cfe3d0" stroke-width=".9" stroke-dasharray="3 4" opacity=".8"/>
-        <path d="M19 45 L44 20" stroke="#cfe3d0" stroke-width="3.2" stroke-linecap="round"/>
-        <path d="M45 19 l-7 1.4 5.6 5.6z" fill="#f2a516"/>
-        <path d="M24 40 l-5.6 -1.4 1.4 5.6z" fill="#cfe3d0" opacity=".75"/>
-        <line x1="32" y1="7" x2="32" y2="15" stroke="#f2a516" stroke-width="1"/>
-        <line x1="32" y1="49" x2="32" y2="57" stroke="#f2a516" stroke-width="1"/>
-      </svg>
-      <div class="crestText">
-        <span>SEZIONE DIFESA AEREA · 3° BATTAGLIONE</span>
-        <span class="dim">FASCICOLO OPS-77 · SETTORE KILO-7</span>
+  <!-- sequenza di avvio del sistema -->
+  <div id="boot"><pre id="bootlog"></pre><div id="bootbar"><i></i></div></div>
+
+  <div id="console">
+
+    <header id="cHead">
+      <div class="hUnit">
+        <svg class="crest" viewBox="0 0 64 64" aria-hidden="true">
+          <polygon points="32,3 58,17 58,45 32,60 6,45 6,17" fill="none" stroke="#f2a516" stroke-width="1.8"/>
+          <circle cx="32" cy="32" r="15" fill="none" stroke="#cfe3d0" stroke-width=".9" stroke-dasharray="3 4" opacity=".8"/>
+          <path d="M19 45 L44 20" stroke="#cfe3d0" stroke-width="3.2" stroke-linecap="round"/>
+          <path d="M45 19 l-7 1.4 5.6 5.6z" fill="#f2a516"/>
+          <path d="M24 40 l-5.6 -1.4 1.4 5.6z" fill="#cfe3d0" opacity=".75"/>
+        </svg>
+        <div class="hName">
+          <b>SCUDO</b>
+          <span>C4ISR · CENTRO OPERAZIONI AEREE TATTICHE</span>
+        </div>
       </div>
-      <span class="stamp">CLASSIFICATO</span>
+      <div class="hClass">ESERCITAZIONE — DATI SIMULATI — SCENARIO DI FANTASIA</div>
+      <div class="hTime">
+        <div><b id="zulu">00:00:00</b><span>ZULU</span></div>
+        <div><b id="loc">00:00:00</b><span>LOCALE</span></div>
+      </div>
     </header>
 
-    <h1 class="hometitle">OPERAZIONE<br><em>SCUDO</em></h1>
-    <p class="tagline">Un operatore. Un tubo di lancio. L'ultimo corridoio della valle.</p>
+    <section class="col" id="cLeft">
+      <h3>STATO SISTEMI</h3>
+      <ul class="sys">
+        <li><i class="led ok"></i>RADAR DI SCOPERTA<b>ATTIVO</b></li>
+        <li><i class="led ok"></i>INTERROGATORE IFF<b>MODO 4</b></li>
+        <li><i class="led ok"></i>DATALINK TATTICO<b>AGGANCIATO</b></li>
+        <li><i class="led warn"></i>COPERTURA A LUNGO RAGGIO<b>ASSENTE</b></li>
+        <li><i class="led ok"></i>POSTAZIONE MANPADS<b>IN LINEA</b></li>
+      </ul>
 
-    <div class="story">
-      <p><b>CRESTA DI KILO-7 — ORE 04:50.</b> La valle sotto di te è la sola strada rimasta per far
-         arrivare i rifornimenti alla città. Le batterie a lungo raggio sono state spazzate via in tre
-         minuti, la notte scorsa. I radar di scoperta non rispondono più.</p>
-      <p>Quello che resta della difesa aerea del settore è una piazzola scavata nella roccia, una cassa
-         di complessi di lancio ai tuoi piedi e tu.</p>
-      <p>All'alba passeranno. Prima i caccia, a ondate, convinti di trovare un cielo vuoto. Poi arriverà
-         <b>lui</b>: un F-35A in configurazione stealth, che guiderà l'attacco finale e semina flare
-         capaci di ingannare un cercatore a infrarossi.</p>
-      <p class="pull">Hai trentotto secondi di argon per ogni missile. Usali bene.</p>
-    </div>
+      <h3>DOTAZIONE SEZIONE</h3>
+      <ul class="kv">
+        <li>COMPLESSI FIM-92<b>23</b></li>
+        <li>CARTUCCE BCU<b>23</b></li>
+        <li>OPERATORI<b>1</b></li>
+        <li>AUTONOMIA ARGON<b>38 s</b></li>
+      </ul>
 
-    <dl class="brief">
-      <div><dt>OBIETTIVO</dt><dd>Negare il cielo sopra il corridoio per quattro ondate</dd></div>
-      <div><dt>MINACCIA</dt><dd>Caccia da attacco al suolo, poi un F-35A stealth</dd></div>
-      <div><dt>DOTAZIONE</dt><dd>FIM-92 Stinger · ottica · BCU all'argon</dd></div>
-    </dl>
+      <h3>METEO ALL'ALBA</h3>
+      <ul class="kv">
+        <li>VENTO<b>060° / 12 kt</b></li>
+        <li>VISIBILITÀ<b>&gt; 10 km</b></li>
+        <li>NUBI<b>SPARSE 4000 ft</b></li>
+        <li>ALBA<b>05:12 Z</b></li>
+      </ul>
+    </section>
 
-    <div class="pillars">
-      <div class="pillar"><span>01</span>
-        <b>La procedura è quella vera</b>
-        <i>Inserisci la BCU, aspetta che l'argon raffreddi il sensore, aggancia, correggi l'anticipo,
-           sblocca il cercatore. Solo allora il grilletto risponde.</i></div>
-      <div class="pillar"><span>02</span>
-        <b>Balistica, non magia</b>
-        <i>Il missile viene espulso a nove metri prima di accendere il motore, poi vola su rotta di
-           collisione e consuma energia a ogni manovra. Un lancio impreciso si paga.</i></div>
-      <div class="pillar"><span>03</span>
-        <b>L'ultimo aereo è il più difficile</b>
-        <i>L'F-35 rilascia flare appena ti sente addosso. Devi lanciare nella finestra fra un'esca
-           e l'altra, con i cannoni che ti cercano.</i></div>
-    </div>
+    <section id="cCenter">
+      <div id="feedwin">
+        <span class="lbl">FEED OTTICO 01 · POSTAZIONE MANPADS</span>
+        <span class="rec">● IN DIRETTA</span>
+        <span class="tele">PTZ 04 · f/2.8 · IR OFF</span>
+        <b class="c tl"></b><b class="c tr"></b><b class="c bl"></b><b class="c br"></b>
+      </div>
+      <div id="tac">
+        <canvas id="tacCanvas"></canvas>
+        <span class="lbl">QUADRO TATTICO · TOCCA UN'AREA DI OPERAZIONI PER SELEZIONARLA</span>
+      </div>
+    </section>
 
-    <div class="misshead"><span>MISSIONE 1</span> CRESTA KILO-7</div>
-    <div class="cta">
-      <button class="btn primary" onclick="startGame('easy','ridge')">ADDESTRAMENTO<small>IFF automatico · nemici prudenti · argon abbondante</small></button>
-      <button class="btn" onclick="startGame('hard','ridge')">OPERATIVO<small>procedura manuale · argon scarso · nemici reattivi</small></button>
-    </div>
+    <section class="col" id="cRight">
+      <h3>TRAFFICO MESSAGGI</h3>
+      <div id="msgs"></div>
+      <h3 id="aoTitle">ORDINE DI OPERAZIONE</h3>
+      <div id="brief"></div>
+    </section>
 
-    <div class="misshead second"><span>MISSIONE 2</span> BASE AEREA DELTA</div>
-    <div class="story">
-      <p><b>BASE AEREA DELTA — ORE 05:40.</b> Le rampe sono cariche: cinque velivoli da trasporto
-         devono portare fuori i feriti e l'ultimo reparto rimasto sul confine.</p>
-      <p>Un aereo in decollo è la preda più facile del mondo. Inchiodato alla pista, lento, senza
-         manovra: dodici secondi in cui non può fare assolutamente nulla per difendersi. I caccia
-         nemici lo sanno, e non vengono per te.</p>
-      <p>Sei a centosettanta metri dalla soglia pista, con un tubo di lancio. Stavolta non devi
-         restare vivo: devi far decollare <b>loro</b>.</p>
-      <p class="pull">E il tuo cercatore a infrarossi non distingue un amico da un nemico:
-         solo l'interrogatore IFF può farlo. Sbaglia, e il missile parte lo stesso.</p>
-    </div>
-    <div class="cta">
-      <button class="btn primary" onclick="startGame('easy','airbase')">ADDESTRAMENTO<small>IFF automatico · aggancio sugli amici inibito</small></button>
-      <button class="btn" onclick="startGame('hard','airbase')">OPERATIVO<small>IFF manuale [Q] · tre perdite e il ponte aereo salta</small></button>
-    </div>
+    <footer id="cFoot">
+      <div class="fSel">
+        <span>AREA SELEZIONATA</span>
+        <b id="aoSel">KILO-7</b>
+      </div>
+      <div class="fBtns">
+        <button class="gobtn" onclick="launchMission('easy')">ADDESTRAMENTO<small>IFF automatico · nemici prudenti</small></button>
+        <button class="gobtn hot" onclick="launchMission('hard')">OPERATIVO<small>procedura manuale · IFF [Q]</small></button>
+      </div>
+      <div class="fHint" id="fHint">FRECCE o MOUSE mira · <b>E</b> BCU · <b>C</b> sblocco · <b>SPAZIO</b> fuoco</div>
+    </footer>
 
-    <div class="keys touchkeys">
-      <b>TRASCINA</b><span>ruota il lanciatore, ovunque sullo schermo</span>
-      <b>BCU</b><span>attiva la cartuccia e raffredda il sensore</span>
-      <b>SBLOCCO</b><span>libera il cercatore dopo l'aggancio</span>
-    <b>IFF</b><span>interroga il bersaglio prima di lanciare</span>
-      <b>FUOCO</b><span>lancia il missile</span>
-      <b>RIPARO</b><span>tieni premuto per stare in trincea</span>
-    </div>
-    <div class="keys">
-      <b>FRECCE / MOUSE</b><span>brandeggio e alzo del lanciatore</span>
-      <b>E</b><span>inserisci e attiva la BCU — serve a ogni lancio</span>
-      <b>C</b><span>sblocca il sensore prima del fuoco</span>
-    <b>Q</b><span>interroga l'IFF: amico o ostile</span>
-      <b>SPAZIO / CLIC</b><span>grilletto di lancio</span>
-      <b>SHIFT</b><span>riparati nella trincea</span>
-      <b>Z</b><span>ingrandimento ottica</span>
-      <b>P</b><span>pausa</span>
-    </div>
-
-    <footer class="homefoot">Velivoli, unità e settore sono di fantasia. Nessun dato tecnico reale è riprodotto.</footer>
-  </aside>
+  </div>
 </div>
 
 <!-- PAUSA -->
@@ -1140,6 +1176,7 @@ function initEngine(){
   resize(); addEventListener('resize', resize);
   bindInput();
   document.getElementById('loading').style.display = 'none';
+  initConsole();
   startAttract();
   animate();
 }
@@ -1221,7 +1258,7 @@ function bindInput(){
      può restare sui pulsanti senza disturbare la mira.                  */
   // un tocco che nasce su un pulsante o dentro una schermata (home, pausa,
   // fine partita) non muove la mira: serve a premere o a scorrere il testo
-  const onBtn = t => t.target && t.target.closest && t.target.closest('button, .screen');
+  const onBtn = t => t.target && t.target.closest && t.target.closest('button, .screen, canvas#tacCanvas');
   let lookId = null, lx = 0, ly = 0;
 
   addEventListener('touchstart', e=>{
@@ -1498,6 +1535,211 @@ function loadScenario(name){
   scene.add(worldGroup);
 }
 
+
+/* =========================================================================
+   CONSOLE C4ISR — la schermata d'ingresso è un posto di comando: orologio
+   zulu, quadro tattico interattivo, traffico messaggi e avvio del sistema.
+   ========================================================================= */
+const AO = {
+  ridge:{ code:'KILO-7', name:'CRESTA KILO-7', x:-.34, y:-.30,
+    brief:`<p><b>CRESTA DI KILO-7 — ORE 04:50.</b> La valle sotto la postazione è la sola strada
+           rimasta per far arrivare i rifornimenti alla città. Le batterie a lungo raggio sono state
+           spazzate via in tre minuti, la notte scorsa. I radar di scoperta non rispondono più.</p>
+           <p>All'alba passeranno: prima i caccia, a ondate, convinti di trovare un cielo vuoto.
+           Poi un <b>F-35A</b> in configurazione stealth, che semina flare capaci di ingannare
+           un cercatore a infrarossi.</p>
+           <p class="pull">Hai trentotto secondi di argon per ogni missile. Usali bene.</p>` },
+  airbase:{ code:'DELTA', name:'BASE AEREA DELTA', x:.38, y:.26,
+    brief:`<p><b>BASE AEREA DELTA — ORE 05:40.</b> Le rampe sono cariche: cinque velivoli da
+           trasporto devono portare fuori i feriti e l'ultimo reparto rimasto sul confine.</p>
+           <p>Un aereo in decollo è la preda più facile del mondo: inchiodato alla pista, lento,
+           senza manovra. Ventinove secondi in cui non può fare nulla per difendersi. I caccia
+           nemici lo sanno, e <b>non vengono per te</b>.</p>
+           <p class="pull">Il cercatore a infrarossi non distingue un amico da un nemico:
+           solo l'interrogatore IFF può farlo.</p>` }
+};
+let selAO = 'ridge';
+let tacCv, tacX, tacHit = [], tacT = 0, conT = 0, msgT = 3, booted = false;
+
+const MSGS = [
+  ['c','DATALINK: sincronizzazione quadro completata'],
+  ['t','RICOGNIZIONE: attività su base ostile a 140 km'],
+  ['a','ALLERTA: decolli multipli rilevati a nord-est'],
+  ['t','LOGISTICA: 23 complessi FIM-92 in postazione'],
+  ['c','IFF MODO 4: chiavi del giorno caricate'],
+  ['r','SETTORE 4: batteria a lungo raggio non risponde'],
+  ['t','METEO: vento 060 gradi, 12 nodi, in calo'],
+  ['a','ORDINE: mantenere copertura fino a nuovo avviso'],
+  ['c','TORRE DELTA: rampe cariche, in attesa di finestra'],
+  ['t','SANITÀ: 40 feriti pronti all\'imbarco'],
+  ['r','SIGINT: emissioni radar ostili in avvicinamento'],
+  ['c','POSTAZIONE MANPADS: operatore in linea']
+];
+
+function conClock(){
+  const d = new Date();
+  const z = new Date(d.getTime() + d.getTimezoneOffset()*60000);
+  const f = t => String(t).padStart(2,'0');
+  const zz = document.getElementById('zulu'), lo = document.getElementById('loc');
+  if(zz) zz.textContent = f(z.getHours())+':'+f(z.getMinutes())+':'+f(z.getSeconds());
+  if(lo) lo.textContent = f(d.getHours())+':'+f(d.getMinutes())+':'+f(d.getSeconds());
+}
+
+function conMsg(){
+  const box = document.getElementById('msgs'); if(!box) return;
+  const m = MSGS[Math.floor(Math.random()*MSGS.length)];
+  const d = new Date();
+  const f = t => String(t).padStart(2,'0');
+  const el = document.createElement('div');
+  el.innerHTML = '<span class="t">' + f(d.getHours())+f(d.getMinutes()) + 'Z</span> ' +
+                 '<span class="' + m[0] + '">' + m[1] + '</span>';
+  box.insertBefore(el, box.firstChild);
+  while(box.children.length > 8) box.removeChild(box.lastChild);
+}
+
+function selectAO(key){
+  selAO = key;
+  document.getElementById('aoSel').textContent = AO[key].code;
+  document.getElementById('aoTitle').textContent = 'ORDINE DI OPERAZIONE · ' + AO[key].name;
+  document.getElementById('brief').innerHTML = AO[key].brief;
+  const h = document.getElementById('fHint');
+  if(h) h.innerHTML = key === 'airbase'
+    ? 'Missione con velivoli amici: <b>Q</b> interroga l\'IFF prima di lanciare'
+    : 'FRECCE o MOUSE mira · <b>E</b> BCU · <b>C</b> sblocco · <b>SPAZIO</b> fuoco';
+}
+function launchMission(level){ startGame(level, selAO); }
+
+/* --- quadro tattico: indicatore panoramico con contatti e aree operative --- */
+const tacBlips = [];
+function drawTac(dt){
+  if(!tacCv) return;
+  const cw = tacCv.clientWidth, ch = tacCv.clientHeight;
+  if(!cw || !ch) return;
+  const dpr = Math.min(devicePixelRatio||1, 2);
+  if(tacCv.width !== Math.round(cw*dpr)){
+    tacCv.width = Math.round(cw*dpr); tacCv.height = Math.round(ch*dpr);
+    tacX.setTransform(dpr,0,0,dpr,0,0);
+  }
+  const cx = cw/2, cy = ch/2, R = Math.min(cw,ch)/2 - 14;
+  tacT += dt;
+  tacX.clearRect(0,0,cw,ch);
+
+  // reticolo
+  tacX.strokeStyle = 'rgba(207,227,208,.13)'; tacX.lineWidth = 1;
+  for(let i=1;i<=4;i++){ tacX.beginPath(); tacX.arc(cx,cy,R*i/4,0,7); tacX.stroke(); }
+  tacX.beginPath(); tacX.moveTo(cx-R,cy); tacX.lineTo(cx+R,cy);
+  tacX.moveTo(cx,cy-R); tacX.lineTo(cx,cy+R); tacX.stroke();
+  tacX.fillStyle = 'rgba(207,227,208,.35)';
+  tacX.font = '9px "Share Tech Mono",monospace'; tacX.textAlign = 'center';
+  for(let a=0;a<360;a+=30){
+    const rad = (a-90)*Math.PI/180;
+    tacX.fillText(String(a).padStart(3,'0'), cx+Math.cos(rad)*(R+8), cy+Math.sin(rad)*(R+8)+3);
+  }
+
+  // spazzata
+  const sw = tacT*.9;
+  tacX.save(); tacX.beginPath(); tacX.arc(cx,cy,R,0,7); tacX.clip();
+  for(let i=0;i<26;i++){
+    tacX.strokeStyle = 'rgba(127,216,255,' + (0.10*(1-i/26)) + ')';
+    tacX.beginPath(); tacX.moveTo(cx,cy);
+    tacX.lineTo(cx+Math.cos(sw-i*.03)*R, cy+Math.sin(sw-i*.03)*R); tacX.stroke();
+  }
+  tacX.restore();
+
+  // contatti generici
+  if(tacBlips.length < 9 && Math.random() < dt*1.4)
+    tacBlips.push({a:Math.random()*7, r:.35+Math.random()*.6, v:(Math.random()-.5)*.08, life:0});
+  for(let i=tacBlips.length-1;i>=0;i--){
+    const b = tacBlips[i]; b.a += b.v*dt; b.life += dt;
+    if(b.life > 22){ tacBlips.splice(i,1); continue; }
+    const x = cx+Math.cos(b.a)*R*b.r, y = cy+Math.sin(b.a)*R*b.r;
+    tacX.fillStyle = 'rgba(207,227,208,' + (.25+.45*Math.abs(Math.sin(b.life))) + ')';
+    tacX.fillRect(x-1.5,y-1.5,3,3);
+  }
+
+  // aree di operazione selezionabili
+  tacHit = [];
+  for(const k of Object.keys(AO)){
+    const o = AO[k];
+    const x = cx + o.x*R, y = cy + o.y*R;
+    const on = (k === selAO);
+    tacHit.push({k:k, x:x, y:y});
+    const pulse = on ? 1 + Math.sin(tacT*3)*.10 : 1;
+    tacX.strokeStyle = on ? '#f2a516' : 'rgba(207,227,208,.5)';
+    tacX.lineWidth = on ? 2 : 1;
+    tacX.beginPath(); tacX.arc(x,y,15*pulse,0,7); tacX.stroke();
+    tacX.beginPath();
+    tacX.moveTo(x,y-22*pulse); tacX.lineTo(x+22*pulse,y);
+    tacX.lineTo(x,y+22*pulse); tacX.lineTo(x-22*pulse,y); tacX.closePath();
+    tacX.setLineDash(on ? [] : [4,5]); tacX.stroke(); tacX.setLineDash([]);
+    tacX.fillStyle = on ? '#f2a516' : 'rgba(207,227,208,.6)';
+    tacX.beginPath(); tacX.arc(x,y,3.5,0,7); tacX.fill();
+    tacX.font = (on ? 'bold ' : '') + '10px "Share Tech Mono",monospace';
+    tacX.fillText(o.code, x, y+38);
+    if(on){
+      tacX.font = '8.5px "Share Tech Mono",monospace';
+      tacX.fillStyle = 'rgba(242,165,22,.85)';
+      tacX.fillText('SELEZIONATA', x, y+50);
+    }
+  }
+  tacX.fillStyle = 'rgba(127,216,255,.9)';
+  tacX.fillRect(cx-2,cy-2,4,4);
+}
+
+function tacClick(ev){
+  const r = tacCv.getBoundingClientRect();
+  const t = ev.touches ? ev.touches[0] : ev;
+  const px = t.clientX - r.left, py = t.clientY - r.top;
+  for(const h of tacHit)
+    if(Math.hypot(px-h.x, py-h.y) < 34){ selectAO(h.k); AU.init(); AU.beep(880,.08,.05); return; }
+}
+
+/* --- sequenza di avvio --- */
+const BOOTLINES = [
+  'AVVIO NUCLEO C4ISR ....................... OK',
+  'AUTENTICAZIONE OPERATORE ................. CONCESSA',
+  'COLLEGAMENTO RADAR DI SCOPERTA ........... OK',
+  'INTERROGATORE IFF MODO 4 ................. CHIAVI CARICATE',
+  'DATALINK TATTICO ......................... AGGANCIATO',
+  'INVENTARIO FIM-92 ........................ 23 COMPLESSI',
+  'COPERTURA A LUNGO RAGGIO ................. NON DISPONIBILE',
+  'CARICAMENTO QUADRO TATTICO ............... OK',
+  '',
+  'CONSOLE PRONTA — SELEZIONARE L\'AREA DI OPERAZIONI'
+];
+function runBoot(){
+  const box = document.getElementById('bootlog');
+  const bar = document.querySelector('#bootbar i');
+  const win = document.getElementById('boot');
+  if(!box) return;
+  box.textContent = ''; win.classList.remove('done'); win.style.display = 'flex';
+  let i = 0;
+  const step = ()=>{
+    if(i < BOOTLINES.length){
+      box.textContent += BOOTLINES[i] + '\n';
+      bar.style.width = ((i+1)/BOOTLINES.length*100) + '%';
+      if(BOOTLINES[i]) AU.beep(i === BOOTLINES.length-1 ? 900 : 1500, .03, .02);
+      i++;
+      setTimeout(step, i === BOOTLINES.length ? 700 : 150 + Math.random()*110);
+    } else {
+      win.classList.add('done');
+      setTimeout(()=>{ win.style.display = 'none'; }, 800);
+    }
+  };
+  step();
+}
+
+function initConsole(){
+  tacCv = document.getElementById('tacCanvas');
+  tacX  = tacCv.getContext('2d');
+  tacCv.addEventListener('click', tacClick);
+  tacCv.addEventListener('touchstart', e=>{ e.preventDefault(); tacClick(e); }, {passive:false});
+  selectAO('ridge');
+  conClock();
+  for(let i=0;i<5;i++) conMsg();
+  runBoot(); booted = true;
+}
+
 /* =========================================================================
    VETRINA DELLA HOME — la scena resta viva dietro il fascicolo: telecamera
    cinematica attorno alla piazzola e passaggi di caccia in quota.
@@ -1520,6 +1762,12 @@ function stopAttract(){
 }
 function updateAttract(dt){
   demo.t += dt;
+  // la console resta viva: orologio, messaggi e quadro tattico
+  conT += dt;
+  if(conT > .5){ conT = 0; conClock(); }
+  msgT -= dt;
+  if(msgT <= 0){ msgT = 4 + Math.random()*5; conMsg(); }
+  drawTac(dt);
   const a = demo.t*.055, r = 52 + Math.sin(demo.t*.09)*11;
   camera.position.set(Math.cos(a)*r, 9 + Math.sin(demo.t*.13)*4.5, Math.sin(a)*r);
   camera.lookAt(new V3(Math.cos(a+2.4)*14, 15 + Math.sin(demo.t*.21)*13, Math.sin(a+2.4)*14));
@@ -1608,6 +1856,12 @@ function goHome(){
   camera.position.copy(PLAYER);
   camera.rotation.set(pitch, yaw, 0);
   document.getElementById('menu').style.display = 'block';
+  const bx = document.getElementById('msgs');
+  if(bx){
+    const el = document.createElement('div');
+    el.innerHTML = '<span class="a">POSTAZIONE RIENTRATA IN CONSOLE — MISSIONE INTERROTTA</span>';
+    bx.insertBefore(el, bx.firstChild);
+  }
   startAttract();
 }
 
