@@ -326,6 +326,132 @@ body.touch .touchkeys{display:grid}
 }
 @media (max-height:460px){ #bootlog{font-size:10.5px;line-height:1.7} }
 
+
+/* ══════════════ IDENTITÀ, CLASSIFICA, PROFILO ══════════════ */
+.ovl{position:fixed;inset:0;z-index:55;display:none;background:rgba(4,7,5,.93);
+  overflow-y:auto;touch-action:pan-y;-webkit-overflow-scrolling:touch;
+  padding:18px;cursor:default}
+.ovl.on{display:block}
+.ovl .box{max-width:860px;margin:0 auto;background:rgba(8,13,10,.96);
+  border:1px solid var(--line);border-top:2px solid var(--amber);padding:20px 22px}
+.ovl h2{font-family:'Oswald',sans-serif;letter-spacing:.24em;font-size:15px;color:#fff;
+  margin-bottom:3px}
+.ovl .sub{font-size:10.5px;letter-spacing:.16em;color:var(--dim);margin-bottom:16px}
+.xbtn{position:absolute;right:20px;top:18px;background:transparent;border:1px solid var(--line);
+  color:var(--data);font-family:'Oswald',sans-serif;letter-spacing:.14em;font-size:12px;
+  padding:7px 14px;cursor:pointer}
+.xbtn:hover{background:var(--data);color:#0d120e}
+
+/* --- accreditamento --- */
+#idscreen .box{max-width:480px;margin-top:6vh;text-align:center}
+#idscreen .crest{width:64px;height:64px;margin-bottom:10px}
+#idscreen .title{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.22em;
+  font-size:32px;color:#fff;line-height:1}
+#idscreen .title em{font-style:normal;color:var(--amber)}
+#idscreen .kicker{font-size:9.5px;letter-spacing:.26em;color:var(--amber);margin-bottom:18px}
+#idscreen label{display:block;text-align:left;font-size:10px;letter-spacing:.2em;
+  color:var(--dim);margin-bottom:6px}
+#nameInput{width:100%;background:rgba(0,0,0,.5);border:1px solid var(--line);
+  color:#fff;font-family:'Share Tech Mono',monospace;font-size:17px;letter-spacing:.14em;
+  padding:12px 14px;outline:none}
+#nameInput:focus{border-color:var(--amber);box-shadow:0 0 0 1px rgba(242,165,22,.3)}
+#nameMsg{min-height:34px;font-size:11px;line-height:1.6;margin-top:8px;text-align:left;color:var(--dim)}
+#nameMsg.err{color:#ff6a60}
+#nameMsg.ok{color:#7fd8ff}
+#nameMsg button{background:transparent;border:1px solid var(--amber);color:var(--amber);
+  font-family:'Share Tech Mono',monospace;font-size:11px;padding:3px 9px;margin-left:6px;cursor:pointer}
+#idscreen .go{width:100%;margin-top:12px;font-family:'Oswald',sans-serif;letter-spacing:.2em;
+  font-size:15px;padding:13px;background:var(--amber);color:#0d120e;border:none;cursor:pointer}
+#idscreen .go:disabled{opacity:.35;cursor:not-allowed}
+#idscreen .note{font-size:9.5px;letter-spacing:.1em;color:rgba(207,227,208,.4);margin-top:14px;line-height:1.7}
+
+/* --- tabelle di classifica --- */
+.tabs{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.tab{font-family:'Share Tech Mono',monospace;font-size:10.5px;letter-spacing:.12em;
+  background:transparent;border:1px solid var(--line);color:var(--dim);padding:6px 11px;cursor:pointer}
+.tab.on{border-color:var(--amber);color:var(--amber);background:rgba(242,165,22,.1)}
+.lbTable{width:100%;border-collapse:collapse;font-size:12px}
+.lbTable th{font-family:'Oswald',sans-serif;font-size:9.5px;letter-spacing:.18em;color:var(--amber);
+  text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);font-weight:400}
+.lbTable td{padding:7px 8px;border-bottom:1px solid rgba(207,227,208,.08);color:var(--data)}
+.lbTable td.num{color:var(--dim);width:46px}
+.lbTable td.sc{color:#fff;font-size:13px}
+.lbTable tr.me td{background:rgba(242,165,22,.12);color:#fff}
+.lbTable tr.top1 td.num{color:#ffd24a}
+.lbTable tr.top2 td.num,.lbTable tr.top3 td.num{color:#cfe3d0}
+.lbTable .who{color:#7fd8ff;cursor:pointer;text-decoration:none;border-bottom:1px dotted rgba(127,216,255,.4)}
+.lbTable .who:hover{color:#fff}
+.lbEmpty{color:var(--dim);font-size:11.5px;padding:22px 0;text-align:center;line-height:1.8}
+#lbFoot{display:flex;justify-content:space-between;gap:12px;margin-top:12px;
+  font-size:9.5px;letter-spacing:.12em;color:rgba(207,227,208,.45)}
+.livedot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#7fd8ff;
+  box-shadow:0 0 7px #7fd8ff;animation:pulse 2s infinite;margin-right:5px}
+
+/* --- profilo --- */
+#profile .box{max-width:560px;margin-top:6vh}
+.pfHead{display:flex;gap:16px;align-items:center;margin-bottom:16px}
+.pfHead .av{width:74px;height:74px;flex:none;border:1px solid var(--line)}
+.pfHead b{font-family:'Oswald',sans-serif;font-size:24px;letter-spacing:.14em;color:#fff;display:block}
+.pfHead span{font-size:10px;letter-spacing:.16em;color:var(--dim)}
+.pfGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.pfGrid div{background:rgba(8,13,10,.98);padding:11px 12px}
+.pfGrid span{display:block;font-size:9px;letter-spacing:.18em;color:var(--dim);margin-bottom:4px}
+.pfGrid b{font-family:'Oswald',sans-serif;font-size:19px;color:#fff;font-weight:400}
+.pfGrid b.up{color:#7fd8ff}.pfGrid b.down{color:#ff6a60}
+
+/* --- cruscotto in partita --- */
+#ops{position:absolute;top:12px;left:50%;transform:translateX(-50%);z-index:12;display:none;
+  background:rgba(10,16,11,.85);border:1px solid var(--line);border-top:2px solid var(--amber);
+  padding:6px 14px;font-size:11px;letter-spacing:.08em;white-space:nowrap;
+  display:none;gap:14px;align-items:center}
+body.playing #ops{display:flex}
+#ops i{font-style:normal;color:var(--dim)}
+#ops b{color:#fff;font-weight:400;margin-left:5px}
+#ops .op{color:#7fd8ff}
+#ops .rec.hot b{color:var(--amber)}
+
+/* --- fine partita, blocco online --- */
+#overNet{margin-top:16px;border:1px solid var(--line);padding:14px 16px;max-width:520px;
+  width:100%;text-align:left;font-size:12px;line-height:1.9}
+#overNet .big{font-family:'Oswald',sans-serif;font-size:34px;color:#fff;letter-spacing:.1em;
+  display:block;line-height:1.1}
+#overNet .rec{color:var(--amber);letter-spacing:.18em;font-family:'Oswald',sans-serif;
+  animation:recglow 1.4s ease-in-out infinite}
+@keyframes recglow{0%,100%{text-shadow:0 0 0 rgba(242,165,22,0)}50%{text-shadow:0 0 22px rgba(242,165,22,.9)}}
+#overNet .k{color:var(--dim)}
+#overNet .v{color:#fff}
+.overBtns{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:18px}
+
+/* --- notifiche --- */
+#toasts{position:fixed;right:14px;bottom:14px;z-index:58;display:flex;flex-direction:column;
+  gap:8px;align-items:flex-end;pointer-events:none;max-width:78vw}
+.toast{background:rgba(8,13,10,.96);border:1px solid var(--line);border-left:3px solid var(--amber);
+  padding:9px 13px;font-size:11px;letter-spacing:.08em;color:var(--data);
+  animation:tin .4s ease-out;box-shadow:0 8px 26px rgba(0,0,0,.7)}
+.toast.good{border-left-color:#7fd8ff}
+.toast.bad{border-left-color:#ff6a60}
+.toast b{color:#fff}
+@keyframes tin{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
+
+/* --- distintivo operatore nella console --- */
+#opBadge{display:flex;align-items:center;gap:9px;margin-left:14px;padding-left:14px;
+  border-left:1px solid var(--line)}
+#opBadge .av{width:30px;height:30px;border:1px solid var(--line);flex:none}
+#opBadge .nm b{font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:.14em;color:#fff;display:block;line-height:1.2}
+#opBadge .nm span{font-size:9px;letter-spacing:.14em;color:var(--dim)}
+#opBadge button{background:transparent;border:1px solid var(--line);color:var(--dim);
+  font-family:'Share Tech Mono',monospace;font-size:9px;padding:4px 7px;cursor:pointer;letter-spacing:.1em}
+#opBadge button:hover{border-color:var(--amber);color:var(--amber)}
+
+@media (max-width:760px){
+  .pfGrid{grid-template-columns:repeat(2,1fr)}
+  .lbTable td.lv,.lbTable th.lv{display:none}
+  #ops{font-size:9.5px;gap:9px;padding:5px 9px;max-width:96vw;overflow:hidden}
+  .ovl{padding:10px}
+  .ovl .box{padding:14px}
+  #idscreen .title{font-size:25px}
+}
+
 /* durante la home la strumentazione di bordo resta spenta */
 body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{display:none}
 
@@ -398,6 +524,15 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
     <div id="bosstrack"><div id="bossfill"></div></div>
   </div>
 
+  <div id="ops">
+    <span class="op">OPERATORE<b id="opsName">—</b></span>
+    <i>PUNTI<b id="opsScore">0</b></i>
+    <i class="rec" id="opsRecWrap">RECORD<b id="opsRec">0</b></i>
+    <i>POS<b id="opsRank">—</b></i>
+    <i>ONDATA<b id="opsLvl">1</b></i>
+    <i>INTEGRITÀ<b id="opsHp">100%</b></i>
+    <i>TEMPO<b id="opsTime">00:00</b></i>
+  </div>
   <div id="feed"></div>
   <div id="alert"></div>
   <div id="banner"></div>
@@ -443,6 +578,13 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
           <b>SCUDO</b>
           <span>C4ISR · CENTRO OPERAZIONI AEREE TATTICHE</span>
         </div>
+      </div>
+      <div id="opBadge">
+        <span class="av" id="badgeAv"></span>
+        <span class="nm"><b id="badgeName">—</b><span id="badgeSub">non accreditato</span></span>
+        <button onclick="Net.openBoard()">CLASSIFICA</button>
+        <button onclick="Net.openProfile()">PROFILO</button>
+        <button onclick="Net.rename()">RINOMINA</button>
       </div>
       <div class="hClass">ESERCITAZIONE — DATI SIMULATI — SCENARIO DI FANTASIA</div>
       <div class="hTime">
@@ -506,6 +648,7 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
       <div class="fBtns">
         <button class="gobtn" onclick="launchMission('easy')">ADDESTRAMENTO<small>IFF automatico · nemici prudenti</small></button>
         <button class="gobtn hot" onclick="launchMission('hard')">OPERATIVO<small>procedura manuale · IFF [Q]</small></button>
+        <button class="gobtn" onclick="Net.openBoard()">CLASSIFICA<small>globale e per periodo</small></button>
       </div>
       <div class="fHint" id="fHint">FRECCE o MOUSE mira · <b>E</b> BCU · <b>C</b> sblocco · <b>SPAZIO</b> fuoco</div>
     </footer>
@@ -529,16 +672,82 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
   <h2 id="overtag">RAPPORTO DI FINE MISSIONE</h2>
   <h1 id="overtitle">POSTAZIONE DISTRUTTA</h1>
   <p id="overdesc"></p>
+  <div id="overNet"></div>
   <div class="stats">
     PUNTEGGIO FINALE <span id="fscore">0</span><br>
     VELIVOLI ABBATTUTI <span id="fkills">0</span><br>
     MISSILI LANCIATI <span id="fshots">0</span> — PRECISIONE <span id="facc">0%</span>
   </div>
-  <div style="margin-top:22px">
-    <button class="btn primary" onclick="resetGame()">NUOVA SESSIONE</button><br>
-    <button class="btn" onclick="goHome()">MENU PRINCIPALE</button>
+  <div class="overBtns">
+    <button class="btn primary" onclick="resetGame()">GIOCA ANCORA</button>
+    <button class="btn" onclick="Net.openBoard()">CLASSIFICA</button>
+    <button class="btn" onclick="Net.share()">CONDIVIDI</button>
+    <button class="btn" onclick="goHome()">CENTRO DI COMANDO</button>
   </div>
 </div>
+
+<!-- ══════════════ ACCREDITAMENTO OPERATORE ══════════════ -->
+<div class="ovl" id="idscreen">
+  <div class="box">
+    <svg class="crest" viewBox="0 0 64 64" aria-hidden="true">
+      <polygon points="32,3 58,17 58,45 32,60 6,45 6,17" fill="none" stroke="#f2a516" stroke-width="1.8"/>
+      <circle cx="32" cy="32" r="15" fill="none" stroke="#cfe3d0" stroke-width=".9" stroke-dasharray="3 4" opacity=".8"/>
+      <path d="M19 45 L44 20" stroke="#cfe3d0" stroke-width="3.2" stroke-linecap="round"/>
+      <path d="M45 19 l-7 1.4 5.6 5.6z" fill="#f2a516"/>
+      <path d="M24 40 l-5.6 -1.4 1.4 5.6z" fill="#cfe3d0" opacity=".75"/>
+    </svg>
+    <div class="kicker">C4ISR · ACCREDITAMENTO OPERATORE</div>
+    <div class="title">OPERAZIONE <em>SCUDO</em></div>
+    <div class="sub" style="margin-top:14px">Il nominativo identifica i tuoi punteggi nella classifica globale</div>
+    <label for="nameInput">NOMINATIVO OPERATORE</label>
+    <input id="nameInput" maxlength="20" autocomplete="off" autocapitalize="off"
+           spellcheck="false" placeholder="es. Falco_07">
+    <div id="nameMsg">Da 3 a 20 caratteri: lettere, numeri e underscore.</div>
+    <button class="go" id="nameGo">GIOCA</button>
+    <div class="note" id="netNote"></div>
+  </div>
+</div>
+
+<!-- ══════════════ CLASSIFICA GLOBALE ══════════════ -->
+<div class="ovl" id="board">
+  <div class="box" style="position:relative">
+    <button class="xbtn" onclick="Net.closeBoard()">CHIUDI</button>
+    <h2>CLASSIFICA GLOBALE</h2>
+    <div class="sub" id="lbMode">—</div>
+    <div class="tabs" id="lbPeriod">
+      <button class="tab on" data-p="all">STORICA</button>
+      <button class="tab" data-p="day">GIORNO</button>
+      <button class="tab" data-p="week">SETTIMANA</button>
+      <button class="tab" data-p="month">MESE</button>
+    </div>
+    <div class="tabs" id="lbBoard">
+      <button class="tab on" data-b="best">PUNTEGGIO</button>
+      <button class="tab" data-b="levels">LIVELLI COMPLETATI</button>
+      <button class="tab" data-b="time">MIGLIOR TEMPO</button>
+      <button class="tab" data-b="games">PIÙ PARTITE</button>
+    </div>
+    <div class="tabs" id="lbLimit">
+      <button class="tab on" data-l="10">TOP 10</button>
+      <button class="tab" data-l="50">TOP 50</button>
+      <button class="tab" data-l="100">TOP 100</button>
+    </div>
+    <div id="lbBody"></div>
+    <div id="lbFoot">
+      <span><span class="livedot"></span><span id="lbLive">aggiornamento automatico</span></span>
+      <span id="lbStats"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SCHEDA GIOCATORE ══════════════ -->
+<div class="ovl" id="profile">
+  <div class="box" style="position:relative">
+    <button class="xbtn" onclick="Net.closeProfile()">CHIUDI</button>
+    <div id="pfBody"></div>
+  </div>
+</div>
+
+<div id="toasts"></div>
 
 <div id="loading">CARICAMENTO SISTEMI D'ARMA…</div>
 
@@ -1186,6 +1395,7 @@ function initEngine(){
   bindInput();
   document.getElementById('loading').style.display = 'none';
   initConsole();
+  Net.init();
   startAttract();
   animate();
 }
@@ -1213,6 +1423,7 @@ function resize(){
 const keys = {};
 function bindInput(){
   addEventListener('keydown', e=>{
+    if(e.target && e.target.tagName === 'INPUT') return;   // si sta digitando il nominativo
     AU.init();
     keys[e.code] = true;
     const ch = (e.key||'').toLowerCase();
@@ -1545,6 +1756,474 @@ function loadScenario(name){
 }
 
 
+
+/* =========================================================================
+   IDENTITÀ, PUNTEGGI E CLASSIFICA GLOBALE
+   -------------------------------------------------------------------------
+   Per attivare la classifica condivisa basta compilare le due righe qui
+   sotto con i dati del progetto Supabase (Impostazioni → API) e caricare
+   supabase_schema.sql nell'SQL Editor. Finché restano vuote il gioco usa un
+   archivio locale del browser: tutto funziona, ma i punteggi restano tuoi.
+
+   La chiave "anon" è pubblica per definizione: non protegge nulla. La
+   validazione dei punteggi vive nelle funzioni SECURITY DEFINER del database,
+   che sono l'unica via di scrittura consentita.
+   ========================================================================= */
+const BACKEND = {
+  url: 'https://cmdibydnwcbntteqodjd.supabase.co',            // es. 'https://abcdefgh.supabase.co'
+  key: 'sb_publishable_G2y-xhKUT4omAZM9WP2uYQ_cJdGPkqf'             // chiave pubblica: sb_publishable_... (o la vecchia anon eyJ...)
+};
+const GAME_VER = '1.4.0';
+
+const Net = {
+  online:false, uuid:null, name:null,
+  me:{ best:0, games:0, rank:null, average:0, level:0 },
+  lb:{ period:'all', board:'best', limit:10, timer:null, rows:[] },
+  lastRank:null, t0:0, pending:null,
+
+  /* ───────────────── identità persistente ───────────────── */
+  init(){
+    this.online = !!(BACKEND.url && BACKEND.key);
+    let id = null;
+    try{ id = JSON.parse(localStorage.getItem('scudo.identity') || 'null'); }catch(e){}
+    if(!id || !id.uuid){
+      id = { uuid: (crypto.randomUUID ? crypto.randomUUID() : 'x'+Date.now()+Math.random().toString(16).slice(2)),
+             name: null };
+      this.save(id);
+    }
+    this.uuid = id.uuid; this.name = id.name;
+
+    document.getElementById('netNote').innerHTML = this.online
+      ? 'Classifica globale attiva. Il nominativo è univoco fra tutti i giocatori.'
+      : 'Nessun server configurato: i punteggi restano su questo dispositivo.<br>'+
+        'Per la classifica condivisa vedi <b>LEGGIMI-online.md</b>.';
+
+    this.bindUI();
+    if(this.name){ this.refreshMe(); this.paintBadge(); }
+    else this.askName();
+  },
+  save(id){ try{ localStorage.setItem('scudo.identity', JSON.stringify(id)); }catch(e){} },
+
+  /* ───────────────── trasporto ───────────────── */
+  async rpc(fn, body){
+    /* Le chiavi nuove (sb_publishable_...) non sono JWT e vanno solo
+       nell'header apikey; quelle vecchie (eyJ...) vogliono anche il Bearer. */
+    const h = { 'Content-Type':'application/json', apikey:BACKEND.key };
+    if(BACKEND.key.startsWith('eyJ')) h.Authorization = 'Bearer ' + BACKEND.key;
+    const r = await fetch(BACKEND.url + '/rest/v1/rpc/' + fn, {
+      method:'POST', headers:h, body: JSON.stringify(body)
+    });
+    if(!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  },
+
+  /* ───────────────── archivio locale di riserva ───────────────── */
+  db(){
+    try{ return JSON.parse(localStorage.getItem('scudo.db') || '{"players":{},"scores":[]}'); }
+    catch(e){ return {players:{}, scores:[]}; }
+  },
+  dbSave(d){ try{ localStorage.setItem('scudo.db', JSON.stringify(d)); }catch(e){} },
+
+  localClaim(name){
+    const d = this.db();
+    const key = name.toLowerCase();
+    const taken = Object.values(d.players).find(p => p.username.toLowerCase() === key && p.uuid !== this.uuid);
+    if(taken) return { ok:false, error:'occupato', suggestion:name.slice(0,16) + Math.floor(100+Math.random()*900),
+                       message:'Nome già assegnato a un altro operatore.' };
+    const prev = d.players[this.uuid] || { uuid:this.uuid, games:0, best_score:0, best_level:0,
+                                           best_time:0, total_score:0, created_at:Date.now() };
+    prev.username = name; prev.last_seen = Date.now();
+    d.players[this.uuid] = prev; this.dbSave(d);
+    return { ok:true, username:name };
+  },
+  localSubmit(p){
+    if(p.duration < 25) return { ok:false, error:'rifiutato', message:'partita troppo breve' };
+    if(p.score > 3000 + p.duration*260) return { ok:false, error:'rifiutato', message:'punteggio implausibile' };
+    const d = this.db();
+    const pl = d.players[this.uuid];
+    if(!pl) return { ok:false, error:'ignoto' };
+    d.scores.push({ uuid:this.uuid, username:pl.username, score:p.score, level:p.level,
+                    duration_s:p.duration, scenario:p.scenario, difficulty:p.difficulty,
+                    version:p.version, created_at:Date.now() });
+    if(d.scores.length > 400) d.scores = d.scores.slice(-400);
+    const record = p.score >= pl.best_score;
+    pl.games++; pl.total_score += p.score;
+    pl.best_score = Math.max(pl.best_score, p.score);
+    pl.best_level = Math.max(pl.best_level, p.level);
+    pl.best_time  = Math.max(pl.best_time,  p.duration);
+    pl.last_seen  = Date.now();
+    this.dbSave(d);
+    const better = Object.values(d.players).filter(x => x.best_score > pl.best_score)
+                         .sort((a,b)=>a.best_score-b.best_score);
+    return { ok:true, best:pl.best_score, record:record, games:pl.games,
+             average:Math.round(pl.total_score/Math.max(pl.games,1)),
+             rank:better.length + 1,
+             above_name: better.length ? better[0].username : null,
+             above_gap:  better.length ? better[0].best_score - pl.best_score : 0 };
+  },
+  localBoard(period, board, limit){
+    const d = this.db();
+    const since = { day:864e5, week:6048e5, month:2592e6, all:Infinity }[period];
+    const cut = Date.now() - since;
+    const agg = {};
+    for(const s of d.scores){
+      if(s.created_at < cut) continue;
+      const a = agg[s.username] || (agg[s.username] = { username:s.username, score:0, level:0,
+                                                        games:0, duration_s:0, last_at:0 });
+      a.score = Math.max(a.score, s.score); a.level = Math.max(a.level, s.level);
+      a.duration_s = Math.max(a.duration_s, s.duration_s);
+      a.games++; a.last_at = Math.max(a.last_at, s.created_at);
+    }
+    const key = r => board === 'time' ? r.duration_s : board === 'games' ? r.games
+                   : board === 'levels' ? r.level*1e6 + r.score : r.score;
+    return Object.values(agg).sort((a,b)=>key(b)-key(a)).slice(0, limit)
+                 .map((r,i)=>({ ...r, rank:i+1 }));
+  },
+  localProfile(name){
+    const d = this.db();
+    const pl = Object.values(d.players).find(x => x.username.toLowerCase() === name.toLowerCase());
+    if(!pl) return { ok:false };
+    const mine = d.scores.filter(s => s.uuid === pl.uuid).sort((a,b)=>b.created_at-a.created_at);
+    const avg = a => a.length ? a.reduce((n,s)=>n+s.score,0)/a.length : null;
+    const r5 = avg(mine.slice(0,5)), p5 = avg(mine.slice(5,10));
+    return { ok:true, username:pl.username, best_score:pl.best_score, best_level:pl.best_level,
+             best_time:pl.best_time, games:pl.games,
+             average:Math.round(pl.total_score/Math.max(pl.games,1)),
+             rank:Object.values(d.players).filter(x=>x.best_score>pl.best_score).length + 1,
+             created_at:pl.created_at, last_seen:pl.last_seen,
+             trend: (p5 && p5 > 0) ? Math.round((r5-p5)/p5*1000)/10 : null,
+             last_game: mine[0] ? { score:mine[0].score, level:mine[0].level,
+                                    duration_s:mine[0].duration_s, at:mine[0].created_at,
+                                    scenario:mine[0].scenario, difficulty:mine[0].difficulty } : null };
+  },
+
+  /* ───────────────── operazioni ad alto livello ───────────────── */
+  async claim(name){
+    if(this.online){
+      try{ return await this.rpc('claim_name', { p_uuid:this.uuid, p_name:name }); }
+      catch(e){ this.toast('Server non raggiungibile: passo all\'archivio locale','bad');
+                this.online = false; }
+    }
+    return this.localClaim(name);
+  },
+  async submit(p){
+    if(this.online){
+      try{ return await this.rpc('submit_score', {
+        p_uuid:this.uuid, p_name:this.name, p_score:p.score, p_level:p.level,
+        p_duration:p.duration, p_scenario:p.scenario, p_difficulty:p.difficulty,
+        p_version:p.version }); }
+      catch(e){ return { ok:false, error:'rete', message:'punteggio non inviato: server non raggiungibile' }; }
+    }
+    return this.localSubmit(p);
+  },
+  async board(period, board, limit){
+    if(this.online){
+      try{ return await this.rpc('leaderboard', { p_period:period, p_board:board, p_limit:limit }); }
+      catch(e){ return null; }
+    }
+    return this.localBoard(period, board, limit);
+  },
+  async profile(name){
+    if(this.online){
+      try{ return await this.rpc('player_profile', { p_name:name }); }catch(e){ return {ok:false}; }
+    }
+    return this.localProfile(name);
+  },
+  async refreshMe(){
+    if(!this.name) return;
+    const p = await this.profile(this.name);
+    if(p && p.ok){
+      const wasRank = this.lastRank;
+      this.me = { best:p.best_score, games:p.games, rank:p.rank, average:p.average, level:p.best_level };
+      if(wasRank !== null && p.rank > wasRank)
+        this.toast('Sei stato superato: ora sei <b>#' + p.rank + '</b> in classifica','bad');
+      this.lastRank = p.rank;
+      this.paintBadge();
+    }
+  },
+
+  /* ───────────────── accreditamento ───────────────── */
+  askName(){
+    const box = document.getElementById('idscreen');
+    box.classList.add('on');
+    const inp = document.getElementById('nameInput');
+    inp.value = this.name || '';
+    setTimeout(()=>inp.focus(), 150);
+    this.validate();
+  },
+  rename(){ this.askName(); },
+  bindUI(){
+    const inp = document.getElementById('nameInput');
+    const go  = document.getElementById('nameGo');
+    inp.addEventListener('input', ()=>this.validate());
+    inp.addEventListener('keydown', e=>{ if(e.key === 'Enter') this.confirmName(); });
+    go.addEventListener('click', ()=>this.confirmName());
+    document.querySelectorAll('#lbPeriod .tab').forEach(b=>b.addEventListener('click', ()=>{
+      document.querySelectorAll('#lbPeriod .tab').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on'); this.lb.period = b.dataset.p; this.paintBoard();
+    }));
+    document.querySelectorAll('#lbBoard .tab').forEach(b=>b.addEventListener('click', ()=>{
+      document.querySelectorAll('#lbBoard .tab').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on'); this.lb.board = b.dataset.b; this.paintBoard();
+    }));
+    document.querySelectorAll('#lbLimit .tab').forEach(b=>b.addEventListener('click', ()=>{
+      document.querySelectorAll('#lbLimit .tab').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on'); this.lb.limit = +b.dataset.l; this.paintBoard();
+    }));
+  },
+  checkName(v){
+    if(v !== v.trim())            return 'Niente spazi all\'inizio o alla fine.';
+    if(v.length < 3)              return 'Almeno 3 caratteri.';
+    if(v.length > 20)             return 'Massimo 20 caratteri.';
+    if(!/^[A-Za-z0-9_]+$/.test(v))return 'Solo lettere, numeri e underscore.';
+    return null;
+  },
+  validate(){
+    const v = document.getElementById('nameInput').value;
+    const msg = document.getElementById('nameMsg');
+    const go = document.getElementById('nameGo');
+    const err = this.checkName(v);
+    msg.className = err && v.length ? 'err' : '';
+    msg.textContent = v.length === 0 ? 'Da 3 a 20 caratteri: lettere, numeri e underscore.'
+                    : (err || 'Nominativo valido.');
+    if(!err && v.length) msg.className = 'ok';
+    go.disabled = !!err;
+    return !err;
+  },
+  async confirmName(){
+    if(!this.validate()) return;
+    const v = document.getElementById('nameInput').value.trim();
+    const msg = document.getElementById('nameMsg');
+    const go = document.getElementById('nameGo');
+    go.disabled = true; msg.className = ''; msg.textContent = 'Verifica del nominativo…';
+    const r = await this.claim(v);
+    if(r && r.ok){
+      this.name = r.username; this.save({ uuid:this.uuid, name:this.name });
+      document.getElementById('idscreen').classList.remove('on');
+      this.paintBadge(); this.refreshMe();
+      this.toast('Operatore <b>' + this.name + '</b> accreditato','good');
+      if(typeof AU !== 'undefined'){ AU.init(); AU.beep(900,.09,.05); }
+    } else {
+      msg.className = 'err';
+      if(r && r.suggestion){
+        msg.innerHTML = (r.message || 'Nome non disponibile.') +
+          ' Proposta: <b>' + r.suggestion + '</b>' +
+          '<button onclick="Net.useSuggestion(\'' + r.suggestion + '\')">USA</button>';
+      } else msg.textContent = (r && r.message) || 'Nominativo non accettato.';
+      go.disabled = false;
+    }
+  },
+  useSuggestion(v){ document.getElementById('nameInput').value = v; this.validate(); this.confirmName(); },
+
+  /* ───────────────── avatar deterministico ───────────────── */
+  avatar(seed, size){
+    let h = 0;
+    for(let i=0;i<seed.length;i++) h = (h*31 + seed.charCodeAt(i)) >>> 0;
+    const hue = h % 360;
+    const c1 = 'hsl(' + hue + ',55%,58%)', c2 = 'hsl(' + ((hue+40)%360) + ',45%,32%)';
+    let cells = '';
+    for(let y=0;y<5;y++) for(let x=0;x<3;x++){
+      const bit = (h >> (y*3 + x)) & 1;
+      if(!bit) continue;
+      cells += '<rect x="'+(x*20)+'" y="'+(y*20)+'" width="20" height="20" fill="'+c1+'"/>';
+      if(x < 2) cells += '<rect x="'+((4-x)*20)+'" y="'+(y*20)+'" width="20" height="20" fill="'+c1+'"/>';
+    }
+    return '<svg viewBox="0 0 100 100" width="'+size+'" height="'+size+'" '+
+           'xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="'+c2+'"/>'+
+           cells + '</svg>';
+  },
+  paintBadge(){
+    const av = document.getElementById('badgeAv');
+    if(!av) return;
+    av.innerHTML = this.name ? this.avatar(this.name, 30) : '';
+    document.getElementById('badgeName').textContent = this.name || '—';
+    document.getElementById('badgeSub').textContent = this.name
+      ? ('record ' + this.me.best + (this.me.rank ? ' · #' + this.me.rank : '') +
+         ' · ' + this.me.games + ' partite')
+      : 'non accreditato';
+  },
+
+  /* ───────────────── classifica ───────────────── */
+  openBoard(){
+    document.getElementById('board').classList.add('on');
+    this.paintBoard();
+    clearInterval(this.lb.timer);
+    this.lb.timer = setInterval(()=>this.paintBoard(true), this.online ? 12000 : 30000);
+  },
+  closeBoard(){
+    document.getElementById('board').classList.remove('on');
+    clearInterval(this.lb.timer); this.lb.timer = null;
+  },
+  async paintBoard(silent){
+    const body = document.getElementById('lbBody');
+    const names = { all:'storica', day:'ultime 24 ore', week:'ultimi 7 giorni', month:'ultimi 30 giorni' };
+    const bn = { best:'miglior punteggio', time:'partita più lunga', games:'più partite giocate',
+                 levels:'più livelli completati' };
+    document.getElementById('lbMode').textContent =
+      (this.online ? 'CLASSIFICA CONDIVISA' : 'ARCHIVIO LOCALE — non condiviso') +
+      ' · ' + names[this.lb.period] + ' · ' + bn[this.lb.board];
+    if(!silent) body.innerHTML = '<div class="lbEmpty">Interrogazione in corso…</div>';
+
+    const rows = await this.board(this.lb.period, this.lb.board, this.lb.limit);
+    if(!rows){ body.innerHTML = '<div class="lbEmpty">Classifica non raggiungibile.</div>'; return; }
+    if(!rows.length){
+      body.innerHTML = '<div class="lbEmpty">Nessun punteggio in questo periodo.<br>'+
+                       'La prima partita che concludi apre la classifica.</div>';
+      document.getElementById('lbStats').textContent = '';
+      return;
+    }
+    const fmtT = s => Math.floor(s/60) + ':' + String(s%60).padStart(2,'0');
+    let h = '<table class="lbTable"><thead><tr><th>POS</th><th>OPERATORE</th>'+
+            '<th>MIGLIOR PUNTEGGIO</th><th class="lv">ONDATA</th><th>PARTITE</th><th class="lv">TEMPO</th>'+
+            '</tr></thead><tbody>';
+    for(const r of rows){
+      const me = this.name && r.username.toLowerCase() === this.name.toLowerCase();
+      h += '<tr class="' + (me ? 'me ' : '') + 'top' + r.rank + '">' +
+           '<td class="num">' + String(r.rank).padStart(2,'0') + '</td>' +
+           '<td><a class="who" onclick="Net.openProfile(\'' + r.username.replace(/'/g,"") + '\')">' +
+             r.username + '</a></td>' +
+           '<td class="sc">' + r.score.toLocaleString('it-IT') + '</td>' +
+           '<td class="lv">' + r.level + '</td>' +
+           '<td>' + r.games + '</td>' +
+           '<td class="lv">' + fmtT(r.duration_s || 0) + '</td></tr>';
+    }
+    body.innerHTML = h + '</tbody></table>';
+    this.lb.rows = rows;
+
+    const mine = rows.find(r => this.name && r.username.toLowerCase() === this.name.toLowerCase());
+    document.getElementById('lbStats').textContent = mine
+      ? ('la tua posizione: #' + mine.rank + ' su ' + rows.length + ' in elenco')
+      : (this.name ? 'non sei ancora in questa classifica' : '');
+    document.getElementById('lbLive').textContent = this.online
+      ? 'aggiornamento automatico ogni 12 secondi' : 'archivio locale';
+  },
+
+  /* ───────────────── scheda giocatore ───────────────── */
+  async openProfile(name){
+    const who = name || this.name;
+    if(!who) return;
+    const el = document.getElementById('profile');
+    const body = document.getElementById('pfBody');
+    el.classList.add('on');
+    body.innerHTML = '<div class="lbEmpty">Caricamento scheda…</div>';
+    const p = await this.profile(who);
+    if(!p || !p.ok){ body.innerHTML = '<div class="lbEmpty">Nessuna scheda per questo operatore.</div>'; return; }
+    const fmtT = s => Math.floor(s/60) + ':' + String(s%60).padStart(2,'0');
+    const d = p.last_game ? new Date(p.last_game.at) : null;
+    const tr = p.trend;
+    body.innerHTML =
+      '<div class="pfHead"><span class="av">' + this.avatar(p.username, 74) + '</span>' +
+      '<div><b>' + p.username + '</b><span>POSIZIONE GLOBALE #' + p.rank +
+      ' · ' + p.games + ' PARTITE</span></div></div>' +
+      '<div class="pfGrid">' +
+        '<div><span>RECORD PERSONALE</span><b>' + p.best_score.toLocaleString('it-IT') + '</b></div>' +
+        '<div><span>MEDIA PUNTEGGI</span><b>' + Number(p.average).toLocaleString('it-IT') + '</b></div>' +
+        '<div><span>ONDATA MASSIMA</span><b>' + p.best_level + '</b></div>' +
+        '<div><span>PARTITA PIÙ LUNGA</span><b>' + fmtT(p.best_time || 0) + '</b></div>' +
+        '<div><span>MIGLIORAMENTO</span><b class="' + (tr > 0 ? 'up' : tr < 0 ? 'down' : '') + '">' +
+          (tr === null || tr === undefined ? '—' : (tr > 0 ? '+' : '') + tr + '%') + '</b></div>' +
+        '<div><span>ULTIMA PARTITA</span><b style="font-size:14px">' +
+          (d ? d.toLocaleDateString('it-IT') + ' ' + d.toLocaleTimeString('it-IT').slice(0,5) : '—') +
+        '</b></div>' +
+      '</div>' +
+      (p.last_game ? '<div style="margin-top:12px;font-size:11px;color:var(--dim);letter-spacing:.1em">' +
+        'ULTIMO ESITO: ' + p.last_game.score.toLocaleString('it-IT') + ' punti · ondata ' +
+        p.last_game.level + ' · ' + fmtT(p.last_game.duration_s) + ' · ' +
+        (p.last_game.scenario === 'airbase' ? 'BASE DELTA' : 'CRESTA KILO-7') +
+        ' · ' + (p.last_game.difficulty === 'hard' ? 'OPERATIVO' : 'ADDESTRAMENTO') + '</div>' : '') +
+      (tr !== null && tr !== undefined
+        ? '<div style="margin-top:8px;font-size:10.5px;color:rgba(207,227,208,.42);line-height:1.7">' +
+          'Il miglioramento confronta la media delle ultime cinque partite con quella delle cinque precedenti.</div>'
+        : '');
+  },
+  closeProfile(){ document.getElementById('profile').classList.remove('on'); },
+
+  /* ───────────────── ciclo di partita ───────────────── */
+  gameStart(){
+    this.t0 = Date.now(); this.pending = null;
+    document.body.classList.add('playing');
+    document.getElementById('opsName').textContent = this.name || '—';
+    document.getElementById('opsRec').textContent  = this.me.best;
+    document.getElementById('opsRank').textContent = this.me.rank ? '#' + this.me.rank : '—';
+  },
+  elapsed(){ return Math.max(0, Math.round((Date.now() - this.t0)/1000)); },
+  tick(){
+    if(!S) return;
+    const t = this.elapsed();
+    document.getElementById('opsScore').textContent = S.score;
+    document.getElementById('opsLvl').textContent   = Math.max(1, S.wave + 1);
+    document.getElementById('opsHp').textContent    = Math.round(S.hp) + '%';
+    document.getElementById('opsTime').textContent  =
+      Math.floor(t/60) + ':' + String(t%60).padStart(2,'0');
+    const w = document.getElementById('opsRecWrap');
+    if(S.score > this.me.best) w.classList.add('hot'); else w.classList.remove('hot');
+  },
+  async gameEnd(win){
+    const dur = this.elapsed();
+    const payload = { score:S.score, level:Math.max(1, Math.min(4, S.wave + 1)),
+                      duration:dur, scenario:S.scen, difficulty:S.level, version:GAME_VER };
+    const box = document.getElementById('overNet');
+    box.innerHTML = '<span class="k">Invio del punteggio in corso…</span>';
+
+    if(dur < 25){
+      box.innerHTML = '<span class="big">' + S.score.toLocaleString('it-IT') + '</span>' +
+        '<span class="k">Partita troppo breve per essere registrata in classifica.</span>';
+      return;
+    }
+    const r = await this.submit(payload);
+    if(!r || !r.ok){
+      box.innerHTML = '<span class="big">' + S.score.toLocaleString('it-IT') + '</span>' +
+        '<span class="k">Punteggio non registrato: ' +
+        ((r && r.message) || 'errore di rete') + '</span>';
+      return;
+    }
+    this.me = { best:r.best, games:r.games, rank:r.rank, average:r.average, level:payload.level };
+    this.lastRank = r.rank;
+    this.paintBadge();
+    this.pending = { score:S.score, rank:r.rank, level:payload.level };
+
+    box.innerHTML =
+      '<span class="big">' + S.score.toLocaleString('it-IT') + '</span>' +
+      (r.record ? '<span class="rec">NUOVO RECORD PERSONALE</span><br>' : '') +
+      '<span class="k">POSIZIONE GLOBALE</span> <span class="v">#' + r.rank + '</span><br>' +
+      '<span class="k">RECORD PERSONALE</span> <span class="v">' + r.best.toLocaleString('it-IT') + '</span><br>' +
+      '<span class="k">MEDIA SU ' + r.games + ' PARTITE</span> <span class="v">' +
+        Number(r.average).toLocaleString('it-IT') + '</span><br>' +
+      (r.above_name
+        ? '<span class="k">DA SUPERARE</span> <span class="v">' + r.above_name +
+          '</span> <span class="k">a</span> <span class="v">+' +
+          Number(r.above_gap).toLocaleString('it-IT') + '</span>'
+        : '<span class="k">SEI IN TESTA ALLA CLASSIFICA</span>');
+
+    if(r.record) this.toast('Nuovo record personale: <b>' + S.score.toLocaleString('it-IT') + '</b>','good');
+    if(r.rank <= 10) this.toast('Sei entrato nella <b>TOP 10</b> — posizione #' + r.rank,'good');
+  },
+
+  share(){
+    const p = this.pending || { score:(S ? S.score : 0), rank:this.me.rank, level:this.me.level };
+    const txt = 'OPERAZIONE SCUDO — ' + (this.name || 'operatore') + ': ' +
+      p.score.toLocaleString('it-IT') + ' punti, ondata ' + p.level +
+      (p.rank ? ', posizione #' + p.rank + ' in classifica' : '') + '.';
+    if(navigator.share) navigator.share({ title:'Operazione Scudo', text:txt, url:location.href })
+                                .catch(()=>{});
+    else if(navigator.clipboard) navigator.clipboard.writeText(txt + ' ' + location.href)
+      .then(()=>this.toast('Risultato copiato negli appunti','good'))
+      .catch(()=>this.toast('Copia non riuscita','bad'));
+    else this.toast('Condivisione non disponibile su questo browser','bad');
+  },
+
+  toast(html, kind){
+    const box = document.getElementById('toasts');
+    const el = document.createElement('div');
+    el.className = 'toast ' + (kind || '');
+    el.innerHTML = html;
+    box.appendChild(el);
+    setTimeout(()=>{ el.style.transition='opacity .5s'; el.style.opacity=0;
+                     setTimeout(()=>el.remove(), 520); }, 4200);
+    while(box.children.length > 4) box.removeChild(box.firstChild);
+  }
+};
+
 /* =========================================================================
    CONSOLE C4ISR — la schermata d'ingresso è un posto di comando: orologio
    zulu, quadro tattico interattivo, traffico messaggi e avvio del sistema.
@@ -1814,6 +2493,7 @@ function updateAttract(dt){
    ========================================================================= */
 function startGame(level, scen){
   AU.init();
+  if(!Net.name){ Net.askName(); return; }     // prima l'accreditamento
   stopAttract();
   if(scen && scen !== SCN) loadScenario(scen);
   cfg = DIFF[level];
@@ -1828,6 +2508,7 @@ function startGame(level, scen){
     scen:SCN, depTotal:0, depSafe:0, depLost:0, depQueue:0, depTimer:0,
     iff:'', iffKnown:false
   };
+  Net.gameStart();
   document.getElementById('depline').style.display = SCN === 'airbase' ? 'block' : 'none';
   document.getElementById('iffline').style.display = SCN === 'airbase' ? 'block' : 'none';
   document.body.classList.toggle('base', SCN === 'airbase');
@@ -1872,6 +2553,8 @@ function goHome(){
   S = null;
   camera.position.copy(PLAYER);
   camera.rotation.set(pitch, yaw, 0);
+  document.body.classList.remove('playing');
+  Net.refreshMe();
   document.getElementById('menu').style.display = 'block';
   const bx = document.getElementById('msgs');
   if(bx){
@@ -1918,6 +2601,7 @@ function endGame(win, reason){
   document.getElementById('fshots').textContent = S.shots;
   document.getElementById('facc').textContent = (S.shots ? Math.round(S.hits/S.shots*100) : 0)+'%';
   document.getElementById('over').style.display = 'flex';
+  Net.gameEnd(win);
 }
 
 /* ---------- messaggi ---------- */
@@ -2918,6 +3602,7 @@ function animate(){
     );
     S.recoil = Math.max(0, S.recoil - dt*3.2);
     hud();
+    Net.tick();
   } else if(demo.on){
     updateAttract(dt);
     // durante la console si disegna a cadenza dimezzata: la finestra del feed
