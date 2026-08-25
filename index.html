@@ -131,6 +131,12 @@ body.touch #touch{display:block}
 #tBcu{right:122px;bottom:100px;width:64px;height:64px}
 #tZoom{right:32px;bottom:124px;width:56px;height:56px}
 #tCrouch{left:126px;bottom:16px;width:70px;height:70px}
+#tIff{right:196px;bottom:82px;width:60px;height:60px;display:none}
+body.base #tIff{display:flex}
+body.base #tIff{right:calc(196px + env(safe-area-inset-right))}
+#iffval.amico{color:#7fd8ff}
+#iffval.ostile{color:#ff3b30}
+#iffval.ignoto{color:#f2a516}
 #tPause{top:12px;left:50%;transform:translateX(-50%);width:52px;height:38px;border-radius:3px;font-size:11px}
 
 #procmini{display:none;font-size:11px;color:var(--amber);letter-spacing:.06em;margin-top:3px}
@@ -254,6 +260,11 @@ body.touch .touchkeys{display:grid}
 .cta .btn small{display:block;font-family:'Share Tech Mono',monospace;font-size:10px;
   letter-spacing:.08em;opacity:.62;margin-top:4px;text-transform:none}
 
+.misshead{font-family:'Oswald',sans-serif;letter-spacing:.2em;font-size:14px;color:#fff;
+  margin:0 0 12px 0;padding-bottom:8px;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:baseline}
+.misshead span{font-size:10px;color:var(--amber);letter-spacing:.24em}
+.misshead.second{margin-top:30px}
+
 #dossier .keys{margin-top:0;margin-bottom:18px;font-size:11.5px;gap:5px 16px;justify-content:start}
 #dossier .keys b{color:var(--amber)}
 .homefoot{font-size:10px;color:rgba(207,227,208,.35);letter-spacing:.1em;
@@ -289,10 +300,14 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
 <div id="hud">
   <div id="mission" class="panel">
     <span class="tag">MISSIONE</span>
-    <span class="k">SETTORE</span> <span class="v">KILO-7</span><br>
+    <span class="k">SETTORE</span> <span class="v" id="sectorval">KILO-7</span><br>
     <span class="k">ONDATA</span> <span class="v" id="waveval">1 / 4</span><br>
     <span class="k">VELIVOLI</span> <span class="v" id="airval">0</span><br>
     <span class="k">INTEGRITÀ</span> <span class="v" id="hpval">100%</span>
+    <div id="depline" style="display:none">
+      <span class="k">IN SALVO</span> <span class="v" id="depval">0 / 5</span>
+      &nbsp;<span class="k">PERSI</span> <span class="v" id="lostval">0</span>
+    </div>
   </div>
 
   <div id="proc" class="panel">
@@ -316,6 +331,7 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
     <span class="k">TUBO</span> <span class="v" id="tubeval">PRONTO</span>
     &nbsp;<span class="k">RISERVA</span> <span class="v" id="ammoval">0</span><br>
     <span class="k">BCU</span> <span class="v" id="bcuval">ASSENTE</span>
+    <div id="iffline" style="display:none"><span class="k">IFF</span> <span class="v" id="iffval">—</span></div>
     <div id="coolbar"><div id="coolfill"></div></div>
     <div id="reloadbar"><div id="reloadfill"></div></div>
     <div id="procmini">FASE 1 · AVVISTAMENTO</div>
@@ -336,6 +352,7 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
   <button class="tbtn" id="tBcu">BCU<small>argon</small></button>
   <button class="tbtn" id="tUncage">SBLOCCO<small>sensore</small></button>
   <button class="tbtn" id="tZoom">ZOOM</button>
+  <button class="tbtn" id="tIff">IFF<small>interroga</small></button>
   <button class="tbtn" id="tCrouch">RIPARO<small>tieni</small></button>
   <button class="tbtn" id="tFire">FUOCO</button>
 </div>
@@ -406,15 +423,34 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
            e l'altra, con i cannoni che ti cercano.</i></div>
     </div>
 
+    <div class="misshead"><span>MISSIONE 1</span> CRESTA KILO-7</div>
     <div class="cta">
-      <button class="btn primary" onclick="startGame('easy')">ADDESTRAMENTO<small>procedura assistita · nemici prudenti</small></button>
-      <button class="btn" onclick="startGame('hard')">OPERATIVO<small>procedura manuale · argon scarso · nemici reattivi</small></button>
+      <button class="btn primary" onclick="startGame('easy','ridge')">ADDESTRAMENTO<small>IFF automatico · nemici prudenti · argon abbondante</small></button>
+      <button class="btn" onclick="startGame('hard','ridge')">OPERATIVO<small>procedura manuale · argon scarso · nemici reattivi</small></button>
+    </div>
+
+    <div class="misshead second"><span>MISSIONE 2</span> BASE AEREA DELTA</div>
+    <div class="story">
+      <p><b>BASE AEREA DELTA — ORE 05:40.</b> Le rampe sono cariche: cinque velivoli da trasporto
+         devono portare fuori i feriti e l'ultimo reparto rimasto sul confine.</p>
+      <p>Un aereo in decollo è la preda più facile del mondo. Inchiodato alla pista, lento, senza
+         manovra: dodici secondi in cui non può fare assolutamente nulla per difendersi. I caccia
+         nemici lo sanno, e non vengono per te.</p>
+      <p>Sei a centosettanta metri dalla soglia pista, con un tubo di lancio. Stavolta non devi
+         restare vivo: devi far decollare <b>loro</b>.</p>
+      <p class="pull">E il tuo cercatore a infrarossi non distingue un amico da un nemico:
+         solo l'interrogatore IFF può farlo. Sbaglia, e il missile parte lo stesso.</p>
+    </div>
+    <div class="cta">
+      <button class="btn primary" onclick="startGame('easy','airbase')">ADDESTRAMENTO<small>IFF automatico · aggancio sugli amici inibito</small></button>
+      <button class="btn" onclick="startGame('hard','airbase')">OPERATIVO<small>IFF manuale [Q] · tre perdite e il ponte aereo salta</small></button>
     </div>
 
     <div class="keys touchkeys">
       <b>TRASCINA</b><span>ruota il lanciatore, ovunque sullo schermo</span>
       <b>BCU</b><span>attiva la cartuccia e raffredda il sensore</span>
       <b>SBLOCCO</b><span>libera il cercatore dopo l'aggancio</span>
+    <b>IFF</b><span>interroga il bersaglio prima di lanciare</span>
       <b>FUOCO</b><span>lancia il missile</span>
       <b>RIPARO</b><span>tieni premuto per stare in trincea</span>
     </div>
@@ -422,6 +458,7 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
       <b>FRECCE / MOUSE</b><span>brandeggio e alzo del lanciatore</span>
       <b>E</b><span>inserisci e attiva la BCU — serve a ogni lancio</span>
       <b>C</b><span>sblocca il sensore prima del fuoco</span>
+    <b>Q</b><span>interroga l'IFF: amico o ostile</span>
       <b>SPAZIO / CLIC</b><span>grilletto di lancio</span>
       <b>SHIFT</b><span>riparati nella trincea</span>
       <b>Z</b><span>ingrandimento ottica</span>
@@ -482,13 +519,33 @@ const DIFF = {
          bcuCool:1.8, coolant:38, leadTol:.055, uncageWin:7, strict:true,  gimbal:0.85, keepRound:false }
 };
 
-/* ---------- ondate ---------- */
-const WAVES = [
+/* ---------- ondate: due campagne distinte ---------- */
+const WAVES_RIDGE = [
   { title:'ONDATA 1', sub:'CACCIA IN RICOGNIZIONE', count:3, speed:150, aggro:.35, boss:false },
   { title:'ONDATA 2', sub:'ATTACCO AL SUOLO',       count:4, speed:172, aggro:.75, boss:false },
   { title:'ONDATA 3', sub:'SATURAZIONE DEL SETTORE',count:5, speed:196, aggro:1.0, boss:false },
   { title:'ONDATA FINALE', sub:'F-35A LIGHTNING II',count:0, speed:250, aggro:1.0, boss:true  }
 ];
+const WAVES_BASE = [
+  { title:'PARTENZA 1', sub:'TRASPORTO ALFA IN ROLLAGGIO',  count:2, speed:165, aggro:.5, dep:1 },
+  { title:'PARTENZA 2', sub:'TRASPORTO BRAVO — DUE OSTILI', count:3, speed:182, aggro:.8, dep:1 },
+  { title:'PARTENZA 3', sub:'DUE VELIVOLI IN SEQUENZA',     count:4, speed:196, aggro:1.0, dep:2 },
+  { title:'ULTIMA PARTENZA', sub:'SCORTA CONTRO F-35',      count:2, speed:200, aggro:1.0, dep:1, boss:true }
+];
+
+/* Il profilo del terreno è parametrico: la cresta è stretta e montuosa,
+   la base aerea ha mezzo chilometro di piana per la pista.               */
+const SCEN = {
+  ridge:  { label:'CRESTA KILO-7',   waves:WAVES_RIDGE,
+            terr:{ flat:70,  ramp:240, mStart:1250, mRamp:1250, amp:250, mtn:760 } },
+  airbase:{ label:'BASE AEREA DELTA', waves:WAVES_BASE,
+            terr:{ flat:640, ramp:520, mStart:2200, mRamp:1500, amp:130, mtn:600 } }
+};
+let SCN = 'ridge';
+let WAVES = WAVES_RIDGE;
+let worldGroup = null;
+const RW_Z = -170, RW_LEN = 2400, RW_W = 60;      // geometria della pista
+const CALLSIGN = ['ALFA','BRAVO','CHARLIE','DELTA','ECHO','FOXTROT'];
 
 /* ---------- stato ---------- */
 const PLAYER = new V3(0, 2.7, 0);
@@ -496,7 +553,7 @@ const SUNDIR = new THREE.Vector3(-.62,.66,-.42).normalize();
 let cfg = DIFF.easy;
 let S = null;                 // stato partita
 let scene, camera, renderer, wScene, wCam, clock;
-let jets = [], missiles = [], bullets = [], bombs = [], aams = [], flares = [], fx = [];
+let jets = [], missiles = [], bullets = [], bombs = [], aams = [], flares = [], fx = [], friendlies = [];
 let weapon = null, boss = null;
 let fx2d, fxc, radar, rctx;
 let yaw = 0, pitch = 0.12, sweep = 0;
@@ -757,14 +814,14 @@ function ridged(x,y,oct){
 
 /* --- quota del terreno in un punto qualsiasi --- */
 function terrainH(x,z){
-  const s = .00085;
-  let h = (fbm(x*s+11.3, z*s+7.1, 5)-.5)*250;          // ondulazione ampia
-  h += (fbm(x*s*4.3+3.7, z*s*4.3+9.2, 4)-.5)*36;       // dettaglio medio
+  const T = SCEN[SCN].terr, s = .00085;
+  let h = (fbm(x*s+11.3, z*s+7.1, 5)-.5)*T.amp;        // ondulazione ampia
+  h += (fbm(x*s*4.3+3.7, z*s*4.3+9.2, 4)-.5)*36*(T.amp/250);
   const d = Math.hypot(x,z);
-  h *= clamp((d-70)/240, 0, 1);                        // piazzola pianeggiante
+  h *= clamp((d-T.flat)/T.ramp, 0, 1);                 // piana attorno alla postazione
   // catena montuosa che si alza verso l'orizzonte
-  const t = clamp((d-1250)/1250, 0, 1);
-  h += t*t*(160 + ridged(x*.00062+5.5, z*.00062+2.2, 5)*760);
+  const t = clamp((d-T.mStart)/T.mRamp, 0, 1);
+  h += t*t*(160 + ridged(x*.00062+5.5, z*.00062+2.2, 5)*T.mtn);
   return h;
 }
 function terrainSlope(x,z){
@@ -825,7 +882,7 @@ function cloudTexture(){
 }
 
 function buildWorld(){
-  const SUN = SUNDIR;
+  const G = new THREE.Group();
 
   /* ---------- cielo con disco solare e foschia all'orizzonte ---------- */
   const skyMat = new THREE.ShaderMaterial({
@@ -853,7 +910,7 @@ function buildWorld(){
       '  gl_FragColor = vec4(col, 1.0);'+
       '}'
   });
-  scene.add(new THREE.Mesh(new THREE.SphereGeometry(6800,40,24), skyMat));
+  G.add(new THREE.Mesh(new THREE.SphereGeometry(6800,40,24), skyMat));
 
   /* ---------- terreno: rilievo + colorazione per pendenza e quota ---------- */
   const SEG = LOW ? 165 : 210, SIZE = 8000;      // meno sfaccettature sul crinale
@@ -894,7 +951,7 @@ function buildWorld(){
   }));
   ground.rotation.x = -Math.PI/2;
   ground.receiveShadow = true;
-  scene.add(ground);
+  G.add(ground);
 
   /* ---------- rocce sparse (instanced) ---------- */
   const rockGeo = new THREE.DodecahedronGeometry(1,0);
@@ -903,17 +960,18 @@ function buildWorld(){
   const rocks = new THREE.InstancedMesh(rockGeo, rockMat, NR);
   rocks.castShadow = true; rocks.receiveShadow = true;
   const dummy = new THREE.Object3D();
-  let n = 0;
-  while(n < NR){
+  let n = 0, rg = 0;
+  while(n < NR && rg++ < NR*20){
     const a = Math.random()*Math.PI*2, r = 25 + Math.pow(Math.random(),.6)*900;
     const x = Math.cos(a)*r, z = Math.sin(a)*r;
     const s = .5 + Math.random()*2.2;
+    if(SCN === 'airbase' && Math.hypot(x,z) < 480){ continue; }
     dummy.position.set(x, terrainH(x,z) + s*.35, z);
     dummy.rotation.set(Math.random()*3, Math.random()*3, Math.random()*3);
     dummy.scale.set(s, s*(.55+Math.random()*.5), s*(.8+Math.random()*.5));
     dummy.updateMatrix(); rocks.setMatrixAt(n++, dummy.matrix);
   }
-  scene.add(rocks);
+  G.add(rocks);
 
   /* ---------- conifere sui pendii (instanced: tronco + chioma) ---------- */
   const NT = LOW ? 150 : 340;
@@ -930,6 +988,7 @@ function buildWorld(){
     const x = Math.cos(a)*r, z = Math.sin(a)*r;
     const h = terrainH(x,z);
     if(h > 420 || terrainSlope(x,z) > .62) continue;      // niente alberi su cime e pareti
+    if(SCN === 'airbase' && Math.hypot(x,z) < 520) continue;   // il sedime della base è sgombro
     const s = .8 + Math.random()*.9;
     dummy.rotation.set(0, Math.random()*3, 0);
     dummy.scale.set(s,s,s);
@@ -938,7 +997,7 @@ function buildWorld(){
     t++;
   }
   trunk.count = crown.count = t;
-  scene.add(trunk); scene.add(crown);
+  G.add(trunk); G.add(crown);
 
   /* ---------- erba attorno alla postazione (billboard incrociati) ---------- */
   const gTex = grassTexture();
@@ -969,7 +1028,7 @@ function buildWorld(){
     dummy.scale.set(s, s*(.9+Math.random()*.7), s);
     dummy.updateMatrix(); grass.setMatrixAt(gi++, dummy.matrix);
   }
-  scene.add(grass);
+  G.add(grass);
 
   /* ---------- nuvole a più strati, in deriva lenta ---------- */
   const cTex = cloudTexture();
@@ -985,14 +1044,14 @@ function buildWorld(){
     const w = (far?900:480) + Math.random()*600;
     s.scale.set(w, w*(.32+Math.random()*.16), 1);
     s.userData.drift = 4 + Math.random()*7;
-    scene.add(s); clouds.push(s);
+    G.add(s); clouds.push(s);
   }
-  scene.userData.clouds = clouds;
+  G.userData.clouds = clouds;
 
   /* ---------- la piazzola: terrapieno, sacchetti, materiale ---------- */
   const berm = new THREE.Mesh(new THREE.TorusGeometry(3.6,1.5,10,26),
     new THREE.MeshStandardMaterial({color:0x5c5238, roughness:1}));
-  berm.rotation.x = -Math.PI/2; berm.position.y = -.4; berm.receiveShadow = true; scene.add(berm);
+  berm.rotation.x = -Math.PI/2; berm.position.y = -.4; berm.receiveShadow = true; G.add(berm);
 
   const sandMat = new THREE.MeshStandardMaterial({color:0x5a553c, roughness:1});
   for(let i=0;i<30;i++){
@@ -1003,29 +1062,30 @@ function buildWorld(){
       b.scale.set(1,.40,.55);
       b.position.set(Math.cos(a)*3.25, .78 + l*.42, Math.sin(a)*3.25);
       b.rotation.y = -a + (l?.2:0);
-      b.castShadow = b.receiveShadow = true; scene.add(b);
+      b.castShadow = b.receiveShadow = true; G.add(b);
     }
   }
   const crateMat = new THREE.MeshStandardMaterial({color:0x4a4b2c, roughness:.95});
   for(let i=0;i<3;i++){
     const c = new THREE.Mesh(new THREE.BoxGeometry(1.1,.62,.7), crateMat);
     c.position.set(-2.0+i*.35, .55+i*.64, 1.9-i*.2); c.rotation.y = .3+i*.4;
-    c.castShadow = c.receiveShadow = true; scene.add(c);
+    c.castShadow = c.receiveShadow = true; G.add(c);
   }
   // tubi di lancio esausti appoggiati al terrapieno
   for(let i=0;i<3;i++){
     const tu = new THREE.Mesh(new THREE.CylinderGeometry(.09,.09,1.5,10), MAT.tube);
     tu.position.set(1.6+i*.28, .2, 2.2); tu.rotation.set(0,.4+i*.3,Math.PI/2-.15);
-    tu.castShadow = true; scene.add(tu);
+    tu.castShadow = true; G.add(tu);
   }
   const mast = new THREE.Mesh(new THREE.CylinderGeometry(.09,.12,7,8), MAT.gear);
-  mast.position.set(-9.5,3.3,7.4); mast.castShadow = true; scene.add(mast);   // dietro l'operatore
+  mast.position.set(-9.5,3.3,7.4); mast.castShadow = true; G.add(mast);   // dietro l'operatore
   const dish = new THREE.Mesh(new THREE.SphereGeometry(1.4,16,12,0,Math.PI*2,0,Math.PI/2),
     new THREE.MeshStandardMaterial({color:0x8a8c76, roughness:.65, metalness:.3, side:THREE.DoubleSide}));
-  dish.position.set(-9.5,6.6,7.4); dish.rotation.x = -1.1; dish.castShadow = true; scene.add(dish);
-  scene.userData.dish = dish;
+  dish.position.set(-9.5,6.6,7.4); dish.rotation.x = -1.1; dish.castShadow = true; G.add(dish);
+  G.userData.dish = dish;
 
-  return SUN;
+  if(SCN === "airbase") buildAirbase(G);
+  return G;
 }
 
 
@@ -1073,7 +1133,7 @@ function initEngine(){
   const wf = new THREE.DirectionalLight(0x9fb6cc, .35); wf.position.set(1,-.6,-1); wScene.add(wf);
   weapon = buildLauncher(); wScene.add(weapon);
 
-  buildWorld();
+  loadScenario('ridge');
 
   fx2d = document.getElementById('fx2d'); fxc = fx2d.getContext('2d');
   radar = document.getElementById('radar'); rctx = radar.getContext('2d');
@@ -1113,6 +1173,7 @@ function bindInput(){
     if(e.code === 'KeyP' || ch === 'p') togglePause();
     if(e.code === 'KeyE' || ch === 'e') activateBCU();
     if(e.code === 'KeyC' || ch === 'c') uncage();
+    if(e.code === 'KeyQ' || ch === 'q') interrogate();
     if(e.code === 'Space'){ e.preventDefault(); fire(); }
     if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code)){
       e.preventDefault();
@@ -1200,6 +1261,7 @@ function bindInput(){
   btn('tBcu',    activateBCU);
   btn('tUncage', uncage);
   btn('tPause',  togglePause);
+  btn('tIff',    interrogate);
   btn('tCrouch', ()=>{ keys['ShiftLeft'] = true; }, ()=>{ keys['ShiftLeft'] = false; });
   const zb = document.getElementById('tZoom');
   btn('tZoom', ()=>{ zoomToggle = !zoomToggle; }, ()=>{ if(zb) zb.classList.toggle('on', zoomToggle); });
@@ -1213,6 +1275,227 @@ function bindInput(){
       setTimeout(()=>{ if(!locked()) mouse.mode = 'cursor'; }, 350);
     }catch(err){ mouse.mode = 'cursor'; }
   }
+}
+
+
+/* =========================================================================
+   SCENARIO 2 — BASE AEREA DELTA
+   Pista, infrastrutture e i velivoli amici in decollo da proteggere.
+   ========================================================================= */
+function buildAirbase(G){
+  const asphalt  = new THREE.MeshStandardMaterial({color:0x2f3236, roughness:.96});
+  const concrete = new THREE.MeshStandardMaterial({color:0x5d5e58, roughness:1});
+  const paint    = new THREE.MeshBasicMaterial({color:0xc9c9bd});
+  const steel    = new THREE.MeshStandardMaterial({color:0x4e534c, roughness:.85, metalness:.35});
+  const flat = (geo, mat, x, y, z)=>{
+    const m = new THREE.Mesh(geo, mat);
+    m.rotation.x = -Math.PI/2; m.position.set(x,y,z); G.add(m); return m;
+  };
+
+  // ---- pista, spalle, segnaletica -------------------------------------
+  flat(new THREE.PlaneGeometry(RW_LEN, RW_W), asphalt, 0, .10, RW_Z).receiveShadow = true;
+  for(const sd of [-1,1])
+    flat(new THREE.PlaneGeometry(RW_LEN, 16), concrete, 0, .06, RW_Z + sd*(RW_W/2+8));
+  for(let x=-RW_LEN/2+50; x<RW_LEN/2-40; x+=90)
+    flat(new THREE.PlaneGeometry(46,1.3), paint, x, .13, RW_Z);
+  for(const sd of [-1,1]) for(let i=0;i<8;i++)
+    flat(new THREE.PlaneGeometry(26,3.2), paint, sd*(RW_LEN/2-28), .13, RW_Z - 24.5 + i*7);
+
+  // luci di bordo pista
+  const lampMat = new THREE.MeshBasicMaterial({color:0xffd18a});
+  for(let x=-RW_LEN/2; x<=RW_LEN/2; x+=110) for(const sd of [-1,1]){
+    const l = new THREE.Mesh(new THREE.SphereGeometry(.55,6,5), lampMat);
+    l.position.set(x,.65,RW_Z + sd*(RW_W/2+3)); G.add(l);
+  }
+
+  // ---- raccordo e piazzale --------------------------------------------
+  flat(new THREE.PlaneGeometry(30,180), asphalt, -300, .09, RW_Z + 100);
+  flat(new THREE.PlaneGeometry(430,190), asphalt, -300, .08, 20);
+
+  // ---- aviorimesse -----------------------------------------------------
+  for(let i=0;i<3;i++){
+    const hx = -470 + i*160;
+    const body = new THREE.Mesh(new THREE.BoxGeometry(126,15,84), steel);
+    body.position.set(hx,7.5,150); body.castShadow = body.receiveShadow = true; G.add(body);
+    const roof = new THREE.Mesh(new THREE.CylinderGeometry(43,43,126,18,1,true,0,Math.PI), steel);
+    roof.rotation.set(0,0,Math.PI/2); roof.position.set(hx,15,150);
+    roof.castShadow = true; G.add(roof);
+    const door = new THREE.Mesh(new THREE.PlaneGeometry(96,13),
+      new THREE.MeshStandardMaterial({color:0x24272a, roughness:1}));
+    door.position.set(hx,7,107.8); G.add(door);
+  }
+
+  // ---- torre di controllo ---------------------------------------------
+  const tower = new THREE.Mesh(new THREE.BoxGeometry(13,34,13), concrete);
+  tower.position.set(-90,17,55); tower.castShadow = true; G.add(tower);
+  const cab = new THREE.Mesh(new THREE.BoxGeometry(21,8,21),
+    new THREE.MeshStandardMaterial({color:0x16222e, roughness:.12, metalness:.95}));
+  cab.position.set(-90,37,55); cab.castShadow = true; G.add(cab);
+  const beacon = new THREE.Mesh(new THREE.SphereGeometry(1.1,8,6),
+    new THREE.MeshBasicMaterial({color:0x66e0ff}));
+  beacon.position.set(-90,42.5,55); G.add(beacon);
+  G.userData.beacon = beacon;
+
+  // ---- serbatoi carburante --------------------------------------------
+  for(let i=0;i<2;i++){
+    const tk = new THREE.Mesh(new THREE.CylinderGeometry(13,13,15,20),
+      new THREE.MeshStandardMaterial({color:0x8b8d84, roughness:.6, metalness:.5}));
+    tk.position.set(215 + i*36, 7.5, 95); tk.castShadow = true; G.add(tk);
+    const cap = new THREE.Mesh(new THREE.SphereGeometry(13,20,8,0,Math.PI*2,0,Math.PI/2), tk.material);
+    cap.position.set(215 + i*36, 15, 95); G.add(cap);
+  }
+
+  // ---- manica a vento ---------------------------------------------------
+  const pole = new THREE.Mesh(new THREE.CylinderGeometry(.25,.35,11,8), steel);
+  pole.position.set(150,5.5,RW_Z + 70); G.add(pole);
+  const sock = new THREE.Mesh(new THREE.CylinderGeometry(1.1,2.2,7,10,1,true),
+    new THREE.MeshStandardMaterial({color:0xd2632a, roughness:1, side:THREE.DoubleSide}));
+  sock.rotation.set(0,0,-Math.PI/2 + .25); sock.position.set(154,10,RW_Z + 70); G.add(sock);
+
+  // ---- due trasporti parcheggiati sul piazzale --------------------------
+  for(let i=0;i<2;i++){
+    const t = buildTransport();
+    t.position.set(-380 + i*130, 3.4, 30);
+    t.rotation.y = Math.PI/2 + (i?.25:-.2);
+    G.add(t);
+  }
+}
+
+/* --- velivolo da trasporto amico: muso verso +Z --- */
+function buildTransport(){
+  const g = new THREE.Group();
+  const hull = new THREE.MeshStandardMaterial({color:0x9aa0a2, roughness:.55, metalness:.5});
+  const dark = new THREE.MeshStandardMaterial({color:0x5a6165, roughness:.6, metalness:.5});
+
+  const fus = new THREE.Mesh(new THREE.CylinderGeometry(3.1,2.6,34,14), hull);
+  fus.rotation.x = Math.PI/2; g.add(fus);
+  const nose = new THREE.Mesh(new THREE.SphereGeometry(3.1,14,10), hull);
+  nose.scale.set(1,.9,1.5); nose.position.z = 17; g.add(nose);
+  const tailCone = new THREE.Mesh(new THREE.ConeGeometry(2.6,10,14), hull);
+  tailCone.rotation.x = -Math.PI/2; tailCone.position.set(0,1.6,-21); g.add(tailCone);
+
+  const wing = new THREE.Mesh(new THREE.BoxGeometry(46,1.1,7.5), hull);
+  wing.position.set(0,3.1,1); g.add(wing);
+  for(const sd of [-1,1]) for(let i=1;i<=2;i++){
+    const nac = new THREE.Mesh(new THREE.CylinderGeometry(1.5,1.2,7,10), dark);
+    nac.rotation.x = Math.PI/2; nac.position.set(sd*i*7.8, 2.2, 2.6); g.add(nac);
+    const disc = new THREE.Mesh(new THREE.CylinderGeometry(4.2,4.2,.25,16),
+      new THREE.MeshStandardMaterial({color:0x2a2d30, transparent:true, opacity:.45}));
+    disc.rotation.x = Math.PI/2; disc.position.set(sd*i*7.8, 2.2, 6.4); g.add(disc);
+  }
+  const fin = new THREE.Mesh(new THREE.BoxGeometry(.9,12,8), hull);
+  fin.position.set(0,8,-19); g.add(fin);
+  const stab = new THREE.Mesh(new THREE.BoxGeometry(19,.8,4.5), hull);
+  stab.position.set(0,13.6,-20); g.add(stab);
+  for(const sd of [-1,0]){
+    const gear = new THREE.Mesh(new THREE.CylinderGeometry(.9,.9,1.4,8), dark);
+    gear.rotation.z = Math.PI/2; gear.position.set(0,-3.2, sd ? -2 : 13); g.add(gear);
+  }
+  return g;
+}
+
+/* --- partenze: decollo, salita, messa in salvo --- */
+function spawnDeparture(){
+  const f = buildTransport();
+  f.position.set(-RW_LEN/2 + 60, 3.4, RW_Z);
+  f.userData = {
+    friendly:true, hp:3, state:'roll', v:0,
+    vel:new V3(1,0,0), name:CALLSIGN[S.depTotal % CALLSIGN.length], smoke:0
+  };
+  S.depTotal++;
+  scene.add(f); friendlies.push(f);
+  feed('PARTENZA ' + f.userData.name + ' IN ROLLAGGIO — PROTEGGILA', '#7fd8ff');
+  alertMsg('VELIVOLO AMICO IN DECOLLO — NON LASCIARLO SOLO', 3);
+  AU.beep(520,.25,.06,'sine');
+}
+
+function updateFriendlies(dt){
+  for(let i=friendlies.length-1;i>=0;i--){
+    const f = friendlies[i], d = f.userData;
+
+    if(d.state === 'roll'){
+      d.v = Math.min(86, d.v + 7*dt);
+      f.position.x += d.v*dt;
+      d.vel.set(d.v,0,0);
+      if(d.v > 72){ d.state = 'climb'; feed(d.name + ' STACCATA — IN SALITA','#7fd8ff'); }
+    } else if(d.state === 'climb'){
+      d.v = Math.min(165, d.v + 4*dt);
+      const c = Math.cos(.22), sn = Math.sin(.22);
+      d.vel.set(c*d.v, sn*d.v, 0);
+      f.position.add(d.vel.clone().multiplyScalar(dt));
+    } else if(d.state === 'falling'){
+      d.vel.y -= 40*dt;
+      f.position.add(d.vel.clone().multiplyScalar(dt));
+      f.rotateZ(2.2*dt); f.rotateX(.9*dt);
+      d.smoke += dt;
+      if(d.smoke > .05){ d.smoke = 0; puff(f.position, 2.4, Math.random()<.4?TEX.fire:TEX.smoke, .85, 18, 2); }
+      if(f.position.y < terrainH(f.position.x,f.position.z) + 4){
+        explode(f.position, 2.6); scene.remove(f); friendlies.splice(i,1);
+      }
+      continue;
+    }
+
+    if(d.state !== 'falling'){
+      f.lookAt(f.position.clone().add(d.vel));
+      if(d.hp < 3 && (d.smoke += dt) > .12){
+        d.smoke = 0; puff(f.position, 1.4, TEX.smoke, .5, 9, 1.6);
+      }
+      if(f.position.y > 460 || f.position.x > 1750){
+        S.depSafe++; S.score += 1500;
+        feed(d.name + ' FUORI PORTATA — IN SALVO  +1500','#7fd8ff');
+        AU.beep(760,.3,.06,'sine');
+        scene.remove(f); friendlies.splice(i,1); hud();
+      }
+    }
+  }
+}
+
+function hurtFriendly(f, dmg, at){
+  const d = f.userData;
+  if(d.state === 'falling') return;
+  d.hp -= dmg;
+  if(at) explode(at, .8);
+  if(d.hp <= 0){
+    d.state = 'falling';
+    d.vel = d.vel.clone().multiplyScalar(.7);
+    S.depLost++;
+    S.score = Math.max(0, S.score - 800);
+    feed(d.name + ' ABBATTUTA', '#ff3b30');
+    alertMsg('VELIVOLO AMICO PERDUTO', 3);
+    hud();
+    if(S.depLost >= 3) endGame(false, 'friendly');
+  } else {
+    feed(d.name + ' COLPITA — RESISTE', '#f2a516');
+  }
+}
+
+/* --- interrogatore IFF: il cercatore a infrarossi non distingue gli amici --- */
+function interrogate(){
+  if(!S || !S.running || S.paused) return;
+  if(!S.locked){ feed('IFF: NESSUN BERSAGLIO DA INTERROGARE','#f2a516'); AU.deny(); return; }
+  S.iffKnown = true;
+  const amico = !!S.locked.userData.friendly;
+  AU.beep(amico ? 900 : 420, .2, .06, 'sine');
+  feed(amico ? 'IFF: RISPOSTA AMICA — NON LANCIARE' : 'IFF: NESSUNA RISPOSTA — OSTILE',
+       amico ? '#7fd8ff' : '#ff3b30');
+}
+
+/* --- caricamento dello scenario: il mondo viene ricostruito da zero --- */
+function disposeTree(root){
+  root.traverse(o=>{
+    if(o.geometry) o.geometry.dispose();
+    if(o.material){
+      const ms = Array.isArray(o.material) ? o.material : [o.material];
+      ms.forEach(m=>{ if(m.map) m.map.dispose(); m.dispose(); });
+    }
+  });
+}
+function loadScenario(name){
+  if(worldGroup){ scene.remove(worldGroup); disposeTree(worldGroup); }
+  SCN = name;
+  WAVES = SCEN[name].waves;
+  worldGroup = buildWorld();
+  scene.add(worldGroup);
 }
 
 /* =========================================================================
@@ -1264,9 +1547,10 @@ function updateAttract(dt){
 /* =========================================================================
    FLUSSO DI GIOCO
    ========================================================================= */
-function startGame(level){
+function startGame(level, scen){
   AU.init();
   stopAttract();
+  if(scen && scen !== SCN) loadScenario(scen);
   cfg = DIFF[level];
   document.getElementById('menu').style.display = 'none';
   S = {
@@ -1275,8 +1559,13 @@ function startGame(level){
     wave:-1, waveTimer:1.6, spawnQueue:0, spawnTimer:0, waveActive:false,
     lockT:0, locked:null, zoom:0, recoil:0, shake:0, crouch:0, invuln:0, alertT:0,
     bcu:'none', coolT:0, coolant:0, uncaged:false, uncageT:0,
-    lead:null, leadErr:9, leadQ:0, blast:0
+    lead:null, leadErr:9, leadQ:0, blast:0,
+    scen:SCN, depTotal:0, depSafe:0, depLost:0, depQueue:0, depTimer:0,
+    iff:'', iffKnown:false
   };
+  document.getElementById('depline').style.display = SCN === 'airbase' ? 'block' : 'none';
+  document.getElementById('iffline').style.display = SCN === 'airbase' ? 'block' : 'none';
+  document.body.classList.toggle('base', SCN === 'airbase');
   boss = null;
   document.getElementById('bossbar').style.display = 'none';
   banner('PRONTI ALL\'INGAGGIO','SETTORE KILO-7 — LIBERO DI FARE FUOCO');
@@ -1287,9 +1576,9 @@ function startGame(level){
 /* Svuota il settore e riporta comandi e pannelli allo stato neutro:
    serve sia al riavvio della missione sia al rientro al menu.            */
 function clearField(){
-  [...jets,...missiles,...bullets,...bombs,...aams,...flares].forEach(o=>scene.remove(o));
+  [...jets,...missiles,...bullets,...bombs,...aams,...flares,...friendlies].forEach(o=>scene.remove(o));
   fx.forEach(f=>scene.remove(f.m));
-  jets=[]; missiles=[]; bullets=[]; bombs=[]; aams=[]; flares=[]; fx=[]; boss=null;
+  jets=[]; missiles=[]; bullets=[]; bombs=[]; aams=[]; flares=[]; fx=[]; friendlies=[]; boss=null;
   AU.lock(false); AU.jets(0);
   yaw = 0; pitch = .12; zoomToggle = false;
   for(const k in keys) keys[k] = false;
@@ -1306,8 +1595,9 @@ function clearField(){
 
 function resetGame(){
   const lvl = S ? S.level : 'easy';
+  const sc  = S ? S.scen : SCN;
   clearField();
-  startGame(lvl);
+  startGame(lvl, sc);
 }
 
 /* Torna alla schermata iniziale: la partita in corso viene abbandonata. */
@@ -1328,14 +1618,30 @@ function togglePause(){
   if(S.paused){ AU.lock(false); AU.jets(0); document.exitPointerLock(); }
 }
 
-function endGame(win){
+function endGame(win, reason){
+  if(!S || !S.running) return;
   S.running = false; AU.lock(false); AU.jets(0);
-  document.exitPointerLock();
-  document.getElementById('overtitle').textContent = win ? 'SETTORE MESSO IN SICUREZZA' : 'POSTAZIONE DISTRUTTA';
+  if(document.pointerLockElement) document.exitPointerLock();
+  const base = S.scen === 'airbase';
+  let title, desc;
+  if(win){
+    title = base ? 'PONTE AEREO COMPLETATO' : 'SETTORE MESSO IN SICUREZZA';
+    desc  = base
+      ? 'Tutte le partenze previste hanno lasciato il sedime: ' + S.depSafe + ' velivoli in salvo'
+        + (S.depLost ? ', ' + S.depLost + ' perduti.' : ', nessuna perdita.')
+      : "L'F-35 è precipitato oltre la cresta. Nessun velivolo ostile resta nel settore: la piazzola ha tenuto.";
+  } else if(reason === 'friendly'){
+    title = 'PONTE AEREO INTERROTTO';
+    desc  = 'Tre velivoli da trasporto sono stati abbattuti in decollo. Le partenze sono state sospese.';
+  } else {
+    title = 'POSTAZIONE DISTRUTTA';
+    desc  = base
+      ? 'La postazione è stata neutralizzata: la pista resta senza copertura antiaerea.'
+      : 'La piazzola è stata neutralizzata. Il settore Kilo-7 è aperto ai velivoli nemici.';
+  }
+  document.getElementById('overtitle').textContent = title;
   document.getElementById('overtitle').style.color = win ? '#cfe3d0' : '#ff3b30';
-  document.getElementById('overdesc').textContent = win
-    ? 'L\'F-35 è precipitato oltre la cresta. Nessun velivolo ostile resta nel settore: la piazzola ha tenuto.'
-    : 'La piazzola è stata neutralizzata. Il settore Kilo-7 è aperto ai velivoli nemici.';
+  document.getElementById('overdesc').textContent = desc;
   document.getElementById('fscore').textContent = S.score;
   document.getElementById('fkills').textContent = S.kills;
   document.getElementById('fshots').textContent = S.shots;
@@ -1375,7 +1681,8 @@ function nextWave(){
   alertMsg('PREMI [E] PER ATTIVARE LA BCU', 3);
   S.waveActive = true;
   if(w.boss){ spawnBoss(); }
-  else { S.spawnQueue = w.count; S.spawnTimer = 0; }
+  if(w.count){ S.spawnQueue = w.count; S.spawnTimer = w.dep ? 5 : 0; }
+  if(w.dep){ S.depQueue = w.dep; S.depTimer = 1.5; }
   hud();
 }
 
@@ -1389,7 +1696,8 @@ function spawnJet(){
   j.userData = {
     hp:1, speed:w.speed*cfg.jetSpeed, vel:dir.multiplyScalar(w.speed*cfg.jetSpeed),
     mode:'ingress', timer:0, cool:1+Math.random()*2, bombLoad:1, roll:0,
-    aggro:w.aggro*cfg.aggro, boss:false
+    aggro:w.aggro*cfg.aggro, boss:false,
+    hunt:(SCN === 'airbase' && Math.random() < .7)   // sette su dieci puntano il trasporto
   };
   scene.add(j); jets.push(j);
 }
@@ -1399,7 +1707,8 @@ function spawnBoss(){
   boss.position.set(1500, 460, -900);
   boss.userData = {
     hp:cfg.bossHP, maxHp:cfg.bossHP, speed:WAVES[S.wave].speed, vel:new V3(-1,0,.4).normalize().multiplyScalar(250),
-    mode:'ingress', timer:0, cool:3, aamCool:8, flareCool:6, flaring:0, roll:0, boss:true, dying:0
+    mode:'ingress', timer:0, cool:3, aamCool:8, flareCool:6, flaring:0, roll:0, boss:true, dying:0,
+    hunt:(SCN === 'airbase')
   };
   scene.add(boss); jets.push(boss);
   document.getElementById('bossbar').style.display = 'block';
@@ -1431,6 +1740,10 @@ function uncage(){
   if(S.uncaged){ feed('SENSORE GIÀ SBLOCCATO — FUOCO [SPAZIO]'); return; }
   if(S.bcu !== 'ready'){ feed('SBLOCCO NEGATO: BCU NON ATTIVA [E]','#ff3b30'); AU.deny(); return; }
   if(S.lockT < 1){ feed('SBLOCCO NEGATO: NESSUN AGGANCIO','#ff3b30'); AU.deny(); return; }
+  if(S.locked.userData.friendly && S.iffKnown){
+    feed('SBLOCCO INIBITO: BERSAGLIO AMICO','#7fd8ff'); AU.deny();
+    alertMsg('IFF AMICO — NON PUOI INGAGGIARLO', 2); return;
+  }
   S.uncaged = true; S.uncageT = cfg.uncageWin;
   AU.beep(1650,.14,.07); feed('SENSORE SBLOCCATO — CENTRA L\'ANTICIPO','#f2a516');
 }
@@ -1572,6 +1885,15 @@ function updateMissiles(dt){
         damageJet(t2, m.position); hit = true; break;
       }
     }
+    if(!hit) for(const f of friendlies){
+      if(f.userData.state !== 'falling' && nearSeg(f.position) < cfg.hitRadius*1.2){
+        explode(m.position, 1.2); hit = true;
+        feed('FUOCO AMICO SU ' + f.userData.name, '#ff3b30');
+        S.score = Math.max(0, S.score - 1500);
+        hurtFriendly(f, 3, null);
+        break;
+      }
+    }
     if(!hit && d.decoyed){
       for(const f of flares) if(nearSeg(f.position) < 16) hit = true;
     }
@@ -1626,7 +1948,16 @@ function updateJets(dt){
   for(const j of jets){
     const d = j.userData;
     if(d.dying) continue;
-    const toP = PLAYER.clone().sub(j.position);
+
+    /* Alla base aerea la maggior parte degli ostili non cerca l'operatore:
+       punta il trasporto in decollo, lento e senza manovra. Devi arrivarci
+       prima di loro.                                                        */
+    let PREY = PLAYER, preyIsFriend = false;
+    if(d.hunt){
+      const f = friendlies.find(x => x.userData.state !== 'falling');
+      if(f){ PREY = f.position; preyIsFriend = true; }
+    }
+    const toP = PREY.clone().sub(j.position);
     const dist = toP.length();
     closest = Math.min(closest, dist);
     d.timer -= dt; d.cool -= dt;
@@ -1634,11 +1965,11 @@ function updateJets(dt){
 
     let desired = null;
     if(d.mode === 'ingress'){
-      desired = PLAYER.clone().add(new V3(0, 120, 0));
+      desired = PREY.clone().add(new V3(0, preyIsFriend ? 55 : 120, 0));
       if(dist < (d.boss?700:520)){ d.mode = 'attack'; d.timer = d.boss?7:4.5; }
     } else if(d.mode === 'attack'){
       anyAttack = true;
-      desired = PLAYER.clone().add(new V3(0, d.boss?90:70, 0));
+      desired = PREY.clone().add(new V3(0, preyIsFriend ? 28 : (d.boss?90:70), 0));
       // cannone
       if(d.cool <= 0 && dist < 800 && dist > 160){
         const fwd = d.vel.clone().normalize();
@@ -1648,13 +1979,13 @@ function updateJets(dt){
         }
       }
       // bomba / missile aria-suolo
-      if(!d.boss && d.bombLoad > 0 && dist < 320 && Math.random() < d.aggro*dt*2.2){
+      if(!d.boss && !preyIsFriend && d.bombLoad > 0 && dist < 320 && Math.random() < d.aggro*dt*2.2){
         dropBomb(j); d.bombLoad--;
       }
       if(d.boss && d.aamCool <= 0 && dist < 900 && Math.random() < dt*1.2){ fireAAM(j); d.aamCool = 6.5; }
       if(dist < (d.boss?260:200) || d.timer < 0){ d.mode = 'egress'; d.timer = d.boss?5:4; }
     } else { // egress
-      const away = j.position.clone().sub(PLAYER).setY(0).normalize();
+      const away = j.position.clone().sub(PREY).setY(0).normalize();
       desired = j.position.clone().add(away.multiplyScalar(700)).setY(d.boss?330:250);
       if(d.timer < 0){ d.mode = 'ingress'; }
     }
@@ -1760,6 +2091,13 @@ function updateProjectiles(dt){
     if(b.position.distanceTo(camera.position) < hitR){
       hurt(cfg.bulletDmg, null); scene.remove(b); bullets.splice(i,1); continue;
     }
+    let hitF = false;
+    for(const f of friendlies){
+      if(f.userData.state !== 'falling' && b.position.distanceTo(f.position) < 16){
+        hurtFriendly(f, 1, b.position); hitF = true; break;
+      }
+    }
+    if(hitF){ scene.remove(b); bullets.splice(i,1); continue; }
     if(b.userData.life > 4 || b.position.y < terrainH(b.position.x,b.position.z)){ scene.remove(b); bullets.splice(i,1); }
   }
 
@@ -1869,8 +2207,8 @@ function updateFX(dt){
 function updateLock(dt){
   const fwd = new V3(); camera.getWorldDirection(fwd);
   let best = null, bestAng = cfg.lockCone*(S.zoom>.5?1.35:1);
-  for(const j of jets){
-    if(j.userData.dying) continue;
+  for(const j of jets.concat(friendlies)){
+    if(j.userData.dying || j.userData.state === 'falling') continue;
     const to = j.position.clone().sub(camera.position);
     const dist = to.length();
     if(dist > 3000) continue;
@@ -1883,9 +2221,9 @@ function updateLock(dt){
   if(best && best === S.locked){
     S.lockT = Math.min(1, S.lockT + dt/cfg.lockTime);
   } else if(best){
-    S.locked = best; S.lockT = 0; S.uncaged = false;
+    S.locked = best; S.lockT = 0; S.uncaged = false; S.iffKnown = false; S.iff = '';
   } else {
-    S.locked = null; S.lockT = 0; S.uncaged = false;
+    S.locked = null; S.lockT = 0; S.uncaged = false; S.iffKnown = false; S.iff = '';
   }
 
   // FASE 4: punto di lancio e qualità del puntamento
@@ -1894,7 +2232,11 @@ function updateLock(dt){
     const to = S.lead.point.clone().sub(camera.position).normalize();
     S.leadErr = fwd.angleTo(to);
     S.leadQ = clamp(1 - S.leadErr/(cfg.leadTol*3.2), 0, 1);
-  } else { S.lead = null; S.leadErr = 9; S.leadQ = 0; }
+    // In addestramento l'interrogatore risponde da solo; in operativo devi
+    // premere [Q], e finché non lo fai non sai chi hai nel mirino.
+    if(!cfg.strict) S.iffKnown = true;
+    S.iff = S.iffKnown ? (S.locked.userData.friendly ? 'AMICO' : 'OSTILE') : 'INTERROGA [Q]';
+  } else { S.lead = null; S.leadErr = 9; S.leadQ = 0; S.iff = ''; }
 
   if(S.uncaged){
     S.uncageT -= dt;
@@ -1916,6 +2258,19 @@ function hud(){
   document.getElementById('waveval').textContent  = Math.max(1,S.wave+1)+' / '+WAVES.length;
   document.getElementById('airval').textContent   = jets.length;
   document.getElementById('ammoval').textContent  = S.ammo;
+  document.getElementById('sectorval').textContent = S.scen === 'airbase' ? 'DELTA' : 'KILO-7';
+  if(S.scen === 'airbase'){
+    const tot = WAVES.reduce((n,w)=>n + (w.dep||0), 0);
+    document.getElementById('depval').textContent  = S.depSafe + ' / ' + tot;
+    const lv = document.getElementById('lostval');
+    lv.textContent = S.depLost + ' / 3';
+    lv.style.color = S.depLost ? '#ff3b30' : '#fff';
+  }
+  const iv = document.getElementById('iffval');
+  if(iv){
+    iv.textContent = S.iff || '—';
+    iv.className = 'v ' + (S.iff === 'AMICO' ? 'amico' : S.iff === 'OSTILE' ? 'ostile' : 'ignoto');
+  }
 }
 
 function drawRadar(){
@@ -1947,6 +2302,14 @@ function drawRadar(){
     rctx.beginPath(); rctx.arc(x,y, isB?5:3, 0, 7); rctx.fill();
     if(isB){ rctx.strokeStyle = '#ff3b30'; rctx.beginPath(); rctx.arc(x,y,8,0,7); rctx.stroke(); }
   }
+  for(const f of friendlies){
+    const x = c + f.position.x*k, y = c + f.position.z*k;
+    if(Math.hypot(x-c,y-c) > c-5) continue;
+    rctx.fillStyle = '#7fd8ff';
+    rctx.beginPath(); rctx.arc(x,y,4,0,7); rctx.fill();
+    rctx.strokeStyle = 'rgba(127,216,255,.55)';
+    rctx.beginPath(); rctx.arc(x,y,7.5,0,7); rctx.stroke();
+  }
   rctx.fillStyle = '#f2a516'; rctx.fillRect(c-1.5,c-1.5,3,3);
   radar.className = (S.lockT>=1) ? 'alarm' : '';
 }
@@ -1959,8 +2322,9 @@ function drawOverlay(){
 
   const fwd = new V3(); camera.getWorldDirection(fwd);
 
-  for(const j of jets){
+  for(const j of jets.concat(friendlies)){
     if(j.userData.dying) continue;
+    const amico = !!j.userData.friendly;
     const to = j.position.clone().sub(camera.position);
     const dist = to.length();
     if(dist > 3200) continue;
@@ -1972,7 +2336,8 @@ function drawOverlay(){
     if(front && Math.abs(p.x) < 1 && Math.abs(p.y) < 1){
       const x = (p.x*.5+.5)*w, y = (-p.y*.5+.5)*h;
       const s = clamp(2600/dist, 14, 90);
-      fxc.strokeStyle = locked ? '#ff3b30' : (seek ? '#f2a516' : 'rgba(207,227,208,.75)');
+      fxc.strokeStyle = amico ? '#7fd8ff'
+                      : (locked ? '#ff3b30' : (seek ? '#f2a516' : 'rgba(207,227,208,.75)'));
       fxc.lineWidth = locked ? 2 : 1.2;
       const c = s*.34;
       [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(q=>{
@@ -1987,6 +2352,7 @@ function drawOverlay(){
       fxc.textAlign = 'center';
       fxc.fillText(Math.round(dist)+' M', x, y+s+15);
       if(j.userData.boss) fxc.fillText('F-35', x, y-s-7);
+      if(amico) fxc.fillText(j.userData.name + ' · AMICO', x, y-s-7);
       if(locked){
         fxc.fillText('AGGANCIATO', x, y-s-7);
         fxc.beginPath(); fxc.arc(x,y,s*1.35,0,7); fxc.stroke();
@@ -2001,7 +2367,8 @@ function drawOverlay(){
       const ey = h*.5;
       const x = clamp(ex, 40, w-40);
       fxc.save(); fxc.translate(x, ey); fxc.rotate(rel > 0 ? 0 : Math.PI);
-      fxc.fillStyle = j.userData.mode === 'attack' ? '#f2a516' : 'rgba(207,227,208,.55)';
+      fxc.fillStyle = amico ? 'rgba(127,216,255,.75)'
+                    : (j.userData.mode === 'attack' ? '#f2a516' : 'rgba(207,227,208,.55)');
       fxc.beginPath(); fxc.moveTo(14,0); fxc.lineTo(-6,-8); fxc.lineTo(-6,8); fxc.closePath(); fxc.fill();
       fxc.restore();
     }
@@ -2164,7 +2531,13 @@ function animate(){
       if(S.spawnQueue > 0){
         S.spawnTimer -= dt;
         if(S.spawnTimer <= 0){ spawnJet(); S.spawnQueue--; S.spawnTimer = 1.6; hud(); }
-      } else if(jets.length === 0 && !fx.some(f=>f.type==='crash')){
+      }
+      if(S.depQueue > 0){
+        S.depTimer -= dt;
+        if(S.depTimer <= 0){ spawnDeparture(); S.depQueue--; S.depTimer = 26; }
+      }
+      if(jets.length === 0 && S.spawnQueue === 0 && S.depQueue === 0 &&
+         friendlies.length === 0 && !fx.some(f=>f.type==='crash')){
         S.waveActive = false; S.waveTimer = 3.2;
         if(S.wave < WAVES.length-1){
           S.score += 500;
@@ -2176,15 +2549,19 @@ function animate(){
 
     /* --- simulazione --- */
     updateJets(dt);
+    updateFriendlies(dt);
     updateMissiles(dt);
     updateProjectiles(dt);
     updateLock(dt);
     updateFX(dt);
     drawRadar();
 
-    if(scene.userData.dish) scene.userData.dish.rotation.z += dt*1.2;
-    if(scene.userData.clouds){
-      for(const c of scene.userData.clouds){
+    if(worldGroup.userData.dish) worldGroup.userData.dish.rotation.z += dt*1.2;
+    if(worldGroup.userData.beacon)
+      worldGroup.userData.beacon.material.color.setHex(
+        Math.sin(performance.now()*.004) > .3 ? 0x9ff0ff : 0x123b45);
+    if(worldGroup.userData.clouds){
+      for(const c of worldGroup.userData.clouds){
         c.position.x += c.userData.drift*dt;
         if(c.position.x > 4200) c.position.x = -4200;
       }
