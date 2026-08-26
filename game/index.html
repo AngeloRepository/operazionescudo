@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>OPERAZIONE SCUDO — Difesa Antiaerea Stinger</title>
+<title>SKY FORTRESS — Aether Lance · Sistema AETHER-9</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#0d120e;
-  --panel:rgba(10,16,11,.82);
-  --line:rgba(207,227,208,.28);
-  --data:#cfe3d0;
-  --amber:#f2a516;
-  --red:#ff3b30;
-  --dim:rgba(207,227,208,.55);
+  --ink:#060b18;
+  --panel:rgba(10,18,32,.84);
+  --line:rgba(120,190,255,.30);
+  --data:#cfe6ff;
+  --amber:#ffa33c;
+  --red:#ff4d6d;
+  --dim:rgba(186,220,255,.55);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:100%;height:100%;overflow:hidden;background:#000;color:var(--data);
@@ -25,7 +25,7 @@ body.touch{cursor:default}
 canvas{display:block}
 #fx2d{position:absolute;inset:0;z-index:8;pointer-events:none}
 
-/* --- vignetta ottica dello Stinger: elemento firma --- */
+/* --- vignetta del mirino della Aether Lance: elemento firma --- */
 #optics{position:absolute;inset:0;z-index:9;pointer-events:none;
   background:radial-gradient(circle at 50% 50%, rgba(0,0,0,0) 34%, rgba(0,0,0,.55) 62%, rgba(0,0,0,.93) 88%);
   transition:background .25s}
@@ -51,23 +51,23 @@ canvas{display:block}
 #reloadbar{height:5px;background:rgba(255,255,255,.12);margin-top:7px;display:none}
 #reloadfill{height:100%;width:0%;background:var(--amber)}
 #coolbar{height:5px;background:rgba(255,255,255,.12);margin-top:5px}
-#coolfill{height:100%;width:0%;background:#7fd8ff;transition:background .2s}
+#coolfill{height:100%;width:0%;background:#62e8ff;transition:background .2s}
 #coolfill.low{background:var(--red)}
 
-#proc{top:176px;left:18px;border-left:3px solid rgba(207,227,208,.28);min-width:236px}
-#proc .step{font-size:12px;letter-spacing:.04em;color:rgba(207,227,208,.36);
+#proc{top:176px;left:18px;border-left:3px solid rgba(186,220,255,.28);min-width:236px}
+#proc .step{font-size:12px;letter-spacing:.04em;color:rgba(186,220,255,.36);
   display:flex;align-items:center;gap:9px;padding:1px 0}
 #proc .step i{width:7px;height:7px;border:1px solid currentColor;flex:none}
 #proc .step b{color:var(--amber);font-weight:400}
-#proc .step.done{color:rgba(207,227,208,.7)}
-#proc .step.done i{background:rgba(207,227,208,.6);border-color:rgba(207,227,208,.6)}
+#proc .step.done{color:rgba(186,220,255,.7)}
+#proc .step.done i{background:rgba(186,220,255,.6);border-color:rgba(186,220,255,.6)}
 #proc .step.on{color:#fff}
 #proc .step.on i{background:var(--amber);border-color:var(--amber);box-shadow:0 0 9px var(--amber)}
 
 #radarwrap{position:absolute;bottom:18px;left:18px;width:186px;height:186px;z-index:12}
 #radar{width:100%;height:100%;border-radius:50%;border:1px solid var(--line);
   background:rgba(8,14,9,.85);box-shadow:0 0 24px rgba(0,0,0,.7);transition:border-color .2s,box-shadow .2s}
-#radar.alarm{border-color:var(--red);box-shadow:0 0 26px rgba(255,59,48,.45)}
+#radar.alarm{border-color:var(--red);box-shadow:0 0 26px rgba(255,77,109,.45)}
 #radarlabel{position:absolute;bottom:-2px;left:0;width:100%;text-align:center;font-size:10px;
   letter-spacing:.22em;color:var(--dim)}
 
@@ -75,7 +75,7 @@ canvas{display:block}
 #bossbar .name{font-family:'Oswald',sans-serif;letter-spacing:.2em;font-size:13px;text-align:center;
   color:var(--red);margin-bottom:5px;text-shadow:0 0 12px #000}
 #bosstrack{height:9px;background:rgba(255,255,255,.1);border:1px solid var(--line)}
-#bossfill{height:100%;width:100%;background:linear-gradient(90deg,#ff3b30,#f2a516);transition:width .25s}
+#bossfill{height:100%;width:100%;background:linear-gradient(90deg,#ff4d6d,#ffa33c);transition:width .25s}
 
 #banner{position:absolute;top:34%;left:50%;transform:translateX(-50%);text-align:center;z-index:13;
   font-family:'Oswald',sans-serif;letter-spacing:.3em;font-size:34px;color:#fff;opacity:0;
@@ -95,7 +95,7 @@ canvas{display:block}
   justify-content:center;align-items:center;text-align:center;padding:24px;
   background:
     linear-gradient(rgba(6,10,7,.90),rgba(6,10,7,.96)),
-    repeating-linear-gradient(0deg,rgba(207,227,208,.05) 0 1px,transparent 1px 3px);
+    repeating-linear-gradient(0deg,rgba(186,220,255,.05) 0 1px,transparent 1px 3px);
   cursor:default;
   overflow-y:auto; touch-action:pan-y; -webkit-overflow-scrolling:touch;
   overscroll-behavior:contain}
@@ -105,9 +105,9 @@ canvas{display:block}
 .btn{font-family:'Oswald',sans-serif;letter-spacing:.18em;font-size:15px;padding:14px 30px;margin:8px;
   width:330px;background:transparent;color:var(--data);border:1px solid var(--line);cursor:pointer;
   transition:background .18s,color .18s,border-color .18s}
-.btn:hover{background:var(--amber);border-color:var(--amber);color:#0d120e}
+.btn:hover{background:var(--amber);border-color:var(--amber);color:#060b18}
 .btn.primary{border-color:var(--amber);color:var(--amber)}
-.btn.primary:hover{color:#0d120e}
+.btn.primary:hover{color:#060b18}
 .keys{margin-top:26px;display:grid;grid-template-columns:auto auto;gap:6px 18px;font-size:13px;color:var(--dim)}
 .keys b{color:var(--data);font-weight:400}
 .stats{margin-top:18px;font-size:14px;color:var(--dim);line-height:1.9}
@@ -115,6 +115,21 @@ canvas{display:block}
 /* ---------- comandi tattili ---------- */
 #touch{position:absolute;inset:0;z-index:22;pointer-events:none;display:none}
 body.touch #touch{display:block}
+/* --- versione desktop: barra compatta in basso, si gioca solo col mouse --- */
+body.desk.playing #touch{display:flex;align-items:flex-end;justify-content:center;
+  padding-bottom:14px;gap:7px;flex-wrap:wrap}
+body.desk #touch .tbtn{position:static;border-radius:3px;width:auto;height:auto;
+  padding:7px 13px;font-size:11px;opacity:.70;transition:opacity .15s,background .15s}
+body.desk #touch .tbtn:hover{opacity:1}
+body.desk #touch .tbtn small{font-size:8px}
+body.desk #tPause{order:9;transform:none;top:auto;left:auto}
+body.desk #tFire{order:1;padding:9px 24px;font-size:13px;background:rgba(70,12,26,.65)}
+body.desk #tBcu{order:2}
+body.desk #tUncage{order:3}
+body.desk #tIff{order:4;display:none}
+body.desk.base #tIff{display:flex}
+body.desk #tCrouch{order:5}
+body.desk #tZoom{order:6}
 .tbtn{position:absolute;pointer-events:auto;padding:0;
   display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.15;
   font-family:'Oswald',sans-serif;letter-spacing:.08em;font-size:11px;color:var(--data);
@@ -122,11 +137,11 @@ body.touch #touch{display:block}
   -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);cursor:pointer;
   transition:background .1s,color .1s,border-color .1s}
 .tbtn small{font-size:9px;opacity:.6;letter-spacing:.04em}
-.tbtn.on{background:rgba(242,165,22,.9);color:#0d120e;border-color:var(--amber)}
+.tbtn.on{background:rgba(255,163,60,.9);color:#060b18;border-color:var(--amber)}
 .tbtn.hot{border-color:var(--amber);color:var(--amber)}
 #tFire{right:16px;bottom:16px;width:98px;height:98px;font-size:15px;
   border-color:var(--red);color:var(--red);background:rgba(40,8,6,.55)}
-#tFire.on{background:rgba(255,59,48,.9);color:#fff;border-color:var(--red)}
+#tFire.on{background:rgba(255,77,109,.9);color:#fff;border-color:var(--red)}
 #tUncage{right:122px;bottom:26px;width:64px;height:64px}
 #tBcu{right:122px;bottom:100px;width:64px;height:64px}
 #tZoom{right:32px;bottom:124px;width:56px;height:56px}
@@ -134,9 +149,9 @@ body.touch #touch{display:block}
 #tIff{right:196px;bottom:82px;width:60px;height:60px;display:none}
 body.base #tIff{display:flex}
 body.base #tIff{right:calc(196px + env(safe-area-inset-right))}
-#iffval.amico{color:#7fd8ff}
-#iffval.ostile{color:#ff3b30}
-#iffval.ignoto{color:#f2a516}
+#iffval.amico{color:#62e8ff}
+#iffval.ostile{color:#ff4d6d}
+#iffval.ignoto{color:#ffa33c}
 #tPause{top:12px;left:50%;transform:translateX(-50%);width:52px;height:38px;border-radius:3px;font-size:11px}
 
 #procmini{display:none;font-size:11px;color:var(--amber);letter-spacing:.06em;margin-top:3px}
@@ -167,6 +182,7 @@ body.touch #proc{display:none}
 body.touch #procmini{display:block}
 body.touch #radarwrap{width:104px;height:104px;left:12px;bottom:12px}
 body.touch #radarlabel{font-size:8px}
+body.touch #ops{top:52px;font-size:9px;gap:8px;padding:4px 9px}
 body.touch #banner{font-size:21px;top:26%}
 body.touch #banner small{font-size:10px}
 body.touch #alert{font-size:12.5px;top:58px;letter-spacing:.16em}
@@ -203,9 +219,9 @@ body.touch .touchkeys{display:grid}
 #menu::before{content:'';position:absolute;inset:0;pointer-events:none;
   background:radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 45%, rgba(0,0,0,.6) 100%)}
 #homeGrain{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:.45;
-  background:repeating-linear-gradient(0deg, rgba(207,227,208,.055) 0 1px, transparent 1px 3px)}
+  background:repeating-linear-gradient(0deg, rgba(186,220,255,.055) 0 1px, transparent 1px 3px)}
 #homeSweep{position:absolute;left:0;right:0;height:170px;z-index:4;pointer-events:none;opacity:.30;
-  background:linear-gradient(180deg, transparent, rgba(169,220,180,.11), transparent);
+  background:linear-gradient(180deg, transparent, rgba(120,200,255,.11), transparent);
   animation:sweep 8s linear infinite}
 @keyframes sweep{ from{ top:-180px } to{ top:100% } }
 
@@ -231,7 +247,7 @@ body.touch .touchkeys{display:grid}
 .hName b{font-family:'Oswald',sans-serif;font-size:19px;letter-spacing:.26em;color:#fff;display:block;line-height:1}
 .hName span{font-size:9.5px;letter-spacing:.17em;color:var(--dim)}
 .hClass{margin-left:auto;font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.22em;
-  color:#ffb84d;border:1px solid rgba(242,165,22,.5);background:rgba(242,165,22,.09);padding:5px 12px}
+  color:#ffbd6a;border:1px solid rgba(255,163,60,.5);background:rgba(255,163,60,.09);padding:5px 12px}
 .hTime{display:flex;gap:16px;text-align:right}
 .hTime b{font-family:'Share Tech Mono',monospace;font-size:17px;color:var(--data);display:block;line-height:1.1}
 .hTime span{font-size:8.5px;letter-spacing:.2em;color:var(--dim)}
@@ -244,20 +260,20 @@ body.touch .touchkeys{display:grid}
 .sys,.kv{list-style:none;font-size:11px}
 .sys li,.kv li{display:flex;align-items:center;gap:7px;padding:3px 0;color:var(--dim);letter-spacing:.05em}
 .sys li b,.kv li b{margin-left:auto;color:var(--data);font-weight:400}
-.led{width:7px;height:7px;flex:none;border-radius:50%;background:#7fd8ff;box-shadow:0 0 7px #7fd8ff;
+.led{width:7px;height:7px;flex:none;border-radius:50%;background:#62e8ff;box-shadow:0 0 7px #62e8ff;
   animation:pulse 2.4s infinite}
 .led.warn{background:var(--amber);box-shadow:0 0 7px var(--amber);animation-duration:1.3s}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
 
 /* --- finestra sul mondo 3D --- */
-#feedwin{position:relative;border:1px solid rgba(207,227,208,.35);background:transparent;overflow:hidden}
+#feedwin{position:relative;border:1px solid rgba(186,220,255,.35);background:transparent;overflow:hidden}
 #feedwin .lbl,#tac .lbl{position:absolute;left:9px;top:7px;font-size:9.5px;letter-spacing:.18em;
   color:var(--dim);text-shadow:0 0 6px #000;pointer-events:none}
-#feedwin .rec{position:absolute;right:9px;top:7px;font-size:9.5px;letter-spacing:.16em;color:#ff6a60;
+#feedwin .rec{position:absolute;right:9px;top:7px;font-size:9.5px;letter-spacing:.16em;color:#ff7d92;
   text-shadow:0 0 6px #000;animation:pulse 1.8s infinite}
 #feedwin .tele{position:absolute;left:9px;bottom:7px;font-size:9.5px;letter-spacing:.14em;color:var(--dim);
   text-shadow:0 0 6px #000}
-#feedwin .c{position:absolute;width:16px;height:16px;border:1px solid rgba(242,165,22,.75)}
+#feedwin .c{position:absolute;width:16px;height:16px;border:1px solid rgba(255,163,60,.75)}
 #feedwin .c.tl{left:8px;top:24px;border-right:none;border-bottom:none}
 #feedwin .c.tr{right:8px;top:24px;border-left:none;border-bottom:none}
 #feedwin .c.bl{left:8px;bottom:24px;border-right:none;border-top:none}
@@ -271,10 +287,10 @@ body.touch .touchkeys{display:grid}
 /* --- traffico messaggi e briefing --- */
 #msgs{font-size:10.5px;line-height:1.75;color:var(--dim);height:150px;overflow:hidden}
 #msgs div{margin-bottom:2px;animation:msgin .45s ease-out}
-#msgs .t{color:rgba(207,227,208,.42)}
+#msgs .t{color:rgba(186,220,255,.42)}
 #msgs .a{color:var(--amber)}
-#msgs .c{color:#7fd8ff}
-#msgs .r{color:#ff6a60}
+#msgs .c{color:#62e8ff}
+#msgs .r{color:#ff7d92}
 @keyframes msgin{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
 #brief p{font-size:11.5px;line-height:1.75;color:var(--dim);margin-bottom:8px}
 #brief b{color:var(--data)}
@@ -290,19 +306,19 @@ body.touch .touchkeys{display:grid}
   transition:background .16s,color .16s,border-color .16s}
 .gobtn small{display:block;font-family:'Share Tech Mono',monospace;font-size:8.5px;
   letter-spacing:.06em;opacity:.6;margin-top:3px}
-.gobtn:hover{background:var(--data);color:#0d120e;border-color:var(--data)}
+.gobtn:hover{background:var(--data);color:#060b18;border-color:var(--data)}
 .gobtn.hot{border-color:var(--amber);color:var(--amber)}
-.gobtn.hot:hover{background:var(--amber);color:#0d120e}
+.gobtn.hot:hover{background:var(--amber);color:#060b18}
 .fHint{font-size:9.5px;letter-spacing:.1em;color:var(--dim);max-width:230px;text-align:right}
 .fHint b{color:var(--amber);font-weight:400}
 
 /* --- avvio del sistema --- */
 #boot{position:absolute;inset:0;z-index:9;background:#050807;padding:6vh 8vw;
   display:flex;flex-direction:column;justify-content:center}
-#bootlog{font-family:'Share Tech Mono',monospace;font-size:12.5px;line-height:2;color:#8fdcae;
-  white-space:pre-wrap;text-shadow:0 0 9px rgba(143,220,174,.35)}
-#bootbar{height:2px;background:rgba(143,220,174,.18);margin-top:22px}
-#bootbar i{display:block;height:100%;width:0;background:#8fdcae;transition:width .18s linear}
+#bootlog{font-family:'Share Tech Mono',monospace;font-size:12.5px;line-height:2;color:#7fe9ff;
+  white-space:pre-wrap;text-shadow:0 0 9px rgba(127,233,255,.35)}
+#bootbar{height:2px;background:rgba(127,233,255,.18);margin-top:22px}
+#bootbar i{display:block;height:100%;width:0;background:#7fe9ff;transition:width .18s linear}
 #boot.done{opacity:0;pointer-events:none;transition:opacity .7s}
 
 @media (max-width:1000px), (orientation:portrait){
@@ -340,7 +356,7 @@ body.touch .touchkeys{display:grid}
 .xbtn{position:absolute;right:20px;top:18px;background:transparent;border:1px solid var(--line);
   color:var(--data);font-family:'Oswald',sans-serif;letter-spacing:.14em;font-size:12px;
   padding:7px 14px;cursor:pointer}
-.xbtn:hover{background:var(--data);color:#0d120e}
+.xbtn:hover{background:var(--data);color:#060b18}
 
 /* --- accreditamento --- */
 #idscreen .box{max-width:480px;margin-top:6vh;text-align:center}
@@ -354,38 +370,38 @@ body.touch .touchkeys{display:grid}
 #nameInput{width:100%;background:rgba(0,0,0,.5);border:1px solid var(--line);
   color:#fff;font-family:'Share Tech Mono',monospace;font-size:17px;letter-spacing:.14em;
   padding:12px 14px;outline:none}
-#nameInput:focus{border-color:var(--amber);box-shadow:0 0 0 1px rgba(242,165,22,.3)}
+#nameInput:focus{border-color:var(--amber);box-shadow:0 0 0 1px rgba(255,163,60,.3)}
 #nameMsg{min-height:34px;font-size:11px;line-height:1.6;margin-top:8px;text-align:left;color:var(--dim)}
-#nameMsg.err{color:#ff6a60}
-#nameMsg.ok{color:#7fd8ff}
+#nameMsg.err{color:#ff7d92}
+#nameMsg.ok{color:#62e8ff}
 #nameMsg button{background:transparent;border:1px solid var(--amber);color:var(--amber);
   font-family:'Share Tech Mono',monospace;font-size:11px;padding:3px 9px;margin-left:6px;cursor:pointer}
 #idscreen .go{width:100%;margin-top:12px;font-family:'Oswald',sans-serif;letter-spacing:.2em;
-  font-size:15px;padding:13px;background:var(--amber);color:#0d120e;border:none;cursor:pointer}
+  font-size:15px;padding:13px;background:var(--amber);color:#060b18;border:none;cursor:pointer}
 #idscreen .go:disabled{opacity:.35;cursor:not-allowed}
-#idscreen .note{font-size:9.5px;letter-spacing:.1em;color:rgba(207,227,208,.4);margin-top:14px;line-height:1.7}
+#idscreen .note{font-size:9.5px;letter-spacing:.1em;color:rgba(186,220,255,.4);margin-top:14px;line-height:1.7}
 
 /* --- tabelle di classifica --- */
 .tabs{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
 .tab{font-family:'Share Tech Mono',monospace;font-size:10.5px;letter-spacing:.12em;
   background:transparent;border:1px solid var(--line);color:var(--dim);padding:6px 11px;cursor:pointer}
-.tab.on{border-color:var(--amber);color:var(--amber);background:rgba(242,165,22,.1)}
+.tab.on{border-color:var(--amber);color:var(--amber);background:rgba(255,163,60,.1)}
 .lbTable{width:100%;border-collapse:collapse;font-size:12px}
 .lbTable th{font-family:'Oswald',sans-serif;font-size:9.5px;letter-spacing:.18em;color:var(--amber);
   text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);font-weight:400}
-.lbTable td{padding:7px 8px;border-bottom:1px solid rgba(207,227,208,.08);color:var(--data)}
+.lbTable td{padding:7px 8px;border-bottom:1px solid rgba(186,220,255,.08);color:var(--data)}
 .lbTable td.num{color:var(--dim);width:46px}
 .lbTable td.sc{color:#fff;font-size:13px}
-.lbTable tr.me td{background:rgba(242,165,22,.12);color:#fff}
-.lbTable tr.top1 td.num{color:#ffd24a}
-.lbTable tr.top2 td.num,.lbTable tr.top3 td.num{color:#cfe3d0}
-.lbTable .who{color:#7fd8ff;cursor:pointer;text-decoration:none;border-bottom:1px dotted rgba(127,216,255,.4)}
+.lbTable tr.me td{background:rgba(255,163,60,.12);color:#fff}
+.lbTable tr.top1 td.num{color:#ffd76a}
+.lbTable tr.top2 td.num,.lbTable tr.top3 td.num{color:#cfe6ff}
+.lbTable .who{color:#62e8ff;cursor:pointer;text-decoration:none;border-bottom:1px dotted rgba(98,232,255,.4)}
 .lbTable .who:hover{color:#fff}
 .lbEmpty{color:var(--dim);font-size:11.5px;padding:22px 0;text-align:center;line-height:1.8}
 #lbFoot{display:flex;justify-content:space-between;gap:12px;margin-top:12px;
-  font-size:9.5px;letter-spacing:.12em;color:rgba(207,227,208,.45)}
-.livedot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#7fd8ff;
-  box-shadow:0 0 7px #7fd8ff;animation:pulse 2s infinite;margin-right:5px}
+  font-size:9.5px;letter-spacing:.12em;color:rgba(186,220,255,.45)}
+.livedot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#62e8ff;
+  box-shadow:0 0 7px #62e8ff;animation:pulse 2s infinite;margin-right:5px}
 
 /* --- profilo --- */
 #profile .box{max-width:560px;margin-top:6vh}
@@ -397,7 +413,7 @@ body.touch .touchkeys{display:grid}
 .pfGrid div{background:rgba(8,13,10,.98);padding:11px 12px}
 .pfGrid span{display:block;font-size:9px;letter-spacing:.18em;color:var(--dim);margin-bottom:4px}
 .pfGrid b{font-family:'Oswald',sans-serif;font-size:19px;color:#fff;font-weight:400}
-.pfGrid b.up{color:#7fd8ff}.pfGrid b.down{color:#ff6a60}
+.pfGrid b.up{color:#62e8ff}.pfGrid b.down{color:#ff7d92}
 
 /* --- cruscotto in partita --- */
 #ops{position:absolute;top:12px;left:50%;transform:translateX(-50%);z-index:12;display:none;
@@ -407,7 +423,7 @@ body.touch .touchkeys{display:grid}
 body.playing #ops{display:flex}
 #ops i{font-style:normal;color:var(--dim)}
 #ops b{color:#fff;font-weight:400;margin-left:5px}
-#ops .op{color:#7fd8ff}
+#ops .op{color:#62e8ff}
 #ops .rec.hot b{color:var(--amber)}
 
 /* --- fine partita, blocco online --- */
@@ -417,10 +433,29 @@ body.playing #ops{display:flex}
   display:block;line-height:1.1}
 #overNet .rec{color:var(--amber);letter-spacing:.18em;font-family:'Oswald',sans-serif;
   animation:recglow 1.4s ease-in-out infinite}
-@keyframes recglow{0%,100%{text-shadow:0 0 0 rgba(242,165,22,0)}50%{text-shadow:0 0 22px rgba(242,165,22,.9)}}
+@keyframes recglow{0%,100%{text-shadow:0 0 0 rgba(255,163,60,0)}50%{text-shadow:0 0 22px rgba(255,163,60,.9)}}
 #overNet .k{color:var(--dim)}
 #overNet .v{color:#fff}
 .overBtns{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:18px}
+
+/* --- ingresso cinematografico del boss --- */
+#bossIntro{position:absolute;inset:0;z-index:26;display:none;pointer-events:none;
+  align-items:center;justify-content:center;flex-direction:column;text-align:center}
+#bossIntro.on{display:flex}
+#bossIntro .bars{position:absolute;inset:0;pointer-events:none}
+#bossIntro .bars::before,#bossIntro .bars::after{content:'';position:absolute;left:0;right:0;
+  height:14vh;background:#02040a;animation:barsIn .8s ease-out}
+#bossIntro .bars::before{top:0}#bossIntro .bars::after{bottom:0}
+@keyframes barsIn{from{height:0}to{height:14vh}}
+#bossIntro .tag{font-family:'Oswald',sans-serif;letter-spacing:.5em;font-size:11px;
+  color:#ff4d6d;animation:fadeUp .7s .2s both}
+#bossIntro .nm{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.22em;
+  font-size:clamp(26px,5vw,52px);color:#fff;margin:10px 0;
+  text-shadow:0 0 40px rgba(169,107,255,.85);animation:fadeUp .8s .45s both}
+#bossIntro .cl{font-size:12px;letter-spacing:.3em;color:#62e8ff;animation:fadeUp .8s .8s both}
+#bossIntro .wr{font-size:11px;letter-spacing:.22em;color:var(--dim);margin-top:16px;
+  animation:fadeUp .8s 1.15s both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
 /* --- notifiche --- */
 #toasts{position:fixed;right:14px;bottom:14px;z-index:58;display:flex;flex-direction:column;
@@ -428,8 +463,8 @@ body.playing #ops{display:flex}
 .toast{background:rgba(8,13,10,.96);border:1px solid var(--line);border-left:3px solid var(--amber);
   padding:9px 13px;font-size:11px;letter-spacing:.08em;color:var(--data);
   animation:tin .4s ease-out;box-shadow:0 8px 26px rgba(0,0,0,.7)}
-.toast.good{border-left-color:#7fd8ff}
-.toast.bad{border-left-color:#ff6a60}
+.toast.good{border-left-color:#62e8ff}
+.toast.bad{border-left-color:#ff7d92}
 .toast b{color:#fff}
 @keyframes tin{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
 
@@ -481,11 +516,11 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
 
 <div id="hud">
   <div id="mission" class="panel">
-    <span class="tag">MISSIONE</span>
-    <span class="k">SETTORE</span> <span class="v" id="sectorval">KILO-7</span><br>
+    <span class="tag">OPERAZIONE</span>
+    <span class="k">SETTORE</span> <span class="v" id="sectorval">CITADEL</span><br>
     <span class="k">ONDATA</span> <span class="v" id="waveval">1 / 4</span><br>
-    <span class="k">VELIVOLI</span> <span class="v" id="airval">0</span><br>
-    <span class="k">INTEGRITÀ</span> <span class="v" id="hpval">100%</span>
+    <span class="k">OSTILI</span> <span class="v" id="airval">0</span><br>
+    <span class="k">SCUDO</span> <span class="v" id="hpval">100%</span>
     <div id="depline" style="display:none">
       <span class="k">IN SALVO</span> <span class="v" id="depval">0 / 5</span>
       &nbsp;<span class="k">PERSI</span> <span class="v" id="lostval">0</span>
@@ -493,12 +528,12 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
   </div>
 
   <div id="proc" class="panel">
-    <span class="tag">PROCEDURA DI LANCIO</span>
-    <div class="step" id="p1"><i></i>1 · AVVISTAMENTO</div>
-    <div class="step" id="p2"><i></i>2 · BCU / ARGON <b>[E]</b></div>
-    <div class="step" id="p3"><i></i>3 · AGGANCIO IR</div>
-    <div class="step" id="p4"><i></i>4 · ANTICIPO</div>
-    <div class="step" id="p5"><i></i>5 · SBLOCCO <b>[C]</b> · FUOCO</div>
+    <span class="tag">SEQUENZA DI SCARICA</span>
+    <div class="step" id="p1"><i></i>1 · RILEVAMENTO</div>
+    <div class="step" id="p2"><i></i>2 · ENERGY CELL <b>[E]</b></div>
+    <div class="step" id="p3"><i></i>3 · ENERGY LOCK</div>
+    <div class="step" id="p4"><i></i>4 · VETTORE</div>
+    <div class="step" id="p5"><i></i>5 · RILASCIO <b>[C]</b> · FUOCO</div>
   </div>
 
   <div id="score" class="panel">
@@ -508,30 +543,37 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
   </div>
 
   <div id="weapon" class="panel">
-    <span class="tag">FIM-92 STINGER</span>
-    <div id="lockline">RICERCA INFRAROSSI…</div>
-    <span class="k">TUBO</span> <span class="v" id="tubeval">PRONTO</span>
-    &nbsp;<span class="k">RISERVA</span> <span class="v" id="ammoval">0</span><br>
-    <span class="k">BCU</span> <span class="v" id="bcuval">ASSENTE</span>
-    <div id="iffline" style="display:none"><span class="k">IFF</span> <span class="v" id="iffval">—</span></div>
+    <span class="tag">AETHER LANCE MK-IV</span>
+    <div id="lockline">SCANSIONE SIGNATURE…</div>
+    <span class="k">LANCIA</span> <span class="v" id="tubeval">PRONTO</span>
+    &nbsp;<span class="k">CELLE</span> <span class="v" id="ammoval">0</span><br>
+    <span class="k">NUCLEO</span> <span class="v" id="bcuval">ASSENTE</span>
+    <div id="iffline" style="display:none"><span class="k">SCAN</span> <span class="v" id="iffval">—</span></div>
     <div id="coolbar"><div id="coolfill"></div></div>
     <div id="reloadbar"><div id="reloadfill"></div></div>
-    <div id="procmini">FASE 1 · AVVISTAMENTO</div>
+    <div id="procmini">FASE 1 · RILEVAMENTO</div>
   </div>
 
   <div id="bossbar">
-    <div class="name">F-35A LIGHTNING II — BERSAGLIO PRIORITARIO</div>
+    <div class="name">LEVIATHAN CLASS DESTROYER — NUCLEO PRIORITARIO</div>
     <div id="bosstrack"><div id="bossfill"></div></div>
   </div>
 
   <div id="ops">
-    <span class="op">OPERATORE<b id="opsName">—</b></span>
+    <span class="op">GUARDIAN<b id="opsName">—</b></span>
     <i>PUNTI<b id="opsScore">0</b></i>
     <i class="rec" id="opsRecWrap">RECORD<b id="opsRec">0</b></i>
     <i>POS<b id="opsRank">—</b></i>
     <i>ONDATA<b id="opsLvl">1</b></i>
-    <i>INTEGRITÀ<b id="opsHp">100%</b></i>
+    <i>SCUDO<b id="opsHp">100%</b></i>
     <i>TEMPO<b id="opsTime">00:00</b></i>
+  </div>
+  <div id="bossIntro">
+    <div class="bars"></div>
+    <div class="tag">FIRMA DIMENSIONALE IN EMERSIONE</div>
+    <div class="nm">LEVIATHAN</div>
+    <div class="cl">CLASS DESTROYER · THE NULL</div>
+    <div class="wr">NUCLEO DI SINGOLARITÀ ESPOSTO — COLPISCILO QUANDO I DECOY SI SPENGONO</div>
   </div>
   <div id="feed"></div>
   <div id="alert"></div>
@@ -540,11 +582,11 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
 
 <div id="touch">
   <button class="tbtn" id="tPause">II</button>
-  <button class="tbtn" id="tBcu">BCU<small>argon</small></button>
-  <button class="tbtn" id="tUncage">SBLOCCO<small>sensore</small></button>
+  <button class="tbtn" id="tBcu">CELL<small>nucleo</small></button>
+  <button class="tbtn" id="tUncage">RILASCIO<small>lancia</small></button>
   <button class="tbtn" id="tZoom">ZOOM</button>
-  <button class="tbtn" id="tIff">IFF<small>interroga</small></button>
-  <button class="tbtn" id="tCrouch">RIPARO<small>tieni</small></button>
+  <button class="tbtn" id="tIff">SCAN<small>identifica</small></button>
+  <button class="tbtn" id="tCrouch">SCUDO<small>tieni</small></button>
   <button class="tbtn" id="tFire">FUOCO</button>
 </div>
 
@@ -552,7 +594,7 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
 
 <div id="radarwrap">
   <canvas id="radar" width="186" height="186"></canvas>
-  <div id="radarlabel">RADAR 3 KM</div>
+  <div id="radarlabel">SCANNER · 3 KM</div>
 </div>
 
 <!-- ══════════════ CONSOLE C4ISR — LANDING ══════════════ -->
@@ -568,15 +610,15 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
     <header id="cHead">
       <div class="hUnit">
         <svg class="crest" viewBox="0 0 64 64" aria-hidden="true">
-          <polygon points="32,3 58,17 58,45 32,60 6,45 6,17" fill="none" stroke="#f2a516" stroke-width="1.8"/>
-          <circle cx="32" cy="32" r="15" fill="none" stroke="#cfe3d0" stroke-width=".9" stroke-dasharray="3 4" opacity=".8"/>
-          <path d="M19 45 L44 20" stroke="#cfe3d0" stroke-width="3.2" stroke-linecap="round"/>
-          <path d="M45 19 l-7 1.4 5.6 5.6z" fill="#f2a516"/>
-          <path d="M24 40 l-5.6 -1.4 1.4 5.6z" fill="#cfe3d0" opacity=".75"/>
+          <polygon points="32,3 58,17 58,45 32,60 6,45 6,17" fill="none" stroke="#ffa33c" stroke-width="1.8"/>
+          <circle cx="32" cy="32" r="15" fill="none" stroke="#cfe6ff" stroke-width=".9" stroke-dasharray="3 4" opacity=".8"/>
+          <path d="M19 45 L44 20" stroke="#cfe6ff" stroke-width="3.2" stroke-linecap="round"/>
+          <path d="M45 19 l-7 1.4 5.6 5.6z" fill="#ffa33c"/>
+          <path d="M24 40 l-5.6 -1.4 1.4 5.6z" fill="#cfe6ff" opacity=".75"/>
         </svg>
         <div class="hName">
-          <b>SCUDO</b>
-          <span>C4ISR · CENTRO OPERAZIONI AEREE TATTICHE</span>
+          <b>SKY FORTRESS</b>
+          <span>AEGIS NET · PONTE DI COMANDO DELLA SKY FORTRESS</span>
         </div>
       </div>
       <div id="opBadge">
@@ -586,7 +628,7 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
         <button onclick="Net.openProfile()">PROFILO</button>
         <button onclick="Net.rename()">RINOMINA</button>
       </div>
-      <div class="hClass">ESERCITAZIONE — DATI SIMULATI — SCENARIO DI FANTASIA</div>
+      <div class="hClass">SIMULAZIONE ADDESTRATIVA · SETTORE AETHER-9</div>
       <div class="hTime">
         <div><b id="zulu">00:00:00</b><span>ZULU</span></div>
         <div><b id="loc">00:00:00</b><span>LOCALE</span></div>
@@ -596,61 +638,61 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
     <section class="col" id="cLeft">
       <h3>STATO SISTEMI</h3>
       <ul class="sys">
-        <li><i class="led ok"></i>RADAR DI SCOPERTA<b>ATTIVO</b></li>
-        <li><i class="led ok"></i>INTERROGATORE IFF<b>MODO 4</b></li>
-        <li><i class="led ok"></i>DATALINK TATTICO<b>AGGANCIATO</b></li>
-        <li><i class="led warn"></i>COPERTURA A LUNGO RAGGIO<b>ASSENTE</b></li>
-        <li><i class="led ok"></i>POSTAZIONE MANPADS<b>IN LINEA</b></li>
+        <li><i class="led ok"></i>TACTICAL SCANNER<b>ATTIVO</b></li>
+        <li><i class="led ok"></i>SIGNAL SCAN<b>MODO 4</b></li>
+        <li><i class="led ok"></i>AEGIS DATALINK<b>SINCRONO</b></li>
+        <li><i class="led warn"></i>BATTERIE ORBITALI<b>OFFLINE</b></li>
+        <li><i class="led ok"></i>TORRETTA GUARDIAN<b>IN LINEA</b></li>
       </ul>
 
-      <h3>DOTAZIONE SEZIONE</h3>
+      <h3>DOTAZIONE TORRETTA</h3>
       <ul class="kv">
-        <li>COMPLESSI FIM-92<b>23</b></li>
-        <li>CARTUCCE BCU<b>23</b></li>
-        <li>OPERATORI<b>1</b></li>
-        <li>AUTONOMIA ARGON<b>38 s</b></li>
+        <li>PHOTON LANCE<b>23</b></li>
+        <li>ENERGY CELL<b>23</b></li>
+        <li>GUARDIAN PILOT<b>1</b></li>
+        <li>STABILITÀ NUCLEO<b>38 s</b></li>
       </ul>
 
-      <h3>METEO ALL'ALBA</h3>
+      <h3>CONDIZIONI DI STRATO</h3>
       <ul class="kv">
-        <li>VENTO<b>060° / 12 kt</b></li>
+        <li>CORRENTI<b>060° / 12 nodi</b></li>
         <li>VISIBILITÀ<b>&gt; 10 km</b></li>
-        <li>NUBI<b>SPARSE 4000 ft</b></li>
-        <li>ALBA<b>05:12 Z</b></li>
+        <li>TEMPESTE IONICHE<b>SPARSE</b></li>
+        <li>ALBA STELLARE<b>05:12 Z</b></li>
       </ul>
     </section>
 
     <section id="cCenter">
       <div id="feedwin">
-        <span class="lbl">FEED OTTICO 01 · POSTAZIONE MANPADS</span>
+        <span class="lbl">FEED OTTICO 01 · TORRETTA GUARDIAN</span>
         <span class="rec">● IN DIRETTA</span>
         <span class="tele">PTZ 04 · f/2.8 · IR OFF</span>
         <b class="c tl"></b><b class="c tr"></b><b class="c bl"></b><b class="c br"></b>
       </div>
       <div id="tac">
         <canvas id="tacCanvas"></canvas>
-        <span class="lbl">QUADRO TATTICO · TOCCA UN'AREA DI OPERAZIONI PER SELEZIONARLA</span>
+        <span class="lbl">TACTICAL SCANNER · TOCCA UN SETTORE PER SELEZIONARLO</span>
       </div>
     </section>
 
     <section class="col" id="cRight">
-      <h3>TRAFFICO MESSAGGI</h3>
+      <h3>CANALE AEGIS</h3>
       <div id="msgs"></div>
-      <h3 id="aoTitle">ORDINE DI OPERAZIONE</h3>
+      <h3 id="aoTitle">DIRETTIVA OPERATIVA</h3>
       <div id="brief"></div>
     </section>
 
     <footer id="cFoot">
       <div class="fSel">
-        <span>AREA SELEZIONATA</span>
-        <b id="aoSel">KILO-7</b>
+        <span>SETTORE SELEZIONATO</span>
+        <b id="aoSel">CITADEL</b>
       </div>
       <div class="fBtns">
-        <button class="gobtn" onclick="launchMission('easy')">ADDESTRAMENTO<small>IFF automatico · nemici prudenti</small></button>
-        <button class="gobtn hot" onclick="launchMission('hard')">OPERATIVO<small>procedura manuale · IFF [Q]</small></button>
-        <button class="gobtn" onclick="Net.openBoard()">CLASSIFICA<small>globale e per periodo</small></button>
+        <button class="gobtn" onclick="launchMission('easy')">ADDESTRAMENTO<small>scan automatico · ostili prudenti</small></button>
+        <button class="gobtn hot" onclick="launchMission('hard')">OPERATIVO<small>sequenza manuale · scan [Q]</small></button>
+        <button class="gobtn" onclick="Net.openBoard()">CLASSIFICA<small>del Corpo, per ciclo</small></button>
       </div>
-      <div class="fHint" id="fHint">FRECCE o MOUSE mira · <b>E</b> BCU · <b>C</b> sblocco · <b>SPAZIO</b> fuoco</div>
+      <div class="fHint" id="fHint">FRECCE o MOUSE mira · <b>E</b> cella · <b>C</b> rilascio · <b>SPAZIO</b> scarica</div>
     </footer>
 
   </div>
@@ -669,14 +711,14 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
 
 <!-- FINE PARTITA -->
 <div class="screen" id="over" style="display:none">
-  <h2 id="overtag">RAPPORTO DI FINE MISSIONE</h2>
+  <h2 id="overtag">RAPPORTO DI FINE OPERAZIONE</h2>
   <h1 id="overtitle">POSTAZIONE DISTRUTTA</h1>
   <p id="overdesc"></p>
   <div id="overNet"></div>
   <div class="stats">
     PUNTEGGIO FINALE <span id="fscore">0</span><br>
-    VELIVOLI ABBATTUTI <span id="fkills">0</span><br>
-    MISSILI LANCIATI <span id="fshots">0</span> — PRECISIONE <span id="facc">0%</span>
+    OSTILI DISINTEGRATI <span id="fkills">0</span><br>
+    PHOTON LANCE SCARICATE <span id="fshots">0</span> — PRECISIONE <span id="facc">0%</span>
   </div>
   <div class="overBtns">
     <button class="btn primary" onclick="resetGame()">GIOCA ANCORA</button>
@@ -690,18 +732,18 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
 <div class="ovl" id="idscreen">
   <div class="box">
     <svg class="crest" viewBox="0 0 64 64" aria-hidden="true">
-      <polygon points="32,3 58,17 58,45 32,60 6,45 6,17" fill="none" stroke="#f2a516" stroke-width="1.8"/>
-      <circle cx="32" cy="32" r="15" fill="none" stroke="#cfe3d0" stroke-width=".9" stroke-dasharray="3 4" opacity=".8"/>
-      <path d="M19 45 L44 20" stroke="#cfe3d0" stroke-width="3.2" stroke-linecap="round"/>
-      <path d="M45 19 l-7 1.4 5.6 5.6z" fill="#f2a516"/>
-      <path d="M24 40 l-5.6 -1.4 1.4 5.6z" fill="#cfe3d0" opacity=".75"/>
+      <polygon points="32,3 58,17 58,45 32,60 6,45 6,17" fill="none" stroke="#ffa33c" stroke-width="1.8"/>
+      <circle cx="32" cy="32" r="15" fill="none" stroke="#cfe6ff" stroke-width=".9" stroke-dasharray="3 4" opacity=".8"/>
+      <path d="M19 45 L44 20" stroke="#cfe6ff" stroke-width="3.2" stroke-linecap="round"/>
+      <path d="M45 19 l-7 1.4 5.6 5.6z" fill="#ffa33c"/>
+      <path d="M24 40 l-5.6 -1.4 1.4 5.6z" fill="#cfe6ff" opacity=".75"/>
     </svg>
-    <div class="kicker">C4ISR · ACCREDITAMENTO OPERATORE</div>
-    <div class="title">OPERAZIONE <em>SCUDO</em></div>
-    <div class="sub" style="margin-top:14px">Il nominativo identifica i tuoi punteggi nella classifica globale</div>
-    <label for="nameInput">NOMINATIVO OPERATORE</label>
+    <div class="kicker">SKY FORTRESS DEFENSE CORPS · ACCREDITAMENTO</div>
+    <div class="title">SKY <em>FORTRESS</em></div>
+    <div class="sub" style="margin-top:14px">Il tuo nominativo Guardian identifica i punteggi nella classifica del Corpo</div>
+    <label for="nameInput">NOMINATIVO GUARDIAN</label>
     <input id="nameInput" maxlength="20" autocomplete="off" autocapitalize="off"
-           spellcheck="false" placeholder="es. Falco_07">
+           spellcheck="false" placeholder="es. Vega_07">
     <div id="nameMsg">Da 3 a 20 caratteri: lettere, numeri e underscore.</div>
     <button class="go" id="nameGo">GIOCA</button>
     <div class="note" id="netNote"></div>
@@ -749,12 +791,13 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
 
 <div id="toasts"></div>
 
-<div id="loading">CARICAMENTO SISTEMI D'ARMA…</div>
+<div id="loading">SINCRONIZZAZIONE DELLA TORRETTA GUARDIAN…</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 /* =========================================================================
-   OPERAZIONE SCUDO — simulatore di difesa antiaerea con FIM-92 Stinger
+   SKY FORTRESS — difesa della città volante nel sistema AETHER-9
+   Guardian Pilot armato di AETHER LANCE MK-IV contro le squadre di THE NULL.
    Motore: three.js r128 — tutto in un unico file.
    ========================================================================= */
 
@@ -774,31 +817,31 @@ const DIFF = {
 
 /* ---------- ondate: due campagne distinte ---------- */
 const WAVES_RIDGE = [
-  { title:'ONDATA 1', sub:'CACCIA IN RICOGNIZIONE', count:3, speed:150, aggro:.35, boss:false },
-  { title:'ONDATA 2', sub:'ATTACCO AL SUOLO',       count:4, speed:172, aggro:.75, boss:false },
-  { title:'ONDATA 3', sub:'SATURAZIONE DEL SETTORE',count:5, speed:196, aggro:1.0, boss:false },
-  { title:'ONDATA FINALE', sub:'F-35A LIGHTNING II',count:0, speed:250, aggro:1.0, boss:true  }
+  { title:'ONDATA 1', sub:'INTERCEPTOR DRONE IN RICOGNIZIONE', count:3, speed:150, aggro:.35, boss:false },
+  { title:'ONDATA 2', sub:'NEBULA FIGHTER IN PICCHIATA',       count:4, speed:172, aggro:.75, boss:false },
+  { title:'ONDATA 3', sub:'STORM HUNTER — SATURAZIONE',count:5, speed:196, aggro:1.0, boss:false },
+  { title:'ONDATA FINALE', sub:'LEVIATHAN CLASS DESTROYER',count:0, speed:250, aggro:1.0, boss:true  }
 ];
 const WAVES_BASE = [
-  { title:'PARTENZA 1', sub:'TRASPORTO ALFA IN ROLLAGGIO',  count:2, speed:165, aggro:.5, dep:1 },
-  { title:'PARTENZA 2', sub:'TRASPORTO BRAVO — DUE OSTILI', count:3, speed:182, aggro:.8, dep:1 },
-  { title:'PARTENZA 3', sub:'DUE VELIVOLI IN SEQUENZA',     count:4, speed:196, aggro:1.0, dep:2 },
-  { title:'ULTIMA PARTENZA', sub:'SCORTA CONTRO F-35',      count:2, speed:200, aggro:1.0, dep:1, boss:true }
+  { title:'DISTACCO 1', sub:'SHUTTLE ALFA IN USCITA',  count:2, speed:165, aggro:.5, dep:1 },
+  { title:'DISTACCO 2', sub:'SHUTTLE BRAVO — DUE OSTILI', count:3, speed:182, aggro:.8, dep:1 },
+  { title:'DISTACCO 3', sub:'DUE SHUTTLE IN SEQUENZA',     count:4, speed:196, aggro:1.0, dep:2 },
+  { title:'ULTIMO DISTACCO', sub:'SCORTA CONTRO IL LEVIATHAN',      count:2, speed:200, aggro:1.0, dep:1, boss:true }
 ];
 
 /* Il profilo del terreno è parametrico: la cresta è stretta e montuosa,
    la base aerea ha mezzo chilometro di piana per la pista.               */
 const SCEN = {
-  ridge:  { label:'CRESTA KILO-7',   waves:WAVES_RIDGE,
+  ridge:  { label:'CLOUD CITADEL',   waves:WAVES_RIDGE,
             terr:{ flat:70,  ramp:240, mStart:1250, mRamp:1250, amp:250, mtn:760 } },
-  airbase:{ label:'BASE AEREA DELTA', waves:WAVES_BASE,
+  airbase:{ label:'ORBITAL GATEWAY', waves:WAVES_BASE,
             terr:{ flat:640, ramp:520, mStart:2200, mRamp:1500, amp:130, mtn:600 } }
 };
 let SCN = 'ridge';
 let WAVES = WAVES_RIDGE;
 let worldGroup = null;
 const RW_Z = -170, RW_LEN = 2400, RW_W = 60;      // geometria della pista
-const CALLSIGN = ['ALFA','BRAVO','CHARLIE','DELTA','ECHO','FOXTROT'];
+const CALLSIGN = ['ARK-1','ARK-2','ARK-3','ARK-4','ARK-5','ARK-6'];
 
 /* ---------- stato ---------- */
 const PLAYER = new V3(0, 2.7, 0);
@@ -815,9 +858,10 @@ let zoomToggle = false;
 let vmScale = 1, vmDX = 0, vmDY = 0;      // taratura del modello in prima persona
 /* Su schermi tattili si usano i comandi a tocco e si alleggerisce la scena:
    meno vertici, meno vegetazione, niente ombre proiettate.                    */
-const TOUCH = (navigator.maxTouchPoints > 0 && matchMedia('(pointer: coarse)').matches) || 'ontouchstart' in window;
+const TOUCH = navigator.maxTouchPoints > 0 && matchMedia('(pointer: coarse)').matches;
+let lastTouchAt = 0;      // per distinguere i clic veri da quelli emulati dal tocco
 const LOW = TOUCH;
-if(TOUCH) document.body.classList.add('touch');
+document.body.classList.add(TOUCH ? 'touch' : 'desk');
 
 /* =========================================================================
    AUDIO — sintetizzato con WebAudio (nessun file esterno)
@@ -834,7 +878,7 @@ const AU = {
     this.noise = buf;
     // rombo di fondo dei motori
     const src = this.ctx.createBufferSource(); src.buffer = buf; src.loop = true;
-    const lp = this.ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=110;
+    const lp = this.ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=78;  // rombo dei motori a ioni
     this.jetGain = this.ctx.createGain(); this.jetGain.gain.value = 0;
     src.connect(lp); lp.connect(this.jetGain); this.jetGain.connect(this.ctx.destination);
     src.start();
@@ -856,12 +900,12 @@ const AU = {
     g.gain.exponentialRampToValueAtTime(0.0001,this.ctx.currentTime+dur);
     o.connect(g); g.connect(this.ctx.destination); o.start(); o.stop(this.ctx.currentTime+dur);
   },
-  // tono continuo di aggancio (il "growl" dello Stinger)
+  // tono continuo di energy lock
   lock(on){
     if(!this.ctx) return;
     if(on && !this.lockOsc){
       this.lockOsc = this.ctx.createOscillator(); this.lockGain = this.ctx.createGain();
-      this.lockOsc.type='square'; this.lockOsc.frequency.value = 1180;
+      this.lockOsc.type='sine'; this.lockOsc.frequency.value = 1320;   // tono di energy lock
       this.lockGain.gain.value = 0.05;
       this.lockOsc.connect(this.lockGain); this.lockGain.connect(this.ctx.destination);
       this.lockOsc.start();
@@ -870,12 +914,41 @@ const AU = {
       this.lockOsc.disconnect(); this.lockOsc = null;
     }
   },
-  launch(){ this.burst(.55,900,1.1,'lowpass'); this.beep(220,.35,.18,'sawtooth'); },
-  argon(){ this.burst(.30,5200,1.0,'highpass'); this.beep(120,.10,.07,'square'); },
+  launch(){
+    // scarica di plasma: sibilo filtrato in alto più uno sweep discendente
+    this.burst(.42,2600,.85,'bandpass');
+    if(!this.ctx) return;
+    const o = this.ctx.createOscillator(), g = this.ctx.createGain();
+    o.type='sawtooth';
+    o.frequency.setValueAtTime(1400,this.ctx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(180,this.ctx.currentTime+.45);
+    g.gain.setValueAtTime(.16,this.ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(.0001,this.ctx.currentTime+.5);
+    o.connect(g); g.connect(this.ctx.destination); o.start(); o.stop(this.ctx.currentTime+.5);
+  },
+  argon(){
+    // innesto della cella: risalita di frequenza, come un condensatore che carica
+    this.burst(.18,6000,.6,'highpass');
+    if(!this.ctx) return;
+    const o = this.ctx.createOscillator(), g = this.ctx.createGain();
+    o.type='triangle';
+    o.frequency.setValueAtTime(180,this.ctx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(1250,this.ctx.currentTime+.9);
+    g.gain.setValueAtTime(.09,this.ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(.0001,this.ctx.currentTime+1);
+    o.connect(g); g.connect(this.ctx.destination); o.start(); o.stop(this.ctx.currentTime+1);
+  },
   deny(){ this.beep(150,.16,.07,'square'); },
-  boom(v){ this.burst(v||.7,340,1.0,'lowpass'); },
+  boom(v){
+    // detonazione al plasma: corpo grave più una coda brillante
+    this.burst(v||.7,420,.9,'lowpass');
+    this.burst((v||.7)*.5,3200,.35,'highpass');
+  },
   hit(){ this.burst(.5,2200,.16,'highpass'); },
-  cannon(){ this.burst(.16,1600,.09,'bandpass'); },
+  cannon(){
+    this.burst(.10,2400,.07,'bandpass');
+    this.beep(1900 + Math.random()*400, .05, .035, 'square');   // dardo ionico
+  },
   jets(v){ if(this.jetGain) this.jetGain.gain.value = v; }
 };
 
@@ -898,91 +971,127 @@ const TEX = {};
    MODELLI 3D
    ========================================================================= */
 const MAT = {
-  oliveBody : new THREE.MeshStandardMaterial({color:0x8f9455, roughness:.72, metalness:.22}),
-  steel     : new THREE.MeshStandardMaterial({color:0xb9bcc0, roughness:.35, metalness:.9}),
-  darkSteel : new THREE.MeshStandardMaterial({color:0x3a3f42, roughness:.5,  metalness:.85}),
-  copper    : new THREE.MeshStandardMaterial({color:0xb87333, roughness:.4,  metalness:.9}),
-  tube      : new THREE.MeshStandardMaterial({color:0x5d5f32, roughness:.85, metalness:.15}),
-  tubeDark  : new THREE.MeshStandardMaterial({color:0x43451f, roughness:.9,  metalness:.1}),
-  gear      : new THREE.MeshStandardMaterial({color:0x2b2d1c, roughness:.95, metalness:.05}),
-  glove     : new THREE.MeshStandardMaterial({color:0x3b3a2c, roughness:1}),
-  jet       : new THREE.MeshStandardMaterial({color:0x39434d, roughness:.55, metalness:.75}),
-  jetDark   : new THREE.MeshStandardMaterial({color:0x252b31, roughness:.6,  metalness:.7}),
-  f35       : new THREE.MeshStandardMaterial({color:0x6d7278, roughness:.42, metalness:.82}),
-  f35Dark   : new THREE.MeshStandardMaterial({color:0x4a4f55, roughness:.5,  metalness:.8}),
-  canopy    : new THREE.MeshStandardMaterial({color:0x0d1c2b, roughness:.08, metalness:1}),
-  burner    : new THREE.MeshBasicMaterial({color:0xffb14a})
+  /* Scafi: bianco perla e grafite, tipici della Sky Fortress */
+  hull      : new THREE.MeshStandardMaterial({color:0xdfe7f2, roughness:.32, metalness:.65}),
+  hullDark  : new THREE.MeshStandardMaterial({color:0x2b3446, roughness:.42, metalness:.8}),
+  steel     : new THREE.MeshStandardMaterial({color:0xaeb9cc, roughness:.3,  metalness:.9}),
+  darkSteel : new THREE.MeshStandardMaterial({color:0x1d2432, roughness:.45, metalness:.85}),
+  copper    : new THREE.MeshStandardMaterial({color:0xff9d4a, roughness:.35, metalness:.85,
+                emissive:0x5a2a00, emissiveIntensity:.7}),
+  /* Energia: materiali non illuminati, servono a "bruciare" sul fondo scuro */
+  energy    : new THREE.MeshBasicMaterial({color:0x62e8ff}),
+  energyHot : new THREE.MeshBasicMaterial({color:0xffffff}),
+  energyVio : new THREE.MeshBasicMaterial({color:0xa96bff}),
+  energyAmb : new THREE.MeshBasicMaterial({color:0xffa33c}),
+  /* Lancia dell'operatore */
+  tube      : new THREE.MeshStandardMaterial({color:0xc8d2e0, roughness:.28, metalness:.7}),
+  tubeDark  : new THREE.MeshStandardMaterial({color:0x232b3a, roughness:.4,  metalness:.85}),
+  gear      : new THREE.MeshStandardMaterial({color:0x1a212e, roughness:.55, metalness:.7}),
+  glove     : new THREE.MeshStandardMaterial({color:0x2f3a4d, roughness:.65, metalness:.4}),
+  /* Ostili THE NULL: scafi neri opachi, nessun riflesso */
+  jet       : new THREE.MeshStandardMaterial({color:0x161c28, roughness:.62, metalness:.55}),
+  jetDark   : new THREE.MeshStandardMaterial({color:0x0d1119, roughness:.7,  metalness:.5}),
+  f35       : new THREE.MeshStandardMaterial({color:0x1b1424, roughness:.5,  metalness:.7}),
+  f35Dark   : new THREE.MeshStandardMaterial({color:0x100c17, roughness:.6,  metalness:.65}),
+  canopy    : new THREE.MeshStandardMaterial({color:0x3a1f5c, roughness:.08, metalness:1,
+                emissive:0x2a0f4a, emissiveIntensity:.8}),
+  burner    : new THREE.MeshBasicMaterial({color:0xa96bff})
 };
+/* Retrocompatibilità: qualche modello usa ancora il vecchio nome */
+MAT.oliveBody = MAT.hull;
 
 /* --- il missile: riprodotto sulla foto di riferimento ---
    naso scuro col cercatore IR, 4 alette di controllo, corpo verde oliva,
    fascia in rame, sezione posteriore in acciaio, 4 pinne e ugello.        */
 function buildMissile(){
-  const g = new THREE.Group();          // asse: naso verso +Z
+  const g = new THREE.Group();          // punta verso +Z
   const add = (m,z,rx)=>{ m.position.z = z; if(rx!==undefined) m.rotation.x = rx; g.add(m); return m; };
 
-  add(new THREE.Mesh(new THREE.SphereGeometry(.062,12,10), MAT.darkSteel), .74);
-  add(new THREE.Mesh(new THREE.CylinderGeometry(.062,.07,.16,14), MAT.darkSteel), .66, Math.PI/2);
-  add(new THREE.Mesh(new THREE.CylinderGeometry(.072,.072,.07,14), MAT.steel), .55, Math.PI/2);
-  // alette anteriori
-  for(let i=0;i<4;i++){
-    const f = new THREE.Mesh(new THREE.BoxGeometry(.30,.012,.10), MAT.steel);
-    f.position.z = .54; f.rotation.z = i*Math.PI/2; g.add(f);
+  // punta cristallina: un ottaedro allungato che concentra la carica
+  const tip = add(new THREE.Mesh(new THREE.OctahedronGeometry(.13,0), MAT.energyHot), .70);
+  tip.scale.set(.55,.55,2.4);
+  // guscio del vettore
+  add(new THREE.Mesh(new THREE.CylinderGeometry(.055,.085,.34,8), MAT.hull), .42, Math.PI/2);
+  // nucleo energetico esposto fra gli anelli di contenimento
+  add(new THREE.Mesh(new THREE.CylinderGeometry(.062,.062,.62,10), MAT.energy), .05, Math.PI/2);
+  for(const z of [.26,-.02,-.30]){
+    const r = add(new THREE.Mesh(new THREE.TorusGeometry(.085,.018,6,14), MAT.steel), z);
+    r.rotation.y = 0;
   }
-  add(new THREE.Mesh(new THREE.CylinderGeometry(.075,.075,.72,16), MAT.oliveBody), .17, Math.PI/2);
-  add(new THREE.Mesh(new THREE.CylinderGeometry(.078,.078,.05,16), MAT.copper), -.20, Math.PI/2);
-  add(new THREE.Mesh(new THREE.CylinderGeometry(.076,.076,.22,16), MAT.steel), -.33, Math.PI/2);
-  add(new THREE.Mesh(new THREE.CylinderGeometry(.078,.078,.04,16), MAT.copper), -.45, Math.PI/2);
-  add(new THREE.Mesh(new THREE.CylinderGeometry(.076,.076,.36,16), MAT.steel), -.65, Math.PI/2);
-  // pinne posteriori
+  // alette di stabilizzazione a quattro punte, sottili e affilate
   for(let i=0;i<4;i++){
-    const f = new THREE.Mesh(new THREE.BoxGeometry(.40,.014,.17), MAT.steel);
-    f.position.z = -.70; f.rotation.z = i*Math.PI/2 + Math.PI/4; g.add(f);
+    const f = new THREE.Mesh(new THREE.BoxGeometry(.34,.012,.13), MAT.hullDark);
+    f.position.z = .30; f.rotation.z = i*Math.PI/2; g.add(f);
   }
-  add(new THREE.Mesh(new THREE.CylinderGeometry(.066,.058,.09,14), MAT.darkSteel), -.87, Math.PI/2);
+  // corpo posteriore e ugello al plasma
+  add(new THREE.Mesh(new THREE.CylinderGeometry(.082,.075,.42,10), MAT.hull), -.52, Math.PI/2);
+  for(let i=0;i<4;i++){
+    const f = new THREE.Mesh(new THREE.BoxGeometry(.46,.016,.20), MAT.hullDark);
+    f.position.z = -.66; f.rotation.z = i*Math.PI/2 + Math.PI/4; g.add(f);
+    const e = new THREE.Mesh(new THREE.BoxGeometry(.40,.030,.035), MAT.energy);
+    e.position.z = -.66; e.rotation.z = i*Math.PI/2 + Math.PI/4; g.add(e);
+  }
+  add(new THREE.Mesh(new THREE.CylinderGeometry(.072,.05,.12,10), MAT.energyVio), -.79, Math.PI/2);
   return g;
 }
 
 /* --- il lanciatore visto in prima persona (view model) --- */
 function buildLauncher(){
-  const g = new THREE.Group();          // asse: bocca verso -Z
+  const g = new THREE.Group();          // bocca verso -Z
   const P = (m,x,y,z)=>{ m.position.set(x,y,z); g.add(m); return m; };
 
-  const tube = P(new THREE.Mesh(new THREE.CylinderGeometry(.075,.075,1.52,20), MAT.tube), 0,0,0);
+  /* Canna di contenimento: scafo chiaro con la fenditura del nucleo esposta.
+     Le proporzioni restano quelle del modello precedente, così l'animazione
+     di rinculo, ricarica e mira non richiede alcuna taratura. */
+  const tube = P(new THREE.Mesh(new THREE.CylinderGeometry(.078,.070,1.46,12), MAT.tube), 0,0,0);
   tube.rotation.x = Math.PI/2;
-  P(new THREE.Mesh(new THREE.CylinderGeometry(.088,.088,.09,20), MAT.tubeDark), 0,0,-.76).rotation.x = Math.PI/2;
-  P(new THREE.Mesh(new THREE.CylinderGeometry(.086,.086,.10,20), MAT.tubeDark), 0,0,.74).rotation.x = Math.PI/2;
-  // fascette
-  [-.42,-.05,.34].forEach(z=>{
-    P(new THREE.Mesh(new THREE.CylinderGeometry(.082,.082,.035,20), MAT.gear), 0,0,z).rotation.x = Math.PI/2;
+  // nucleo luminoso che corre dentro la canna
+  const core = P(new THREE.Mesh(new THREE.CylinderGeometry(.030,.030,1.30,8), MAT.energy), 0,0,0);
+  core.rotation.x = Math.PI/2; g.userData.core = core;
+  // anelli di contenimento
+  [-.52,-.18,.18,.52].forEach(z=>{
+    P(new THREE.Mesh(new THREE.TorusGeometry(.086,.014,6,16), MAT.steel), 0,0,z);
   });
-  // corpo di scatto + impugnatura + grilletto
-  P(new THREE.Mesh(new THREE.BoxGeometry(.13,.14,.46), MAT.gear), 0,-.135,-.06);
-  const grip = P(new THREE.Mesh(new THREE.BoxGeometry(.072,.25,.10), MAT.gear), 0,-.30,-.20);
-  grip.rotation.x = .22;
-  P(new THREE.Mesh(new THREE.BoxGeometry(.03,.07,.02), MAT.darkSteel), 0,-.235,-.265).rotation.x = .3;
-  // BCU (batteria/refrigerante) sotto il muso
-  P(new THREE.Mesh(new THREE.CylinderGeometry(.045,.045,.20,14), MAT.tubeDark), 0,-.145,-.50).rotation.x = Math.PI/2;
-  // mirino a griglia, come nella foto
-  const sight = new THREE.Group();
-  sight.add(new THREE.Mesh(new THREE.BoxGeometry(.018,.20,.24), MAT.tubeDark));
-  for(let i=0;i<5;i++){
-    const bar = new THREE.Mesh(new THREE.BoxGeometry(.024,.012,.20), MAT.gear);
-    bar.position.y = -.075 + i*.037; sight.add(bar);
+  // emettitore anteriore a tre alette
+  P(new THREE.Mesh(new THREE.CylinderGeometry(.10,.075,.14,12), MAT.hullDark), 0,0,-.76).rotation.x = Math.PI/2;
+  for(let i=0;i<3;i++){
+    const pr = new THREE.Mesh(new THREE.BoxGeometry(.022,.09,.20), MAT.tubeDark);
+    pr.position.set(0,0,-.86); pr.rotation.z = i*(Math.PI*2/3); g.add(pr);
   }
-  sight.position.set(.075,.105,-.24); sight.rotation.z = -.14; g.add(sight);
-  P(new THREE.Mesh(new THREE.CylinderGeometry(.005,.005,.20,6), MAT.darkSteel), .085,.16,-.13).rotation.set(.25,0,-.30);
-  // spia di aggancio nel mirino (fase 3)
-  const lamp = P(new THREE.Mesh(new THREE.SphereGeometry(.017,10,8),
-    new THREE.MeshBasicMaterial({color:0x1a1a14})), .075,.205,-.235);
+  P(new THREE.Mesh(new THREE.TorusGeometry(.062,.010,6,18), MAT.energyHot), 0,0,-.92);
+  // scarico posteriore
+  P(new THREE.Mesh(new THREE.CylinderGeometry(.082,.092,.13,12), MAT.hullDark), 0,0,.74).rotation.x = Math.PI/2;
+
+  // corpo di comando, impugnatura, grilletto
+  P(new THREE.Mesh(new THREE.BoxGeometry(.135,.145,.46), MAT.gear), 0,-.135,-.06);
+  const grip = P(new THREE.Mesh(new THREE.BoxGeometry(.075,.25,.10), MAT.gear), 0,-.30,-.20);
+  grip.rotation.x = .22;
+  P(new THREE.Mesh(new THREE.BoxGeometry(.03,.07,.02), MAT.energyAmb), 0,-.235,-.265).rotation.x = .3;
+
+  // alloggiamento della Energy Cell, sotto il muso: si illumina quando è carica
+  P(new THREE.Mesh(new THREE.BoxGeometry(.10,.09,.22), MAT.tubeDark), 0,-.145,-.50);
+  const cell = P(new THREE.Mesh(new THREE.BoxGeometry(.055,.055,.17), MAT.energyVio), 0,-.148,-.50);
+  g.userData.cell = cell;
+
+  // mirino olografico: un quadro sospeso invece della griglia metallica
+  const sight = new THREE.Group();
+  sight.add(new THREE.Mesh(new THREE.BoxGeometry(.016,.15,.015), MAT.tubeDark));
+  const frame = new THREE.Mesh(new THREE.TorusGeometry(.075,.005,4,4), MAT.energy);
+  frame.rotation.set(0,Math.PI/2,Math.PI/4); frame.position.y = .12; sight.add(frame);
+  sight.position.set(.075,.10,-.24); sight.rotation.z = -.10; g.add(sight);
+
+  // spia di stato dell'energy lock
+  const lamp = P(new THREE.Mesh(new THREE.SphereGeometry(.019,10,8),
+    new THREE.MeshBasicMaterial({color:0x141a26})), .075,.215,-.235);
   g.userData.lamp = lamp;
-  // vampa di coda al lancio
-  const blast = P(new THREE.Mesh(new THREE.ConeGeometry(.15,.8,12),
-    new THREE.MeshBasicMaterial({color:0xffcf8a, transparent:true, opacity:0, depthWrite:false})), 0,0,1.15);
+
+  // vampa di scarica posteriore
+  const blast = P(new THREE.Mesh(new THREE.ConeGeometry(.16,.85,12),
+    new THREE.MeshBasicMaterial({color:0x9fdcff, transparent:true, opacity:0, depthWrite:false})), 0,0,1.15);
   blast.rotation.x = Math.PI/2; g.userData.blast = blast;
-  // appoggio di spalla
-  P(new THREE.Mesh(new THREE.BoxGeometry(.11,.17,.06), MAT.gear), 0,-.055,.60);
-  // mano dell'operatore sull'impugnatura
+
+  // appoggio di spalla e braccio del pilota
+  P(new THREE.Mesh(new THREE.BoxGeometry(.12,.18,.06), MAT.gear), 0,-.055,.60);
   P(new THREE.Mesh(new THREE.BoxGeometry(.10,.13,.15), MAT.glove), .015,-.30,-.19);
   const arm = P(new THREE.Mesh(new THREE.CylinderGeometry(.055,.06,.42,10), MAT.glove), .06,-.46,-.02);
   arm.rotation.set(1.15,0,-.25);
@@ -992,48 +1101,91 @@ function buildLauncher(){
 /* --- caccia nemico generico --- */
 function buildJet(){
   const g = new THREE.Group();          // muso verso +Z
-  const body = new THREE.Mesh(new THREE.CylinderGeometry(1.15,.95,13,12), MAT.jet);
-  body.rotation.x = Math.PI/2; g.add(body);
-  const nose = new THREE.Mesh(new THREE.ConeGeometry(1.15,3.6,12), MAT.jet);
-  nose.rotation.x = Math.PI/2; nose.position.z = 8.3; g.add(nose);
-  const cano = new THREE.Mesh(new THREE.SphereGeometry(1,10,8), MAT.canopy);
-  cano.scale.set(.85,.55,2.1); cano.position.set(0,.75,4.2); g.add(cano);
-  for(const s of [-1,1]){
-    const w = new THREE.Mesh(new THREE.BoxGeometry(7.4,.34,3.6), MAT.jetDark);
-    w.position.set(s*4.4,-.1,-.6); w.rotation.y = -s*.42; g.add(w);
-    const t = new THREE.Mesh(new THREE.BoxGeometry(3.2,.28,1.9), MAT.jetDark);
-    t.position.set(s*2.1,0,-5.2); t.rotation.y = -s*.42; g.add(t);
-    const v = new THREE.Mesh(new THREE.BoxGeometry(.28,2.6,2.4), MAT.jetDark);
-    v.position.set(s*1.1,1.4,-5.0); v.rotation.z = -s*.28; g.add(v);
-    const i = new THREE.Mesh(new THREE.BoxGeometry(1.1,1.3,4.4), MAT.jetDark);
-    i.position.set(s*1.5,-.35,1.2); g.add(i);
+  /* Drone d'intercettazione di THE NULL: scafo angolare nero opaco, nessuna
+     cabina, una fenditura energetica che corre lungo la fusoliera. Ingombro
+     e proporzioni identiche al modello precedente, così raggio d'impatto,
+     aggancio e riquadri HUD restano tarati. */
+  const body = new THREE.Mesh(new THREE.OctahedronGeometry(4.4,0), MAT.jet);
+  body.scale.set(.55,.42,1.9); g.add(body);
+  const nose = new THREE.Mesh(new THREE.ConeGeometry(1.5,5.2,4), MAT.jetDark);
+  nose.rotation.set(Math.PI/2,0,Math.PI/4); nose.position.z = 8.4; g.add(nose);
+
+  // occhio del sensore, unica luce frontale
+  const eye = new THREE.Mesh(new THREE.SphereGeometry(.75,10,8), MAT.energyVio);
+  eye.position.set(0,.45,5.6); g.add(eye);
+  // fenditura energetica dorsale
+  const slit = new THREE.Mesh(new THREE.BoxGeometry(.35,.12,9), MAT.energyVio);
+  slit.position.set(0,1.5,-.5); g.add(slit);
+
+  for(const sd of [-1,1]){
+    // ali a freccia inversa, spigolose
+    const w = new THREE.Mesh(new THREE.BoxGeometry(8.2,.32,3.4), MAT.jet);
+    w.position.set(sd*4.6,-.15,-1.2); w.rotation.set(0,sd*.30,-sd*.18); g.add(w);
+    const wl = new THREE.Mesh(new THREE.BoxGeometry(7.4,.10,.30), MAT.energy);
+    wl.position.set(sd*4.6,.06,-2.5); wl.rotation.set(0,sd*.30,-sd*.18); g.add(wl);
+    // derive angolate verso l'esterno
+    const v = new THREE.Mesh(new THREE.BoxGeometry(.26,3.0,2.6), MAT.jetDark);
+    v.position.set(sd*2.6,1.2,-5.4); v.rotation.z = -sd*.42; g.add(v);
+    // gondole motore
+    const p = new THREE.Mesh(new THREE.BoxGeometry(1.4,1.2,5.2), MAT.jetDark);
+    p.position.set(sd*1.9,-.30,-3.2); g.add(p);
   }
-  const burner = new THREE.Mesh(new THREE.ConeGeometry(.85,3.2,10), MAT.burner);
-  burner.rotation.x = -Math.PI/2; burner.position.z = -8.2; g.add(burner);
-  g.userData.burner = burner;
+
+  // doppio scarico al plasma
+  const burner = new THREE.Group();
+  for(const sd of [-1,1]){
+    const f = new THREE.Mesh(new THREE.ConeGeometry(.72,3.6,10), MAT.burner);
+    f.rotation.x = -Math.PI/2; f.position.set(sd*1.9,-.30,-7.4); burner.add(f);
+    // alone additivo: costa un solo sprite e regala il bagliore del bloom
+    const gl = new THREE.Sprite(new THREE.SpriteMaterial({map:TEX.fire, color:0xb47bff,
+      transparent:true, opacity:.75, depthWrite:false, blending:THREE.AdditiveBlending}));
+    gl.scale.setScalar(11); gl.position.set(sd*1.9,-.30,-8.2); burner.add(gl);
+  }
+  g.add(burner); g.userData.burner = burner;
   return g;
 }
 
-/* --- l'F-35A: obiettivo finale --- */
+/* --- Leviathan Class Destroyer: nave ammiraglia di THE NULL --- */
 function buildF35(){
   const g = new THREE.Group();
-  const body = new THREE.Mesh(new THREE.CylinderGeometry(1.7,1.35,15.5,8), MAT.f35);
-  body.rotation.x = Math.PI/2; g.add(body);
-  const nose = new THREE.Mesh(new THREE.ConeGeometry(1.7,5,8), MAT.f35);
-  nose.rotation.x = Math.PI/2; nose.position.z = 10.2; g.add(nose);
-  const cano = new THREE.Mesh(new THREE.SphereGeometry(1,10,8), MAT.canopy);
-  cano.scale.set(1.05,.7,2.6); cano.position.set(0,1.05,5.2); g.add(cano);
-  for(const s of [-1,1]){
-    const w = new THREE.Mesh(new THREE.BoxGeometry(9.5,.4,5.4), MAT.f35Dark);
-    w.position.set(s*5.4,-.2,-1.2); w.rotation.y = -s*.5; g.add(w);
-    const t = new THREE.Mesh(new THREE.BoxGeometry(4.2,.34,2.6), MAT.f35Dark);
-    t.position.set(s*2.7,-.1,-6.6); t.rotation.y = -s*.5; g.add(t);
-    const v = new THREE.Mesh(new THREE.BoxGeometry(.32,3.4,3.0), MAT.f35Dark);
-    v.position.set(s*1.6,1.9,-6.2); v.rotation.z = -s*.34; g.add(v);
+  /* Scafo lungo e affilato, viola-nero, con il nucleo di singolarità esposto
+     al centro: è quello che il giocatore deve colpire. */
+  const spine = new THREE.Mesh(new THREE.CylinderGeometry(2.0,1.5,19,6), MAT.f35);
+  spine.rotation.x = Math.PI/2; g.add(spine);
+  const prow = new THREE.Mesh(new THREE.ConeGeometry(2.2,7,6), MAT.f35);
+  prow.rotation.set(Math.PI/2,0,Math.PI/6); prow.position.z = 12.5; g.add(prow);
+
+  // nucleo di singolarità
+  const core = new THREE.Mesh(new THREE.IcosahedronGeometry(2.3,0), MAT.energyVio);
+  core.position.z = 1; g.add(core); g.userData.core = core;
+  const halo = new THREE.Mesh(new THREE.TorusGeometry(4.2,.28,6,22), MAT.energy);
+  halo.position.z = 1; g.add(halo); g.userData.halo = halo;
+  const coreGlow = new THREE.Sprite(new THREE.SpriteMaterial({map:TEX.fire, color:0xa96bff,
+    transparent:true, opacity:.85, depthWrite:false, blending:THREE.AdditiveBlending}));
+  coreGlow.scale.setScalar(26); coreGlow.position.z = 1; g.add(coreGlow);
+
+  for(const sd of [-1,1]){
+    // pinne dorsali e ventrali, come una lama
+    const w = new THREE.Mesh(new THREE.BoxGeometry(11,.55,6.5), MAT.f35Dark);
+    w.position.set(sd*6.2,-.3,-2.2); w.rotation.set(0,sd*.42,-sd*.30); g.add(w);
+    const wl = new THREE.Mesh(new THREE.BoxGeometry(10,.14,.42), MAT.energyVio);
+    wl.position.set(sd*6.2,.05,-4.2); wl.rotation.set(0,sd*.42,-sd*.30); g.add(wl);
+    const v = new THREE.Mesh(new THREE.BoxGeometry(.4,4.6,3.4), MAT.f35Dark);
+    v.position.set(sd*2.2,2.6,-7.2); v.rotation.z = -sd*.30; g.add(v);
+    // torrette di scarica
+    const t = new THREE.Mesh(new THREE.BoxGeometry(1.5,1.4,3.2), MAT.f35Dark);
+    t.position.set(sd*3.0,-1.5,4.4); g.add(t);
   }
-  const burner = new THREE.Mesh(new THREE.ConeGeometry(1.25,5,12), new THREE.MeshBasicMaterial({color:0x9ad8ff}));
-  burner.rotation.x = -Math.PI/2; burner.position.z = -10.4; g.add(burner);
-  g.userData.burner = burner;
+  // tre scarichi principali
+  const burner = new THREE.Group();
+  for(const off of [-2.6,0,2.6]){
+    const f = new THREE.Mesh(new THREE.ConeGeometry(1.15,5.4,12), MAT.energy);
+    f.rotation.x = -Math.PI/2; f.position.set(off,0,-12.4); burner.add(f);
+    const gl = new THREE.Sprite(new THREE.SpriteMaterial({map:TEX.fire, color:0x62e8ff,
+      transparent:true, opacity:.8, depthWrite:false, blending:THREE.AdditiveBlending}));
+    gl.scale.setScalar(15); gl.position.set(off,0,-13.6); burner.add(gl);
+  }
+  g.add(burner); g.userData.burner = burner;
   g.scale.setScalar(1.25);
   return g;
 }
@@ -1111,7 +1263,7 @@ function grassTexture(){
     const bh = 26 + Math.random()*34;
     const lean = (Math.random()-.5)*16;
     const g = x.createLinearGradient(0,64,0,64-bh);
-    g.addColorStop(0,'rgba(84,86,52,1)'); g.addColorStop(1,'rgba(158,152,101,1)');
+    g.addColorStop(0,'rgba(40,80,140,1)'); g.addColorStop(1,'rgba(150,230,255,1)');
     x.strokeStyle = g; x.lineWidth = 1.6 + Math.random()*1.4; x.lineCap = 'round';
     x.beginPath(); x.moveTo(bx,64);
     x.quadraticCurveTo(bx+lean*.4, 64-bh*.6, bx+lean, 64-bh); x.stroke();
@@ -1141,9 +1293,9 @@ function buildWorld(){
   const skyMat = new THREE.ShaderMaterial({
     side:THREE.BackSide, depthWrite:false, fog:false,
     uniforms:{
-      top:{value:new THREE.Color(0x1e4f86)},
-      mid:{value:new THREE.Color(0x7fa3c0)},
-      bot:{value:new THREE.Color(0xc6cdc4)},
+      top:{value:new THREE.Color(0x050a1e)},
+      mid:{value:new THREE.Color(0x1b3a72)},
+      bot:{value:new THREE.Color(0x6f5aa8)},
       sun:{value:SUNDIR}
     },
     vertexShader:
@@ -1155,9 +1307,11 @@ function buildWorld(){
       '  vec3 col = mix(bot, mid, smoothstep(-0.06, 0.22, h));'+
       '  col = mix(col, top, smoothstep(0.16, 0.78, h));'+
       '  float sd = max(dot(d, normalize(sun)), 0.0);'+
-      '  col += vec3(1.0,0.92,0.75) * pow(sd, 900.0) * 2.2;'+       /* disco */
-      '  col += vec3(1.0,0.80,0.55) * pow(sd, 14.0) * 0.30;'+       /* alone */
-      '  col += vec3(1.0,0.86,0.68) * pow(sd, 3.0) * 0.10 * (1.0-smoothstep(0.0,0.35,h));'+
+      '  col += vec3(0.75,0.92,1.00) * pow(sd, 900.0) * 2.6;'+       /* disco */
+      '  col += vec3(0.45,0.72,1.00) * pow(sd, 14.0) * 0.34;'+       /* alone */
+      '  col += vec3(0.70,0.45,1.00) * pow(sd, 3.0) * 0.14 * (1.0-smoothstep(0.0,0.35,h));'+
+      '  float st = fract(sin(dot(floor(d.xz*420.0), vec2(12.99,78.23)))*43758.55);'+
+      '  col += vec3(0.85,0.92,1.0) * step(0.9993, st) * smoothstep(0.05,0.4,h);'+  /* stelle */
       '  float dither = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898,78.233)))*43758.5453);'+
       '  col += (dither - 0.5) / 220.0;'+          /* rompe le fasce di banding */
       '  gl_FragColor = vec4(col, 1.0);'+
@@ -1171,9 +1325,11 @@ function buildWorld(){
   const pos = geo.attributes.position;
   const col = new Float32Array(pos.count*3);
 
-  const cGrass = new THREE.Color(0x454e2c), cDry = new THREE.Color(0x6b6440),
-        cRock  = new THREE.Color(0x4e4b42), cDirt = new THREE.Color(0x60513a),
-        cSnow  = new THREE.Color(0xbfcbd2), tmp = new THREE.Color();
+  // Non è terra: è la superficie superiore dell'oceano di nubi, illuminata
+  // dal basso dai giacimenti di cristallo che affiorano fra i banchi.
+  const cGrass = new THREE.Color(0x2c3f6b), cDry = new THREE.Color(0x4a5f96),
+        cRock  = new THREE.Color(0x6a5aa0), cDirt = new THREE.Color(0x243356),
+        cSnow  = new THREE.Color(0x9fd8ff), tmp = new THREE.Color();
 
   // prima passata: quote sulla griglia (la pendenza si ricava dai vicini, non da altre 4 valutazioni)
   const W = SEG+1, step = SIZE/SEG, H = new Float32Array(pos.count);
@@ -1192,7 +1348,7 @@ function buildWorld(){
     tmp.copy(cGrass).lerp(cDry, clamp(patch*1.6-.15,0,1));
     tmp.lerp(cDirt, clamp((fbm(x*.011+7, z*.011+7, 2)-.55)*2.4, 0, .7));
     tmp.lerp(cRock, clamp((slope-.30)*2.2, 0, 1));                    // roccia sui pendii
-    tmp.lerp(cSnow, clamp((h-600)/300, 0, 1) * clamp(1-slope*1.15,0,1)); // neve solo sulle vette
+    tmp.lerp(cSnow, clamp((h-600)/300, 0, 1) * clamp(1-slope*1.15,0,1)); // creste luminose
     tmp.multiplyScalar(.92 + fbm(x*.06, z*.06, 2)*.18);               // grana fine
     col[i*3] = tmp.r; col[i*3+1] = tmp.g; col[i*3+2] = tmp.b;
   }
@@ -1200,7 +1356,8 @@ function buildWorld(){
   geo.computeVertexNormals();
 
   const ground = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({
-    vertexColors:true, map:groundTexture(), roughness:1, metalness:0
+    vertexColors:true, map:groundTexture(), roughness:1, metalness:0,
+    emissive:0x101c3a, emissiveIntensity:.55        // il banco di nubi brilla di suo
   }));
   ground.rotation.x = -Math.PI/2;
   ground.receiveShadow = true;
@@ -1208,7 +1365,7 @@ function buildWorld(){
 
   /* ---------- rocce sparse (instanced) ---------- */
   const rockGeo = new THREE.DodecahedronGeometry(1,0);
-  const rockMat = new THREE.MeshStandardMaterial({color:0x635b4b, roughness:.95, flatShading:true});
+  const rockMat = new THREE.MeshStandardMaterial({color:0x3b3f66, roughness:.7, metalness:.3, flatShading:true});
   const NR = LOW ? 190 : 520;
   const rocks = new THREE.InstancedMesh(rockGeo, rockMat, NR);
   rocks.castShadow = true; rocks.receiveShadow = true;
@@ -1219,7 +1376,9 @@ function buildWorld(){
     const x = Math.cos(a)*r, z = Math.sin(a)*r;
     const s = .5 + Math.random()*2.2;
     if(SCN === 'airbase' && Math.hypot(x,z) < 480){ continue; }
-    dummy.position.set(x, terrainH(x,z) + s*.35, z);
+    // una parte dei frammenti resta sospesa sopra il banco
+    const lift = Math.random() < .45 ? 6 + Math.random()*26 : s*.35;
+    dummy.position.set(x, terrainH(x,z) + lift, z);
     dummy.rotation.set(Math.random()*3, Math.random()*3, Math.random()*3);
     dummy.scale.set(s, s*(.55+Math.random()*.5), s*(.8+Math.random()*.5));
     dummy.updateMatrix(); rocks.setMatrixAt(n++, dummy.matrix);
@@ -1228,12 +1387,14 @@ function buildWorld(){
 
   /* ---------- conifere sui pendii (instanced: tronco + chioma) ---------- */
   const NT = LOW ? 150 : 340;
+  // guglie di cristallo energetico che affiorano dal banco
   const trunk = new THREE.InstancedMesh(
-    new THREE.CylinderGeometry(.22,.36,3.4,6),
-    new THREE.MeshStandardMaterial({color:0x3a2c20, roughness:1}), NT);
+    new THREE.ConeGeometry(1.1,5,5),
+    new THREE.MeshStandardMaterial({color:0x2a2f5e, roughness:.35, metalness:.5, flatShading:true}), NT);
   const crown = new THREE.InstancedMesh(
-    new THREE.ConeGeometry(2.1,7.5,7),
-    new THREE.MeshStandardMaterial({color:0x2c3a24, roughness:.95, flatShading:true}), NT);
+    new THREE.OctahedronGeometry(2.6,0),
+    new THREE.MeshStandardMaterial({color:0x6ad8ff, roughness:.1, metalness:.2,
+      emissive:0x2e9fd0, emissiveIntensity:1.1, flatShading:true}), NT);
   trunk.castShadow = crown.castShadow = true;
   let t = 0, guard = 0;
   while(t < NT && guard++ < 6000){
@@ -1265,7 +1426,8 @@ function buildWorld(){
   gGeo.setAttribute('uv', new THREE.Float32BufferAttribute(uvs,2));
   gGeo.computeVertexNormals();
   const grass = new THREE.InstancedMesh(gGeo,
-    new THREE.MeshStandardMaterial({map:gTex, transparent:false, alphaTest:.4, side:THREE.DoubleSide, roughness:1}),
+    new THREE.MeshStandardMaterial({map:gTex, transparent:false, alphaTest:.4, side:THREE.DoubleSide,
+      roughness:.4, emissive:0x2a7ea8, emissiveIntensity:.85}),
     LOW ? 3000 : 9000);
   let gi = 0;
   const GR = LOW ? 72 : 115;
@@ -1290,7 +1452,7 @@ function buildWorld(){
   for(let i=0;i<NC;i++){
     const far = i > NC*.58;
     const s = new THREE.Sprite(new THREE.SpriteMaterial({
-      map:cTex, transparent:true, opacity:far?.42:.62, depthWrite:false, fog:false
+      map:cTex, color:0x9fc4ff, transparent:true, opacity:far?.5:.68, depthWrite:false, fog:false
     }));
     const a = Math.random()*Math.PI*2, r = far ? 1800+Math.random()*2200 : 300+Math.random()*1400;
     s.position.set(Math.cos(a)*r, (far?520:340) + Math.random()*420, Math.sin(a)*r);
@@ -1301,39 +1463,75 @@ function buildWorld(){
   }
   G.userData.clouds = clouds;
 
-  /* ---------- la piazzola: terrapieno, sacchetti, materiale ---------- */
+  /* ---------- isole sospese: la firma visiva del settore ---------- */
+  const isleRock = new THREE.MeshStandardMaterial({color:0x353a63, roughness:.75, metalness:.25, flatShading:true});
+  const isleGlow = new THREE.MeshStandardMaterial({color:0x7ee0ff, roughness:.15, metalness:.2,
+                     emissive:0x2f9ad0, emissiveIntensity:1.2, flatShading:true});
+  const NI = LOW ? 12 : 26;
+  for(let i=0;i<NI;i++){
+    const a = Math.random()*Math.PI*2, r = 180 + Math.pow(Math.random(),.65)*1250;
+    const x = Math.cos(a)*r, z = Math.sin(a)*r;
+    const sc = 12 + Math.random()*46;
+    const y = terrainH(x,z) + 60 + Math.random()*260;
+    const isle = new THREE.Group();
+    // corpo dell'isola: due coni contrapposti, la punta pende verso il vuoto
+    const top = new THREE.Mesh(new THREE.DodecahedronGeometry(1,0), isleRock);
+    top.scale.set(1, .45, 1); isle.add(top);
+    const keel = new THREE.Mesh(new THREE.ConeGeometry(.85, 2.6, 6), isleRock);
+    keel.rotation.x = Math.PI; keel.position.y = -1.5; isle.add(keel);
+    // vene di cristallo sulla sommità
+    const nv = 2 + Math.floor(Math.random()*3);
+    for(let k=0;k<nv;k++){
+      const cr = new THREE.Mesh(new THREE.OctahedronGeometry(.22,0), isleGlow);
+      cr.position.set((Math.random()-.5)*1.3, .35 + Math.random()*.4, (Math.random()-.5)*1.3);
+      cr.scale.setScalar(.5 + Math.random());
+      isle.add(cr);
+    }
+    isle.position.set(x, y, z);
+    isle.rotation.y = Math.random()*3;
+    isle.scale.setScalar(sc);
+    isle.castShadow = true;
+    G.add(isle);
+  }
+
+  /* ---------- la torretta Guardian: piattaforma corazzata ---------- */
   const berm = new THREE.Mesh(new THREE.TorusGeometry(3.6,1.5,10,26),
-    new THREE.MeshStandardMaterial({color:0x5c5238, roughness:1}));
+    new THREE.MeshStandardMaterial({color:0x232a40, roughness:.5, metalness:.6}));
   berm.rotation.x = -Math.PI/2; berm.position.y = -.4; berm.receiveShadow = true; G.add(berm);
 
-  const sandMat = new THREE.MeshStandardMaterial({color:0x5a553c, roughness:1});
+  const sandMat = new THREE.MeshStandardMaterial({color:0x2c3450, roughness:.45, metalness:.55});
   for(let i=0;i<30;i++){
     const a = (i/30)*Math.PI*2;
     if(a > 1.0 && a < 2.25) continue;                    // varco frontale libero
     for(let l=0;l<2;l++){
-      const b = new THREE.Mesh(new THREE.SphereGeometry(.55,10,7), sandMat);
-      b.scale.set(1,.40,.55);
+      // segmenti di corazza invece dei sacchetti
+      const b = new THREE.Mesh(new THREE.BoxGeometry(1.05,.42,.55), sandMat);
+      b.scale.set(1,1,1);
       b.position.set(Math.cos(a)*3.25, .78 + l*.42, Math.sin(a)*3.25);
       b.rotation.y = -a + (l?.2:0);
       b.castShadow = b.receiveShadow = true; G.add(b);
     }
   }
-  const crateMat = new THREE.MeshStandardMaterial({color:0x4a4b2c, roughness:.95});
+  const crateMat = new THREE.MeshStandardMaterial({color:0x232a40, roughness:.4, metalness:.6});
   for(let i=0;i<3;i++){
     const c = new THREE.Mesh(new THREE.BoxGeometry(1.1,.62,.7), crateMat);
     c.position.set(-2.0+i*.35, .55+i*.64, 1.9-i*.2); c.rotation.y = .3+i*.4;
     c.castShadow = c.receiveShadow = true; G.add(c);
+    // rastrelliera di Energy Cell: una fila di celle viola in carica
+    const cell = new THREE.Mesh(new THREE.BoxGeometry(.8,.10,.12), MAT.energyVio);
+    cell.position.set(-2.0+i*.35, .88+i*.64, 1.9-i*.2); cell.rotation.y = .3+i*.4; G.add(cell);
   }
   // tubi di lancio esausti appoggiati al terrapieno
   for(let i=0;i<3;i++){
-    const tu = new THREE.Mesh(new THREE.CylinderGeometry(.09,.09,1.5,10), MAT.tube);
+    const tu = new THREE.Mesh(new THREE.CylinderGeometry(.08,.07,1.4,10), MAT.tubeDark);
     tu.position.set(1.6+i*.28, .2, 2.2); tu.rotation.set(0,.4+i*.3,Math.PI/2-.15);
     tu.castShadow = true; G.add(tu);
   }
   const mast = new THREE.Mesh(new THREE.CylinderGeometry(.09,.12,7,8), MAT.gear);
   mast.position.set(-9.5,3.3,7.4); mast.castShadow = true; G.add(mast);   // dietro l'operatore
-  const dish = new THREE.Mesh(new THREE.SphereGeometry(1.4,16,12,0,Math.PI*2,0,Math.PI/2),
-    new THREE.MeshStandardMaterial({color:0x8a8c76, roughness:.65, metalness:.3, side:THREE.DoubleSide}));
+  const dish = new THREE.Mesh(new THREE.TorusGeometry(1.5,.16,8,20),
+    new THREE.MeshStandardMaterial({color:0x62e8ff, roughness:.15, metalness:.4,
+      emissive:0x2b8fc0, emissiveIntensity:1.3}));
   dish.position.set(-9.5,6.6,7.4); dish.rotation.x = -1.1; dish.castShadow = true; G.add(dish);
   G.userData.dish = dish;
 
@@ -1352,7 +1550,7 @@ function initEngine(){
   TEX.cloud = softTexture(240,244,250);
 
   scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(0xa2ada9, 1400, LOW ? 5200 : 6000);   // prospettiva aerea
+  scene.fog = new THREE.Fog(0x3a4a86, 1200, LOW ? 5200 : 6000);   // foschia dello strato
 
   camera = new THREE.PerspectiveCamera(62, innerWidth/innerHeight, .5, 9000);
   camera.rotation.order = 'YXZ';
@@ -1366,11 +1564,11 @@ function initEngine(){
   renderer.shadowMap.enabled = !LOW;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 0.97;
+  renderer.toneMappingExposure = 1.08;
   document.body.insertBefore(renderer.domElement, document.getElementById('fx2d'));
 
-  scene.add(new THREE.HemisphereLight(0x9dbcdd, 0x4a4529, .72));
-  const sun = new THREE.DirectionalLight(0xfff1d4, 1.85);
+  scene.add(new THREE.HemisphereLight(0x8fb8ff, 0x2a2a5a, .85));
+  const sun = new THREE.DirectionalLight(0xcfe0ff, 1.55);
   sun.position.copy(SUNDIR).multiplyScalar(600);
   sun.castShadow = !LOW;
   sun.shadow.mapSize.set(2048,2048);
@@ -1457,7 +1655,8 @@ function bindInput(){
   // il clic lancia SEMPRE; il blocco del puntatore e' solo un tentativo in piu'
   addEventListener('mousedown', e=>{
     AU.init();
-    if(TOUCH) return;                       // sul tocco ci pensano i pulsanti
+    // un tocco genera anche un mousedown fantasma: lo si riconosce dal tempo
+    if(Date.now() - lastTouchAt < 700) return;
     if(!S || !S.running || S.paused) return;
     if(e.target.closest && e.target.closest('button')) return;
     if(e.button !== 0) return;
@@ -1471,7 +1670,7 @@ function bindInput(){
   });
   document.addEventListener('pointerlockerror', ()=>{
     mouse.mode = 'cursor';
-    feed('MIRA A CURSORE: ALLONTANA IL PUNTATORE DAL CENTRO','#f2a516');
+    feed('MIRA A CURSORE: ALLONTANA IL PUNTATORE DAL CENTRO','#ffa33c');
   });
   /* ---------- trascinamento per ruotare il lanciatore ----------
      Si segue un solo dito, identificato dal suo id, così l'altro pollice
@@ -1482,7 +1681,7 @@ function bindInput(){
   let lookId = null, lx = 0, ly = 0;
 
   addEventListener('touchstart', e=>{
-    AU.init();
+    AU.init(); lastTouchAt = Date.now();
     for(const t of e.changedTouches){
       if(onBtn(t)) continue;
       if(lookId === null){ lookId = t.identifier; lx = t.clientX; ly = t.clientY; e.preventDefault(); }
@@ -1490,6 +1689,7 @@ function bindInput(){
   }, {passive:false});
 
   addEventListener('touchmove', e=>{
+    lastTouchAt = Date.now();
     let used = false;
     for(const t of e.changedTouches){
       if(t.identifier !== lookId) continue;
@@ -1540,10 +1740,11 @@ function bindInput(){
    Pista, infrastrutture e i velivoli amici in decollo da proteggere.
    ========================================================================= */
 function buildAirbase(G){
-  const asphalt  = new THREE.MeshStandardMaterial({color:0x2f3236, roughness:.96});
-  const concrete = new THREE.MeshStandardMaterial({color:0x5d5e58, roughness:1});
-  const paint    = new THREE.MeshBasicMaterial({color:0xc9c9bd});
-  const steel    = new THREE.MeshStandardMaterial({color:0x4e534c, roughness:.85, metalness:.35});
+  // Rampa di lancio del Gateway: lega scura con nervature energetiche
+  const asphalt  = new THREE.MeshStandardMaterial({color:0x141a2b, roughness:.55, metalness:.6});
+  const concrete = new THREE.MeshStandardMaterial({color:0x2a3149, roughness:.5, metalness:.55});
+  const paint    = new THREE.MeshBasicMaterial({color:0x62e8ff});
+  const steel    = new THREE.MeshStandardMaterial({color:0x39415e, roughness:.4, metalness:.75});
   const flat = (geo, mat, x, y, z)=>{
     const m = new THREE.Mesh(geo, mat);
     m.rotation.x = -Math.PI/2; m.position.set(x,y,z); G.add(m); return m;
@@ -1559,10 +1760,10 @@ function buildAirbase(G){
     flat(new THREE.PlaneGeometry(26,3.2), paint, sd*(RW_LEN/2-28), .13, RW_Z - 24.5 + i*7);
 
   // luci di bordo pista
-  const lampMat = new THREE.MeshBasicMaterial({color:0xffd18a});
+  const lampMat = new THREE.MeshBasicMaterial({color:0x62e8ff});
   for(let x=-RW_LEN/2; x<=RW_LEN/2; x+=110) for(const sd of [-1,1]){
-    const l = new THREE.Mesh(new THREE.SphereGeometry(.55,6,5), lampMat);
-    l.position.set(x,.65,RW_Z + sd*(RW_W/2+3)); G.add(l);
+    const l = new THREE.Mesh(new THREE.BoxGeometry(6,.5,1.2), lampMat);
+    l.position.set(x,.55,RW_Z + sd*(RW_W/2+3)); G.add(l);
   }
 
   // ---- raccordo e piazzale --------------------------------------------
@@ -1578,15 +1779,15 @@ function buildAirbase(G){
     roof.rotation.set(0,0,Math.PI/2); roof.position.set(hx,15,150);
     roof.castShadow = true; G.add(roof);
     const door = new THREE.Mesh(new THREE.PlaneGeometry(96,13),
-      new THREE.MeshStandardMaterial({color:0x24272a, roughness:1}));
+      new THREE.MeshStandardMaterial({color:0x1b2ea0, roughness:.2, metalness:.3,
+        emissive:0x1d5fb0, emissiveIntensity:.9}));
     door.position.set(hx,7,107.8); G.add(door);
   }
 
   // ---- torre di controllo ---------------------------------------------
   const tower = new THREE.Mesh(new THREE.BoxGeometry(13,34,13), concrete);
   tower.position.set(-90,17,55); tower.castShadow = true; G.add(tower);
-  const cab = new THREE.Mesh(new THREE.BoxGeometry(21,8,21),
-    new THREE.MeshStandardMaterial({color:0x16222e, roughness:.12, metalness:.95}));
+  const cab = new THREE.Mesh(new THREE.CylinderGeometry(11,13,9,8), MAT.canopy);
   cab.position.set(-90,37,55); cab.castShadow = true; G.add(cab);
   const beacon = new THREE.Mesh(new THREE.SphereGeometry(1.1,8,6),
     new THREE.MeshBasicMaterial({color:0x66e0ff}));
@@ -1595,8 +1796,9 @@ function buildAirbase(G){
 
   // ---- serbatoi carburante --------------------------------------------
   for(let i=0;i<2;i++){
-    const tk = new THREE.Mesh(new THREE.CylinderGeometry(13,13,15,20),
-      new THREE.MeshStandardMaterial({color:0x8b8d84, roughness:.6, metalness:.5}));
+    const tk = new THREE.Mesh(new THREE.CylinderGeometry(13,13,15,10),
+      new THREE.MeshStandardMaterial({color:0x2c3450, roughness:.35, metalness:.75,
+        emissive:0x1a3a6a, emissiveIntensity:.5}));
     tk.position.set(215 + i*36, 7.5, 95); tk.castShadow = true; G.add(tk);
     const cap = new THREE.Mesh(new THREE.SphereGeometry(13,20,8,0,Math.PI*2,0,Math.PI/2), tk.material);
     cap.position.set(215 + i*36, 15, 95); G.add(cap);
@@ -1606,7 +1808,7 @@ function buildAirbase(G){
   const pole = new THREE.Mesh(new THREE.CylinderGeometry(.25,.35,11,8), steel);
   pole.position.set(150,5.5,RW_Z + 70); G.add(pole);
   const sock = new THREE.Mesh(new THREE.CylinderGeometry(1.1,2.2,7,10,1,true),
-    new THREE.MeshStandardMaterial({color:0xd2632a, roughness:1, side:THREE.DoubleSide}));
+    new THREE.MeshBasicMaterial({color:0xffa33c, side:THREE.DoubleSide}));
   sock.rotation.set(0,0,-Math.PI/2 + .25); sock.position.set(154,10,RW_Z + 70); G.add(sock);
 
   // ---- due trasporti parcheggiati sul piazzale --------------------------
@@ -1618,36 +1820,41 @@ function buildAirbase(G){
   }
 }
 
-/* --- velivolo da trasporto amico: muso verso +Z --- */
+/* --- Shuttle di classe Ark: evacuazione civili, muso verso +Z --- */
 function buildTransport(){
   const g = new THREE.Group();
-  const hull = new THREE.MeshStandardMaterial({color:0x9aa0a2, roughness:.55, metalness:.5});
-  const dark = new THREE.MeshStandardMaterial({color:0x5a6165, roughness:.6, metalness:.5});
+  const hull = MAT.hull, dark = MAT.hullDark;
 
-  const fus = new THREE.Mesh(new THREE.CylinderGeometry(3.1,2.6,34,14), hull);
-  fus.rotation.x = Math.PI/2; g.add(fus);
-  const nose = new THREE.Mesh(new THREE.SphereGeometry(3.1,14,10), hull);
-  nose.scale.set(1,.9,1.5); nose.position.z = 17; g.add(nose);
-  const tailCone = new THREE.Mesh(new THREE.ConeGeometry(2.6,10,14), hull);
-  tailCone.rotation.x = -Math.PI/2; tailCone.position.set(0,1.6,-21); g.add(tailCone);
+  // scafo squadrato da carico
+  const fus = new THREE.Mesh(new THREE.BoxGeometry(7.5,7,32), hull);
+  g.add(fus);
+  const nose = new THREE.Mesh(new THREE.CylinderGeometry(3.6,4.6,7,6), hull);
+  nose.rotation.set(Math.PI/2,0,Math.PI/6); nose.position.z = 18; g.add(nose);
+  const glass = new THREE.Mesh(new THREE.BoxGeometry(5.4,2.2,3), MAT.canopy);
+  glass.position.set(0,1.8,19.5); g.add(glass);
+  // portellone di poppa
+  const ramp = new THREE.Mesh(new THREE.BoxGeometry(6.5,5.5,.6), dark);
+  ramp.position.z = -16.2; g.add(ramp);
 
-  const wing = new THREE.Mesh(new THREE.BoxGeometry(46,1.1,7.5), hull);
-  wing.position.set(0,3.1,1); g.add(wing);
+  // ali corte con quattro propulsori orientabili
+  const wing = new THREE.Mesh(new THREE.BoxGeometry(38,1.3,8), hull);
+  wing.position.set(0,3.4,0); g.add(wing);
   for(const sd of [-1,1]) for(let i=1;i<=2;i++){
-    const nac = new THREE.Mesh(new THREE.CylinderGeometry(1.5,1.2,7,10), dark);
-    nac.rotation.x = Math.PI/2; nac.position.set(sd*i*7.8, 2.2, 2.6); g.add(nac);
-    const disc = new THREE.Mesh(new THREE.CylinderGeometry(4.2,4.2,.25,16),
-      new THREE.MeshStandardMaterial({color:0x2a2d30, transparent:true, opacity:.45}));
-    disc.rotation.x = Math.PI/2; disc.position.set(sd*i*7.8, 2.2, 6.4); g.add(disc);
+    const nac = new THREE.Mesh(new THREE.BoxGeometry(3.4,3,7.5), dark);
+    nac.position.set(sd*i*7.6, 2.6, 1); g.add(nac);
+    const jet = new THREE.Mesh(new THREE.CylinderGeometry(1.25,1.6,3.4,10), MAT.energy);
+    jet.rotation.x = Math.PI/2; jet.position.set(sd*i*7.6, 2.6, -3.4); g.add(jet);
   }
-  const fin = new THREE.Mesh(new THREE.BoxGeometry(.9,12,8), hull);
-  fin.position.set(0,8,-19); g.add(fin);
-  const stab = new THREE.Mesh(new THREE.BoxGeometry(19,.8,4.5), hull);
-  stab.position.set(0,13.6,-20); g.add(stab);
-  for(const sd of [-1,0]){
-    const gear = new THREE.Mesh(new THREE.CylinderGeometry(.9,.9,1.4,8), dark);
-    gear.rotation.z = Math.PI/2; gear.position.set(0,-3.2, sd ? -2 : 13); g.add(gear);
+  // deriva e luci di posizione alleate, ciano
+  const fin = new THREE.Mesh(new THREE.BoxGeometry(1,11,7), hull);
+  fin.position.set(0,8,-13); g.add(fin);
+  for(const sd of [-1,1]){
+    const l = new THREE.Mesh(new THREE.SphereGeometry(.62,8,6), MAT.energy);
+    l.position.set(sd*18.5,3.6,-1); g.add(l);
   }
+  const strip = new THREE.Mesh(new THREE.BoxGeometry(.35,.35,26), MAT.energy);
+  strip.position.set(3.9,1,0); g.add(strip);
+  const strip2 = strip.clone(); strip2.position.x = -3.9; g.add(strip2);
   return g;
 }
 
@@ -1661,8 +1868,8 @@ function spawnDeparture(){
   };
   S.depTotal++;
   scene.add(f); friendlies.push(f);
-  feed('PARTENZA ' + f.userData.name + ' IN ROLLAGGIO — PROTEGGILA', '#7fd8ff');
-  alertMsg('VELIVOLO AMICO IN DECOLLO — NON LASCIARLO SOLO', 3);
+  feed('PARTENZA ' + f.userData.name + ' IN DISTACCO — PROTEGGILO', '#62e8ff');
+  alertMsg('SHUTTLE IN DISTACCO — NON LASCIARLO SOLO', 3);
   AU.beep(520,.25,.06,'sine');
 }
 
@@ -1674,7 +1881,7 @@ function updateFriendlies(dt){
       d.v = Math.min(86, d.v + 7*dt);
       f.position.x += d.v*dt;
       d.vel.set(d.v,0,0);
-      if(d.v > 72){ d.state = 'climb'; feed(d.name + ' STACCATA — IN SALITA','#7fd8ff'); }
+      if(d.v > 72){ d.state = 'climb'; feed(d.name + ' STACCATO — IN SALITA','#62e8ff'); }
     } else if(d.state === 'climb'){
       d.v = Math.min(165, d.v + 4*dt);
       const c = Math.cos(.22), sn = Math.sin(.22);
@@ -1699,7 +1906,7 @@ function updateFriendlies(dt){
       }
       if(f.position.y > 460 || f.position.x > 1750){
         S.depSafe++; S.score += 1500;
-        feed(d.name + ' FUORI PORTATA — IN SALVO  +1500','#7fd8ff');
+        feed(d.name + ' FUORI PORTATA — IN SALVO  +1500','#62e8ff');
         AU.beep(760,.3,.06,'sine');
         scene.remove(f); friendlies.splice(i,1); hud();
       }
@@ -1717,24 +1924,24 @@ function hurtFriendly(f, dmg, at){
     d.vel = d.vel.clone().multiplyScalar(.7);
     S.depLost++;
     S.score = Math.max(0, S.score - 800);
-    feed(d.name + ' ABBATTUTA', '#ff3b30');
-    alertMsg('VELIVOLO AMICO PERDUTO', 3);
+    feed(d.name + ' DISINTEGRATO', '#ff4d6d');
+    alertMsg('SHUTTLE PERDUTO', 3);
     hud();
     if(S.depLost >= 3) endGame(false, 'friendly');
   } else {
-    feed(d.name + ' COLPITA — RESISTE', '#f2a516');
+    feed(d.name + ' COLPITO — SCUDO REGGE', '#ffa33c');
   }
 }
 
-/* --- interrogatore IFF: il cercatore a infrarossi non distingue gli amici --- */
+/* --- Signal Scan: la lancia legge le firme, non le insegne --- */
 function interrogate(){
   if(!S || !S.running || S.paused) return;
-  if(!S.locked){ feed('IFF: NESSUN BERSAGLIO DA INTERROGARE','#f2a516'); AU.deny(); return; }
+  if(!S.locked){ feed('SCAN: NESSUNA SIGNATURE DA IDENTIFICARE','#ffa33c'); AU.deny(); return; }
   S.iffKnown = true;
   const amico = !!S.locked.userData.friendly;
   AU.beep(amico ? 900 : 420, .2, .06, 'sine');
-  feed(amico ? 'IFF: RISPOSTA AMICA — NON LANCIARE' : 'IFF: NESSUNA RISPOSTA — OSTILE',
-       amico ? '#7fd8ff' : '#ff3b30');
+  feed(amico ? 'SCAN: SIGNATURE ALLEATA — NON SCARICARE' : 'SCAN: NESSUNA RISPOSTA — OSTILE',
+       amico ? '#62e8ff' : '#ff4d6d');
 }
 
 /* --- caricamento dello scenario: il mondo viene ricostruito da zero --- */
@@ -1770,10 +1977,10 @@ function loadScenario(name){
    che sono l'unica via di scrittura consentita.
    ========================================================================= */
 const BACKEND = {
-  url: 'https://cmdibydnwcbntteqodjd.supabase.co',            // es. 'https://abcdefgh.supabase.co'
-  key: 'sb_publishable_G2y-xhKUT4omAZM9WP2uYQ_cJdGPkqf'             // chiave pubblica: sb_publishable_... (o la vecchia anon eyJ...)
+  url: '',            // es. 'https://abcdefgh.supabase.co'
+  key: ''             // chiave pubblica: sb_publishable_... (o la vecchia anon eyJ...)
 };
-const GAME_VER = '1.4.0';
+const GAME_VER = '2.0.0';
 
 const Net = {
   online:false, uuid:null, name:null,
@@ -2001,7 +2208,7 @@ const Net = {
       this.name = r.username; this.save({ uuid:this.uuid, name:this.name });
       document.getElementById('idscreen').classList.remove('on');
       this.paintBadge(); this.refreshMe();
-      this.toast('Operatore <b>' + this.name + '</b> accreditato','good');
+      this.toast('Guardian <b>' + this.name + '</b> accreditato','good');
       if(typeof AU !== 'undefined'){ AU.init(); AU.beep(900,.09,.05); }
     } else {
       msg.className = 'err';
@@ -2039,7 +2246,7 @@ const Net = {
     document.getElementById('badgeName').textContent = this.name || '—';
     document.getElementById('badgeSub').textContent = this.name
       ? ('record ' + this.me.best + (this.me.rank ? ' · #' + this.me.rank : '') +
-         ' · ' + this.me.games + ' partite')
+         ' · ' + this.me.games + ' operazioni')
       : 'non accreditato';
   },
 
@@ -2073,8 +2280,8 @@ const Net = {
       return;
     }
     const fmtT = s => Math.floor(s/60) + ':' + String(s%60).padStart(2,'0');
-    let h = '<table class="lbTable"><thead><tr><th>POS</th><th>OPERATORE</th>'+
-            '<th>MIGLIOR PUNTEGGIO</th><th class="lv">ONDATA</th><th>PARTITE</th><th class="lv">TEMPO</th>'+
+    let h = '<table class="lbTable"><thead><tr><th>POS</th><th>GUARDIAN</th>'+
+            '<th>MIGLIOR PUNTEGGIO</th><th class="lv">ONDATA</th><th>OPERAZIONI</th><th class="lv">TEMPO</th>'+
             '</tr></thead><tbody>';
     for(const r of rows){
       const me = this.name && r.username.toLowerCase() === this.name.toLowerCase();
@@ -2122,17 +2329,17 @@ const Net = {
         '<div><span>PARTITA PIÙ LUNGA</span><b>' + fmtT(p.best_time || 0) + '</b></div>' +
         '<div><span>MIGLIORAMENTO</span><b class="' + (tr > 0 ? 'up' : tr < 0 ? 'down' : '') + '">' +
           (tr === null || tr === undefined ? '—' : (tr > 0 ? '+' : '') + tr + '%') + '</b></div>' +
-        '<div><span>ULTIMA PARTITA</span><b style="font-size:14px">' +
+        '<div><span>ULTIMA OPERAZIONE</span><b style="font-size:14px">' +
           (d ? d.toLocaleDateString('it-IT') + ' ' + d.toLocaleTimeString('it-IT').slice(0,5) : '—') +
         '</b></div>' +
       '</div>' +
       (p.last_game ? '<div style="margin-top:12px;font-size:11px;color:var(--dim);letter-spacing:.1em">' +
         'ULTIMO ESITO: ' + p.last_game.score.toLocaleString('it-IT') + ' punti · ondata ' +
         p.last_game.level + ' · ' + fmtT(p.last_game.duration_s) + ' · ' +
-        (p.last_game.scenario === 'airbase' ? 'BASE DELTA' : 'CRESTA KILO-7') +
+        (p.last_game.scenario === 'airbase' ? 'ORBITAL GATEWAY' : 'CLOUD CITADEL') +
         ' · ' + (p.last_game.difficulty === 'hard' ? 'OPERATIVO' : 'ADDESTRAMENTO') + '</div>' : '') +
       (tr !== null && tr !== undefined
-        ? '<div style="margin-top:8px;font-size:10.5px;color:rgba(207,227,208,.42);line-height:1.7">' +
+        ? '<div style="margin-top:8px;font-size:10.5px;color:rgba(186,220,255,.42);line-height:1.7">' +
           'Il miglioramento confronta la media delle ultime cinque partite con quella delle cinque precedenti.</div>'
         : '');
   },
@@ -2201,10 +2408,10 @@ const Net = {
 
   share(){
     const p = this.pending || { score:(S ? S.score : 0), rank:this.me.rank, level:this.me.level };
-    const txt = 'OPERAZIONE SCUDO — ' + (this.name || 'operatore') + ': ' +
+    const txt = 'SKY FORTRESS — ' + (this.name || 'guardian') + ': ' +
       p.score.toLocaleString('it-IT') + ' punti, ondata ' + p.level +
       (p.rank ? ', posizione #' + p.rank + ' in classifica' : '') + '.';
-    if(navigator.share) navigator.share({ title:'Operazione Scudo', text:txt, url:location.href })
+    if(navigator.share) navigator.share({ title:'Sky Fortress', text:txt, url:location.href })
                                 .catch(()=>{});
     else if(navigator.clipboard) navigator.clipboard.writeText(txt + ' ' + location.href)
       .then(()=>this.toast('Risultato copiato negli appunti','good'))
@@ -2229,39 +2436,47 @@ const Net = {
    zulu, quadro tattico interattivo, traffico messaggi e avvio del sistema.
    ========================================================================= */
 const AO = {
-  ridge:{ code:'KILO-7', name:'CRESTA KILO-7', x:-.34, y:-.30,
-    brief:`<p><b>CRESTA DI KILO-7 — ORE 04:50.</b> La valle sotto la postazione è la sola strada
-           rimasta per far arrivare i rifornimenti alla città. Le batterie a lungo raggio sono state
-           spazzate via in tre minuti, la notte scorsa. I radar di scoperta non rispondono più.</p>
-           <p>All'alba passeranno: prima i caccia, a ondate, convinti di trovare un cielo vuoto.
-           Poi un <b>F-35A</b> in configurazione stealth, che semina flare capaci di ingannare
-           un cercatore a infrarossi.</p>
-           <p class="pull">Hai trentotto secondi di argon per ogni missile. Usali bene.</p>` },
-  airbase:{ code:'DELTA', name:'BASE AEREA DELTA', x:.38, y:.26,
-    brief:`<p><b>BASE AEREA DELTA — ORE 05:40.</b> Le rampe sono cariche: cinque velivoli da
-           trasporto devono portare fuori i feriti e l'ultimo reparto rimasto sul confine.</p>
-           <p>Un aereo in decollo è la preda più facile del mondo: inchiodato alla pista, lento,
-           senza manovra. Ventinove secondi in cui non può fare nulla per difendersi. I caccia
-           nemici lo sanno, e <b>non vengono per te</b>.</p>
-           <p class="pull">Il cercatore a infrarossi non distingue un amico da un nemico:
-           solo l'interrogatore IFF può farlo.</p>` }
+  ridge:{ code:'CITADEL', name:'CLOUD CITADEL', x:-.34, y:-.30,
+    brief:`<p><b>CLOUD CITADEL — CICLO 04:50.</b> Sotto la torretta non c'è terra: solo
+           l'oceano di nubi che avvolge AETHER-9 e le isole sospese che segnano il confine
+           del settore. Le batterie orbitali della Sky Fortress sono state spente in tre
+           minuti, nel ciclo precedente. Lo scanner a lungo raggio non risponde più.</p>
+           <p>All'alba stellare emergeranno: prima gli <b>Interceptor Drone</b>, a sciami,
+           convinti di trovare un cielo scoperto. Poi un <b>Leviathan Class Destroyer</b>,
+           che occulta la propria firma e semina Quantum Decoy capaci di deviare una
+           Photon Lance a mezza traiettoria.</p>
+           <p class="pull">Hai trentotto secondi di stabilità del nucleo per ogni carica.
+           Usali bene.</p>` },
+  airbase:{ code:'GATEWAY', name:'ORBITAL GATEWAY', x:.38, y:.26,
+    brief:`<p><b>ORBITAL GATEWAY — CICLO 05:40.</b> Le culle sono cariche: cinque shuttle
+           di classe Ark devono portare fuori i civili e l'ultima squadra rimasta sul
+           bordo del settore.</p>
+           <p>Uno shuttle in distacco è la preda più facile dell'universo conosciuto:
+           agganciato alla rampa, lento, senza scudo attivo. Ventinove secondi in cui non
+           può fare nulla per difendersi. THE NULL lo sa, e <b>non viene per te</b>.</p>
+           <p class="pull">La tua lancia legge le firme energetiche, non le insegne: solo
+           il Signal Scan distingue un alleato da un ostile.</p>` }
 };
 let selAO = 'ridge';
 let tacCv, tacX, tacHit = [], tacT = 0, conT = 0, msgT = 3, booted = false, tacSkip = 0;
 
 const MSGS = [
-  ['c','DATALINK: sincronizzazione quadro completata'],
-  ['t','RICOGNIZIONE: attività su base ostile a 140 km'],
-  ['a','ALLERTA: decolli multipli rilevati a nord-est'],
-  ['t','LOGISTICA: 23 complessi FIM-92 in postazione'],
-  ['c','IFF MODO 4: chiavi del giorno caricate'],
-  ['r','SETTORE 4: batteria a lungo raggio non risponde'],
-  ['t','METEO: vento 060 gradi, 12 nodi, in calo'],
-  ['a','ORDINE: mantenere copertura fino a nuovo avviso'],
-  ['c','TORRE DELTA: rampe cariche, in attesa di finestra'],
-  ['t','SANITÀ: 40 feriti pronti all\'imbarco'],
-  ['r','SIGINT: emissioni radar ostili in avvicinamento'],
-  ['c','POSTAZIONE MANPADS: operatore in linea']
+  ['c','AEGIS: sincronizzazione dello strato completata'],
+  ['t','RICOGNIZIONE: attività NULL oltre il Nebula Rim'],
+  ['a','ALLERTA: firme multiple in emersione a spinward'],
+  ['t','LOGISTICA: 23 Photon Lance sintetizzate in torretta'],
+  ['c','SIGNAL SCAN: firme alleate del ciclo caricate'],
+  ['r','SETTORE 4: batteria orbitale non risponde'],
+  ['t','STRATO: correnti 060, tempeste ioniche in calo'],
+  ['a','DIRETTIVA: mantenere la cortina fino a nuovo ordine'],
+  ['c','GATEWAY: shuttle carichi, in attesa di finestra'],
+  ['t','ARCHE: 40 civili pronti al distacco'],
+  ['r','SIGINT: eco dimensionali del NULL in avvicinamento'],
+  ['c','TORRETTA GUARDIAN: pilota in linea'],
+  ['r','THE NULL: nessuna risposta ai protocolli di contatto'],
+  ['a','ARCHIVIO: la civiltà artificiale non negozia, converte'],
+  ['t','CRISTALLI: giacimento del settore stabile al 91%'],
+  ['c','PORTALE 3: firma dimensionale in decadimento']
 ];
 
 function conClock(){
@@ -2292,8 +2507,8 @@ function selectAO(key){
   document.getElementById('brief').innerHTML = AO[key].brief;
   const h = document.getElementById('fHint');
   if(h) h.innerHTML = key === 'airbase'
-    ? 'Missione con velivoli amici: <b>Q</b> interroga l\'IFF prima di lanciare'
-    : 'FRECCE o MOUSE mira · <b>E</b> BCU · <b>C</b> sblocco · <b>SPAZIO</b> fuoco';
+    ? 'Settore con shuttle alleati: <b>Q</b> identifica la firma prima di scaricare'
+    : 'FRECCE o MOUSE mira · <b>E</b> cella · <b>C</b> rilascio · <b>SPAZIO</b> scarica';
 }
 function launchMission(level){ startGame(level, selAO); }
 
@@ -2313,11 +2528,11 @@ function drawTac(dt){
   tacX.clearRect(0,0,cw,ch);
 
   // reticolo
-  tacX.strokeStyle = 'rgba(207,227,208,.13)'; tacX.lineWidth = 1;
+  tacX.strokeStyle = 'rgba(186,220,255,.13)'; tacX.lineWidth = 1;
   for(let i=1;i<=4;i++){ tacX.beginPath(); tacX.arc(cx,cy,R*i/4,0,7); tacX.stroke(); }
   tacX.beginPath(); tacX.moveTo(cx-R,cy); tacX.lineTo(cx+R,cy);
   tacX.moveTo(cx,cy-R); tacX.lineTo(cx,cy+R); tacX.stroke();
-  tacX.fillStyle = 'rgba(207,227,208,.35)';
+  tacX.fillStyle = 'rgba(186,220,255,.35)';
   tacX.font = '9px "Share Tech Mono",monospace'; tacX.textAlign = 'center';
   for(let a=0;a<360;a+=30){
     const rad = (a-90)*Math.PI/180;
@@ -2328,7 +2543,7 @@ function drawTac(dt){
   const sw = tacT*.9;
   tacX.save(); tacX.beginPath(); tacX.arc(cx,cy,R,0,7); tacX.clip();
   for(let i=0;i<26;i++){
-    tacX.strokeStyle = 'rgba(127,216,255,' + (0.10*(1-i/26)) + ')';
+    tacX.strokeStyle = 'rgba(98,232,255,' + (0.10*(1-i/26)) + ')';
     tacX.beginPath(); tacX.moveTo(cx,cy);
     tacX.lineTo(cx+Math.cos(sw-i*.03)*R, cy+Math.sin(sw-i*.03)*R); tacX.stroke();
   }
@@ -2341,7 +2556,7 @@ function drawTac(dt){
     const b = tacBlips[i]; b.a += b.v*dt; b.life += dt;
     if(b.life > 22){ tacBlips.splice(i,1); continue; }
     const x = cx+Math.cos(b.a)*R*b.r, y = cy+Math.sin(b.a)*R*b.r;
-    tacX.fillStyle = 'rgba(207,227,208,' + (.25+.45*Math.abs(Math.sin(b.life))) + ')';
+    tacX.fillStyle = 'rgba(186,220,255,' + (.25+.45*Math.abs(Math.sin(b.life))) + ')';
     tacX.fillRect(x-1.5,y-1.5,3,3);
   }
 
@@ -2353,24 +2568,24 @@ function drawTac(dt){
     const on = (k === selAO);
     tacHit.push({k:k, x:x, y:y});
     const pulse = on ? 1 + Math.sin(tacT*3)*.10 : 1;
-    tacX.strokeStyle = on ? '#f2a516' : 'rgba(207,227,208,.5)';
+    tacX.strokeStyle = on ? '#ffa33c' : 'rgba(186,220,255,.5)';
     tacX.lineWidth = on ? 2 : 1;
     tacX.beginPath(); tacX.arc(x,y,15*pulse,0,7); tacX.stroke();
     tacX.beginPath();
     tacX.moveTo(x,y-22*pulse); tacX.lineTo(x+22*pulse,y);
     tacX.lineTo(x,y+22*pulse); tacX.lineTo(x-22*pulse,y); tacX.closePath();
     tacX.setLineDash(on ? [] : [4,5]); tacX.stroke(); tacX.setLineDash([]);
-    tacX.fillStyle = on ? '#f2a516' : 'rgba(207,227,208,.6)';
+    tacX.fillStyle = on ? '#ffa33c' : 'rgba(186,220,255,.6)';
     tacX.beginPath(); tacX.arc(x,y,3.5,0,7); tacX.fill();
     tacX.font = (on ? 'bold ' : '') + '10px "Share Tech Mono",monospace';
     tacX.fillText(o.code, x, y+38);
     if(on){
       tacX.font = '8.5px "Share Tech Mono",monospace';
-      tacX.fillStyle = 'rgba(242,165,22,.85)';
+      tacX.fillStyle = 'rgba(255,163,60,.85)';
       tacX.fillText('SELEZIONATA', x, y+50);
     }
   }
-  tacX.fillStyle = 'rgba(127,216,255,.9)';
+  tacX.fillStyle = 'rgba(98,232,255,.9)';
   tacX.fillRect(cx-2,cy-2,4,4);
 }
 
@@ -2384,16 +2599,16 @@ function tacClick(ev){
 
 /* --- sequenza di avvio --- */
 const BOOTLINES = [
-  'AVVIO NUCLEO C4ISR ....................... OK',
-  'AUTENTICAZIONE OPERATORE ................. CONCESSA',
-  'COLLEGAMENTO RADAR DI SCOPERTA ........... OK',
-  'INTERROGATORE IFF MODO 4 ................. CHIAVI CARICATE',
-  'DATALINK TATTICO ......................... AGGANCIATO',
-  'INVENTARIO FIM-92 ........................ 23 COMPLESSI',
-  'COPERTURA A LUNGO RAGGIO ................. NON DISPONIBILE',
-  'CARICAMENTO QUADRO TATTICO ............... OK',
+  'AVVIO NUCLEO AEGIS ....................... OK',
+  'ACCREDITAMENTO GUARDIAN .................. CONCESSO',
+  'TACTICAL SCANNER ......................... SINCRONIZZATO',
+  'SIGNAL SCAN MODO 4 ....................... FIRME CARICATE',
+  'AEGIS DATALINK ........................... AGGANCIATO',
+  'SINTESI PHOTON LANCE ..................... 23 CARICHE',
+  'BATTERIE ORBITALI ........................ OFFLINE',
+  'MAPPATURA DELLO STRATO ................... OK',
   '',
-  'CONSOLE PRONTA — SELEZIONARE L\'AREA DI OPERAZIONI'
+  'PONTE DI COMANDO PRONTO — SELEZIONARE IL SETTORE'
 ];
 function runBoot(){
   const box = document.getElementById('bootlog');
@@ -2514,8 +2729,8 @@ function startGame(level, scen){
   document.body.classList.toggle('base', SCN === 'airbase');
   boss = null;
   document.getElementById('bossbar').style.display = 'none';
-  banner('PRONTI ALL\'INGAGGIO','SETTORE KILO-7 — LIBERO DI FARE FUOCO');
-  feed('MIRA: FRECCE O MOUSE — CLIC O SPAZIO PER LANCIARE');
+  banner('GUARDIAN IN POSTAZIONE','CLOUD CITADEL — AUTORIZZATO A SCARICARE');
+  feed('MIRA: FRECCE O MOUSE — CLIC O SPAZIO PER SCARICARE');
   hud();
 }
 
@@ -2559,7 +2774,7 @@ function goHome(){
   const bx = document.getElementById('msgs');
   if(bx){
     const el = document.createElement('div');
-    el.innerHTML = '<span class="a">POSTAZIONE RIENTRATA IN CONSOLE — MISSIONE INTERROTTA</span>';
+    el.innerHTML = '<span class="a">GUARDIAN RIENTRATO AL PONTE — OPERAZIONE INTERROTTA</span>';
     bx.insertBefore(el, bx.firstChild);
   }
   startAttract();
@@ -2579,22 +2794,22 @@ function endGame(win, reason){
   const base = S.scen === 'airbase';
   let title, desc;
   if(win){
-    title = base ? 'PONTE AEREO COMPLETATO' : 'SETTORE MESSO IN SICUREZZA';
+    title = base ? 'EVACUAZIONE COMPLETATA' : 'SETTORE BONIFICATO';
     desc  = base
-      ? 'Tutte le partenze previste hanno lasciato il sedime: ' + S.depSafe + ' velivoli in salvo'
+      ? 'Tutti gli shuttle previsti hanno lasciato il Gateway: ' + S.depSafe + ' scafi in salvo'
         + (S.depLost ? ', ' + S.depLost + ' perduti.' : ', nessuna perdita.')
-      : "L'F-35 è precipitato oltre la cresta. Nessun velivolo ostile resta nel settore: la piazzola ha tenuto.";
+      : "Il Leviathan si è disintegrato oltre lo strato di nubi. Nessuna signature ostile resta nel settore: la torretta ha tenuto.";
   } else if(reason === 'friendly'){
-    title = 'PONTE AEREO INTERROTTO';
-    desc  = 'Tre velivoli da trasporto sono stati abbattuti in decollo. Le partenze sono state sospese.';
+    title = 'EVACUAZIONE INTERROTTA';
+    desc  = 'Tre shuttle sono stati disintegrati durante il distacco. Il Gateway ha sospeso le uscite.';
   } else {
-    title = 'POSTAZIONE DISTRUTTA';
+    title = 'TORRETTA DISTRUTTA';
     desc  = base
-      ? 'La postazione è stata neutralizzata: la pista resta senza copertura antiaerea.'
-      : 'La piazzola è stata neutralizzata. Il settore Kilo-7 è aperto ai velivoli nemici.';
+      ? 'La torretta è stata disintegrata: il Gateway resta senza copertura.'
+      : 'La torretta è stata disintegrata. Cloud Citadel è aperta alle squadre di THE NULL.';
   }
   document.getElementById('overtitle').textContent = title;
-  document.getElementById('overtitle').style.color = win ? '#cfe3d0' : '#ff3b30';
+  document.getElementById('overtitle').style.color = win ? '#cfe6ff' : '#ff4d6d';
   document.getElementById('overdesc').textContent = desc;
   document.getElementById('fscore').textContent = S.score;
   document.getElementById('fkills').textContent = S.kills;
@@ -2633,7 +2848,7 @@ function nextWave(){
   banner(w.title, w.sub);
   S.ammo = cfg.ammo; S.loaded = true; S.reload = 0;
   S.bcu = 'none'; S.coolant = 0; S.uncaged = false; S.lockT = 0;
-  alertMsg('PREMI [E] PER ATTIVARE LA BCU', 3);
+  alertMsg('PREMI [E] PER INNESTARE LA ENERGY CELL', 3);
   S.waveActive = true;
   if(w.boss){ spawnBoss(); }
   if(w.count){ S.spawnQueue = w.count; S.spawnTimer = w.dep ? 5 : 0; }
@@ -2668,7 +2883,13 @@ function spawnBoss(){
   scene.add(boss); jets.push(boss);
   document.getElementById('bossbar').style.display = 'block';
   document.getElementById('bossfill').style.width = '100%';
-  alertMsg('CONTATTO STEALTH — RILASCIA FLARE, ASPETTA CHE SI SPENGANO', 5);
+  // ingresso cinematografico: barre nere, nome, sottotitolo, poi si dissolve
+  const bi = document.getElementById('bossIntro');
+  bi.classList.add('on');
+  setTimeout(()=>bi.classList.remove('on'), 4200);
+  AU.beep(70,1.8,.16,'sawtooth');
+  AU.burst(.5,300,2.2,'lowpass');
+  alertMsg('SEGNATURA OCCULTATA — RILASCIA DECOY, ATTENDI CHE SVANISCANO', 5);
 }
 
 /* =========================================================================
@@ -2679,12 +2900,12 @@ function spawnBoss(){
    raffredda il cercatore a infrarossi: senza, il missile non parte.          */
 function activateBCU(){
   if(!S || !S.running || S.paused) return;
-  if(S.bcu === 'cooling'){ feed('RAFFREDDAMENTO GIÀ IN CORSO'); return; }
-  if(S.bcu === 'ready'){ feed('BCU IN FUNZIONE — ANCORA '+Math.ceil(S.coolant)+' s'); return; }
-  if(!S.loaded){ feed('ATTENDI IL COMPLESSO DI LANCIO','#f2a516'); AU.deny(); return; }
-  if(S.ammo <= 0){ feed('NESSUN COMPLESSO DISPONIBILE','#f2a516'); AU.deny(); return; }
+  if(S.bcu === 'cooling'){ feed('STABILIZZAZIONE GIÀ IN CORSO'); return; }
+  if(S.bcu === 'ready'){ feed('NUCLEO STABILE — ANCORA '+Math.ceil(S.coolant)+' s'); return; }
+  if(!S.loaded){ feed('ATTENDI LA RIGENERAZIONE DELLA LANCIA','#ffa33c'); AU.deny(); return; }
+  if(S.ammo <= 0){ feed('NESSUNA ENERGY CELL DISPONIBILE','#ffa33c'); AU.deny(); return; }
   S.bcu = 'cooling'; S.coolT = cfg.bcuCool;
-  AU.argon(); feed('BCU INSERITA — RAFFREDDAMENTO ALL\'ARGON');
+  AU.argon(); feed('ENERGY CELL INNESTATA — STABILIZZAZIONE NUCLEO');
 }
 
 /* --- FASE 5a — sblocco del cercatore (uncage) ------------------------------
@@ -2692,15 +2913,15 @@ function activateBCU(){
    insegue il bersaglio da solo e libera il consenso al lancio.               */
 function uncage(){
   if(!S || !S.running || S.paused) return;
-  if(S.uncaged){ feed('SENSORE GIÀ SBLOCCATO — FUOCO [SPAZIO]'); return; }
-  if(S.bcu !== 'ready'){ feed('SBLOCCO NEGATO: BCU NON ATTIVA [E]','#ff3b30'); AU.deny(); return; }
-  if(S.lockT < 1){ feed('SBLOCCO NEGATO: NESSUN AGGANCIO','#ff3b30'); AU.deny(); return; }
+  if(S.uncaged){ feed('LANCIA GIÀ RILASCIATA — SCARICA [SPAZIO]'); return; }
+  if(S.bcu !== 'ready'){ feed('RILASCIO NEGATO: NUCLEO NON ALIMENTATO [E]','#ff4d6d'); AU.deny(); return; }
+  if(S.lockT < 1){ feed('RILASCIO NEGATO: NESSUN ENERGY LOCK','#ff4d6d'); AU.deny(); return; }
   if(S.locked.userData.friendly && S.iffKnown){
-    feed('SBLOCCO INIBITO: BERSAGLIO AMICO','#7fd8ff'); AU.deny();
-    alertMsg('IFF AMICO — NON PUOI INGAGGIARLO', 2); return;
+    feed('RILASCIO INIBITO: SIGNATURE ALLEATA','#62e8ff'); AU.deny();
+    alertMsg('SIGNATURE ALLEATA — NON PUOI INGAGGIARLA', 2); return;
   }
   S.uncaged = true; S.uncageT = cfg.uncageWin;
-  AU.beep(1650,.14,.07); feed('SENSORE SBLOCCATO — CENTRA L\'ANTICIPO','#f2a516');
+  AU.beep(1650,.14,.07); feed('LANCIA RILASCIATA — CENTRA IL VETTORE','#ffa33c');
 }
 
 /* --- FASE 4 — punto di lancio: anticipo + superelevazione ------------------ */
@@ -2719,22 +2940,22 @@ function computeLead(t){
 /* --- FASE 5b — grilletto di lancio ---------------------------------------- */
 function fire(){
   if(!S || !S.running || S.paused) return;
-  if(S.crouch > .5){ feed('NON PUOI LANCIARE DALLA TRINCEA','#f2a516'); AU.deny(); return; }
+  if(S.crouch > .5){ feed('NON PUOI SCARICARE CON IL DEFLETTORE ALZATO','#ffa33c'); AU.deny(); return; }
   if(!S.loaded) return;
-  if(S.ammo <= 0){ feed('RISERVA ESAURITA — RIFORNIMENTO IN ARRIVO','#f2a516'); return; }
+  if(S.ammo <= 0){ feed('CELLE ESAURITE — SINTESI IN CORSO','#ffa33c'); return; }
   if(S.bcu !== 'ready'){
-    feed('SENSORE NON ALIMENTATO — ATTIVA LA BCU [E]','#ff3b30'); AU.deny();
-    alertMsg('PREMI [E]: INSERISCI E ATTIVA LA BCU', 2); return;
+    feed('NUCLEO NON ALIMENTATO — INNESTA LA ENERGY CELL [E]','#ff4d6d'); AU.deny();
+    alertMsg('PREMI [E]: INNESTA LA ENERGY CELL', 2); return;
   }
 
   const guided = (S.lockT >= 1 && S.uncaged);
   if(!guided && !cfg.strict){
-    feed('CONSENSO MANCANTE — SBLOCCA IL SENSORE [C]','#ff3b30'); AU.deny();
-    alertMsg('PREMI [C]: SBLOCCA IL SENSORE PRIMA DEL FUOCO', 2); return;
+    feed('CONSENSO MANCANTE — RILASCIA LA LANCIA [C]','#ff4d6d'); AU.deny();
+    alertMsg('PREMI [C]: RILASCIA LA LANCIA PRIMA DI SCARICARE', 2); return;
   }
-  if(!guided) feed('LANCIO SENZA CONSENSO — MISSILE NON GUIDATO','#f2a516');
-  else if(S.leadErr < cfg.leadTol) feed('PARAMETRI DI LANCIO OTTIMALI','#cfe3d0');
-  else if(S.leadErr > cfg.leadTol*3) feed('ANTICIPO INSUFFICIENTE — TRAIETTORIA LUNGA','#f2a516');
+  if(!guided) feed('SCARICA SENZA CONSENSO — PHOTON LANCE NON GUIDATA','#ffa33c');
+  else if(S.leadErr < cfg.leadTol) feed('VETTORE DI SCARICA OTTIMALE','#cfe6ff');
+  else if(S.leadErr > cfg.leadTol*3) feed('VETTORE IMPRECISO — TRAIETTORIA LUNGA','#ffa33c');
 
   // il missile lascia il tubo lungo l'asse di puntamento, non verso il bersaglio
   const dir = new V3(); camera.getWorldDirection(dir);
@@ -2788,7 +3009,7 @@ function updateMissiles(dt){
         for(const f of flares){
           if(f.position.distanceTo(m.position) < 220 && Math.random() < cfg.decoy*dt*3){
             d.target = f; d.decoyed = true;
-            feed('MISSILE INGANNATO DA FLARE','#f2a516'); break;
+            feed('PHOTON LANCE DEVIATA DA QUANTUM DECOY','#ffa33c'); break;
           }
         }
       }
@@ -2799,7 +3020,7 @@ function updateMissiles(dt){
       // limite di campo del cercatore: oltre il gimbal il bersaglio esce e il missile va balistico
       if(axis.angleTo(los) > cfg.gimbal){
         d.target = null;
-        feed('BERSAGLIO FUORI DAL CAMPO DEL CERCATORE','#f2a516');
+        feed('SIGNATURE FUORI DAL CAMPO DELLA LANCIA','#ffa33c');
       } else {
         // rotta di collisione: punta dove sarà il bersaglio, non dove si trova
         const tv  = d.target.userData.vel || new V3();
@@ -2822,7 +3043,12 @@ function updateMissiles(dt){
     // scia di fumo
     d.trail += dt;
     if(d.ignite && d.trail > .022){
-      d.trail = 0; puff(m.position, .9, TEX.smoke, .55, 5.5, 1.1);
+      d.trail = 0;
+      const pf = new THREE.Sprite(new THREE.SpriteMaterial({map:TEX.fire, color:0x7fd0ff,
+        transparent:true, opacity:.75, depthWrite:false, blending:THREE.AdditiveBlending}));
+      pf.position.copy(m.position); pf.scale.setScalar(4.2);
+      scene.add(pf);
+      fx.push({m:pf, type:'puff', life:0, max:.85, grow:9, op:.75});
     }
 
     /* --- impatto: distanza minima lungo il tratto percorso nel fotogramma,
@@ -2843,7 +3069,7 @@ function updateMissiles(dt){
     if(!hit) for(const f of friendlies){
       if(f.userData.state !== 'falling' && nearSeg(f.position) < cfg.hitRadius*1.2){
         explode(m.position, 1.2); hit = true;
-        feed('FUOCO AMICO SU ' + f.userData.name, '#ff3b30');
+        feed('SCARICA SU ALLEATO: ' + f.userData.name, '#ff4d6d');
         S.score = Math.max(0, S.score - 1500);
         hurtFriendly(f, 3, null);
         break;
@@ -2869,26 +3095,27 @@ function damageJet(t, at){
     document.getElementById('bossfill').style.width = (d.hp/d.maxHp*100)+'%';
     S.score += 400;
     if(d.hp <= 0){ killJet(t, true); }
-    else { feed('COLPO A SEGNO SULL\'F-35 — INTEGRITÀ '+Math.round(d.hp/d.maxHp*100)+'%','#f2a516'); }
+    else { feed('SCARICA A SEGNO SUL LEVIATHAN — SCUDO '+Math.round(d.hp/d.maxHp*100)+'%','#ffa33c'); }
   } else {
     killJet(t, false);
   }
   hud();
 }
 
+const NULLNAMES = ['INTERCEPTOR DRONE','NEBULA FIGHTER','STORM HUNTER','VOID BOMBER','QUANTUM RAIDER'];
 function killJet(t, isBoss){
   const i = jets.indexOf(t); if(i >= 0) jets.splice(i,1);
   S.kills++; S.score += isBoss ? 5000 : 700;
   if(isBoss){
     boss = null;
     document.getElementById('bossbar').style.display = 'none';
-    feed('F-35 ABBATTUTO','#cfe3d0');
+    feed('LEVIATHAN NEUTRALIZZATO','#cfe6ff');
     // caduta spettacolare
     const d = t.userData; d.dying = 1;
     fx.push({m:t, type:'crash', life:0, max:4.5, vel:d.vel.clone().multiplyScalar(.55), spin:new V3(2.2,.6,3.4)});
     for(let k=0;k<3;k++) explode(t.position.clone().add(new V3((Math.random()-.5)*12,(Math.random()-.5)*8,(Math.random()-.5)*12)), 1.2);
   } else {
-    feed('BERSAGLIO ABBATTUTO +700');
+    feed(NULLNAMES[Math.floor(Math.random()*NULLNAMES.length)] + ' DISINTEGRATO +700');
     scene.remove(t);
   }
   hud();
@@ -2952,7 +3179,7 @@ function updateJets(dt){
       const targeted = (S.locked === j && S.lockT >= 1) || missiles.some(m=>m.userData.target === j);
       if(d.flareCool <= 0 && (targeted || Math.random() < dt*.25)){
         deployFlares(j); d.flareCool = 7.5; d.flaring = 3.4;
-        alertMsg('FLARE RILASCIATI — NON LANCIARE ADESSO', 2.4);
+        alertMsg('QUANTUM DECOY ATTIVI — NON SCARICARE ADESSO', 2.4);
       }
     }
 
@@ -2974,6 +3201,18 @@ function updateJets(dt){
     j.lookAt(j.position.clone().add(d.vel));
     j.rotateZ(d.roll);
     if(d.burner) d.burner.scale.setScalar(.75 + Math.sin(performance.now()*.02)*.18);
+    if(d.boss){
+      // nucleo di singolarità in rotazione e alone che pulsa col danno subito
+      if(j.userData.coreMesh === undefined){
+        j.userData.coreMesh = j.children.find(c=>c.geometry && c.geometry.type === 'IcosahedronGeometry') || null;
+        j.userData.haloMesh = j.children.find(c=>c.geometry && c.geometry.type === 'TorusGeometry') || null;
+      }
+      const cm = j.userData.coreMesh, hm = j.userData.haloMesh;
+      if(cm){ cm.rotation.y += dt*1.6; cm.rotation.x += dt*.9;
+              cm.scale.setScalar(1 + Math.sin(performance.now()*.005)*.12); }
+      if(hm){ hm.rotation.z += dt*.8;
+              hm.scale.setScalar(1 + (1 - d.hp/d.maxHp)*.35); }
+    }
   }
 
   AU.jets(closest < 1200 ? clamp((1200-closest)/1200,0,1)*.22 : 0);
@@ -2983,7 +3222,8 @@ function updateJets(dt){
 function fireCannon(j, aim){
   const spread = j.userData.boss ? .012 : .03;
   const dir = aim.clone().add(new V3((Math.random()-.5)*spread,(Math.random()-.5)*spread,(Math.random()-.5)*spread)).normalize();
-  const b = new THREE.Mesh(new THREE.CylinderGeometry(.22,.22,5,6), new THREE.MeshBasicMaterial({color:0xffcf6a}));
+  const b = new THREE.Mesh(new THREE.CylinderGeometry(.18,.18,7,6),
+    new THREE.MeshBasicMaterial({color:0xb47bff}));   // dardo ionico
   b.position.copy(j.position);
   b.quaternion.setFromUnitVectors(new V3(0,1,0), dir);
   b.userData = {vel:dir.multiplyScalar(430), life:0};
@@ -2992,11 +3232,11 @@ function fireCannon(j, aim){
 }
 
 function dropBomb(j){
-  const b = new THREE.Mesh(new THREE.CylinderGeometry(.45,.28,3.4,8), MAT.darkSteel);
+  const b = new THREE.Mesh(new THREE.OctahedronGeometry(1.5,0), MAT.energyVio);   // carica al plasma
   b.position.copy(j.position);
   b.userData = {vel:j.userData.vel.clone().multiplyScalar(.6)};
   scene.add(b); bombs.push(b);
-  alertMsg('BOMBA IN CADUTA — SHIFT PER RIPARARTI', 1.8);
+  alertMsg('CARICA AL PLASMA IN CADUTA — SHIFT PER IL DEFLETTORE', 1.8);
 }
 
 function fireAAM(j){
@@ -3005,13 +3245,13 @@ function fireAAM(j){
   m.position.copy(j.position);
   m.userData = {vel:dir.multiplyScalar(190), life:0, trail:0};
   scene.add(m); aams.push(m);
-  alertMsg('MISSILE IN ARRIVO — SHIFT PER RIPARARTI', 2.6);
+  alertMsg('SILURO IONICO IN ARRIVO — SHIFT PER IL DEFLETTORE', 2.6);
   AU.beep(320,.5,.15,'sawtooth');
 }
 
 function deployFlares(j){
   for(let i=0;i<8;i++){
-    const s = new THREE.Sprite(new THREE.SpriteMaterial({map:TEX.fire, color:0xffd070, transparent:true, depthWrite:false}));
+    const s = new THREE.Sprite(new THREE.SpriteMaterial({map:TEX.fire, color:0xc9a4ff, transparent:true, depthWrite:false}));
     s.scale.setScalar(16);
     s.position.copy(j.position).add(new V3((Math.random()-.5)*14,(Math.random()-.5)*6,(Math.random()-.5)*14));
     s.userData = {vel:j.userData.vel.clone().multiplyScalar(.35).add(new V3((Math.random()-.5)*70,-25-Math.random()*30,(Math.random()-.5)*70)), life:3.6};
@@ -3031,7 +3271,7 @@ function hurt(amount, why){
   dm.style.opacity = clamp(.55 + (1-S.hp/100)*.4, 0, .95);
   setTimeout(()=>dm.style.opacity = 0, 130);
   AU.hit();
-  if(why) feed(why,'#ff3b30');
+  if(why) feed(why,'#ff4d6d');
   hud();
   if(S.hp <= 0){ S.hp = 0; hud(); endGame(false); }
 }
@@ -3064,7 +3304,7 @@ function updateProjectiles(dt){
     if(b.position.y <= terrainH(b.position.x, b.position.z)){
       explode(b.position, 1.3);
       const d = b.position.distanceTo(PLAYER);
-      if(d < 45) hurt(cfg.bombDmg*(1-d/45), 'IMPATTO RAVVICINATO');
+      if(d < 45) hurt(cfg.bombDmg*(1-d/45), 'DETONAZIONE RAVVICINATA');
       scene.remove(b); bombs.splice(i,1);
     }
   }
@@ -3081,7 +3321,7 @@ function updateProjectiles(dt){
     if(d.trail > .04){ d.trail = 0; puff(m.position,.8,TEX.smoke,.5,5,.9); }
     if(m.position.distanceTo(PLAYER) < 26 || m.position.y < terrainH(m.position.x,m.position.z) || d.life > 14){
       explode(m.position, 1.5);
-      if(m.position.distanceTo(PLAYER) < 40) hurt(cfg.aamDmg, 'MISSILE A SEGNO SULLA PIAZZOLA');
+      if(m.position.distanceTo(PLAYER) < 40) hurt(cfg.aamDmg, 'SILURO A SEGNO SULLA TORRETTA');
       scene.remove(m); aams.splice(i,1);
     }
   }
@@ -3108,19 +3348,31 @@ function puff(pos, scale, tex, opacity, grow, life){
 }
 function explode(pos, size){
   AU.boom(clamp(.85 - pos.distanceTo(PLAYER)/1600, .12, .85));
+  // lampo al plasma: nucleo bianco che si espande, seguito da un anello d'urto
   const core = new THREE.Mesh(new THREE.SphereGeometry(6*size,12,10),
-    new THREE.MeshBasicMaterial({color:0xffd08a, transparent:true, opacity:1}));
+    new THREE.MeshBasicMaterial({color:0xdff4ff, transparent:true, opacity:1,
+      blending:THREE.AdditiveBlending, depthWrite:false}));
   core.position.copy(pos); scene.add(core);
   fx.push({m:core, type:'flash', life:0, max:.45, size:size});
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(6*size,.9*size,6,26),
+    new THREE.MeshBasicMaterial({color:0x62e8ff, transparent:true, opacity:.95, depthWrite:false}));
+  ring.position.copy(pos); ring.rotation.set(Math.random()*3, Math.random()*3, 0);
+  scene.add(ring);
+  fx.push({m:ring, type:'shock', life:0, max:.55, size:size});
   for(let i=0;i<7;i++){
-    const p = new THREE.Sprite(new THREE.SpriteMaterial({map:TEX.fire, transparent:true, opacity:.95, depthWrite:false}));
+    const p = new THREE.Sprite(new THREE.SpriteMaterial({map:TEX.fire,
+      color: i % 2 ? 0x8fd8ff : 0xb47bff, transparent:true, opacity:.95,
+      depthWrite:false, blending:THREE.AdditiveBlending}));
     p.position.copy(pos); p.scale.setScalar(14*size);
     scene.add(p);
     fx.push({m:p, type:'puff', life:0, max:1.1+Math.random(), grow:34*size, op:.95,
       vel:new V3((Math.random()-.5)*40,(Math.random()-.5)*30+8,(Math.random()-.5)*40)});
   }
   for(let i=0;i<9;i++){
-    const sh = new THREE.Mesh(new THREE.BoxGeometry(1.4,1.4,3.6), MAT.darkSteel);
+    // frammenti energetici invece di schegge metalliche
+    const sh = new THREE.Mesh(new THREE.TetrahedronGeometry(1.6,0),
+      new THREE.MeshBasicMaterial({color: i % 3 ? 0x62e8ff : 0xa96bff,
+        transparent:true, opacity:.9, depthWrite:false}));
     sh.position.copy(pos); scene.add(sh);
     fx.push({m:sh, type:'shard', life:0, max:2.4,
       vel:new V3((Math.random()-.5)*90,Math.random()*70,(Math.random()-.5)*90),
@@ -3139,10 +3391,14 @@ function updateFX(dt){
     } else if(f.type === 'flash'){
       f.m.scale.setScalar(1 + k*3.2);
       f.m.material.opacity = 1-k;
+    } else if(f.type === 'shock'){
+      f.m.scale.setScalar(1 + k*5.5);
+      f.m.material.opacity = .95*(1-k)*(1-k);
     } else if(f.type === 'shard'){
       f.vel.y -= 90*dt;
       f.m.position.add(f.vel.clone().multiplyScalar(dt));
       f.m.rotation.x += f.spin.x*dt; f.m.rotation.y += f.spin.y*dt;
+      if(f.m.material.transparent) f.m.material.opacity = Math.max(0, .9*(1-k));
     } else if(f.type === 'crash'){
       f.vel.y -= 55*dt;
       f.m.position.add(f.vel.clone().multiplyScalar(dt));
@@ -3195,7 +3451,7 @@ function updateLock(dt){
 
   if(S.uncaged){
     S.uncageT -= dt;
-    if(S.uncageT <= 0){ S.uncaged = false; feed('SENSORE RIBLOCCATO — RIPETI LO SBLOCCO [C]','#f2a516'); }
+    if(S.uncageT <= 0){ S.uncaged = false; feed('LANCIA RIBLOCCATA — RIPETI IL RILASCIO [C]','#ffa33c'); }
   }
 
   if(S.lockT >= 1) AU.lock(true);
@@ -3209,17 +3465,17 @@ function hud(){
   document.getElementById('scoreval').textContent = S.score;
   document.getElementById('killval').textContent  = S.kills;
   document.getElementById('hpval').textContent    = Math.round(S.hp)+'%';
-  document.getElementById('hpval').style.color    = S.hp>60?'#fff':(S.hp>30?'#f2a516':'#ff3b30');
+  document.getElementById('hpval').style.color    = S.hp>60?'#fff':(S.hp>30?'#ffa33c':'#ff4d6d');
   document.getElementById('waveval').textContent  = Math.max(1,S.wave+1)+' / '+WAVES.length;
   document.getElementById('airval').textContent   = jets.length;
   document.getElementById('ammoval').textContent  = S.ammo;
-  document.getElementById('sectorval').textContent = S.scen === 'airbase' ? 'DELTA' : 'KILO-7';
+  document.getElementById('sectorval').textContent = S.scen === 'airbase' ? 'GATEWAY' : 'CITADEL';
   if(S.scen === 'airbase'){
     const tot = WAVES.reduce((n,w)=>n + (w.dep||0), 0);
     document.getElementById('depval').textContent  = S.depSafe + ' / ' + tot;
     const lv = document.getElementById('lostval');
     lv.textContent = S.depLost + ' / 3';
-    lv.style.color = S.depLost ? '#ff3b30' : '#fff';
+    lv.style.color = S.depLost ? '#ff4d6d' : '#fff';
   }
   const iv = document.getElementById('iffval');
   if(iv){
@@ -3231,20 +3487,20 @@ function hud(){
 function drawRadar(){
   const w = radar.width, c = w/2, R = 3000, k = (c-6)/R;
   rctx.clearRect(0,0,w,w);
-  const col = (S.lockT>=1) ? '#ff3b30' : '#cfe3d0';
-  rctx.strokeStyle = 'rgba(207,227,208,.25)'; rctx.lineWidth = 1;
+  const col = (S.lockT>=1) ? '#ff4d6d' : '#cfe6ff';
+  rctx.strokeStyle = 'rgba(186,220,255,.25)'; rctx.lineWidth = 1;
   [.34,.67,1].forEach(f=>{ rctx.beginPath(); rctx.arc(c,c,(c-5)*f,0,7); rctx.stroke(); });
   rctx.beginPath(); rctx.moveTo(c,4); rctx.lineTo(c,w-4); rctx.moveTo(4,c); rctx.lineTo(w-4,c); rctx.stroke();
 
   // cono di osservazione
-  rctx.fillStyle = 'rgba(242,165,22,.13)';
+  rctx.fillStyle = 'rgba(255,163,60,.13)';
   rctx.beginPath(); rctx.moveTo(c,c);
   rctx.arc(c,c,c-5, -yaw - Math.PI/2 - .5, -yaw - Math.PI/2 + .5);
   rctx.closePath(); rctx.fill();
 
   // spazzata
   sweep += .035;
-  rctx.strokeStyle = 'rgba(207,227,208,.5)';
+  rctx.strokeStyle = 'rgba(186,220,255,.5)';
   rctx.beginPath(); rctx.moveTo(c,c);
   rctx.lineTo(c + Math.cos(sweep)*(c-5), c + Math.sin(sweep)*(c-5)); rctx.stroke();
 
@@ -3253,19 +3509,19 @@ function drawRadar(){
     const x = c + j.position.x*k, y = c + j.position.z*k;
     if(Math.hypot(x-c,y-c) > c-5) continue;
     const isB = j.userData.boss, isL = (j === S.locked && S.lockT >= 1);
-    rctx.fillStyle = isL ? '#ff3b30' : (j.userData.mode === 'attack' ? '#f2a516' : '#cfe3d0');
+    rctx.fillStyle = isL ? '#ff4d6d' : (j.userData.mode === 'attack' ? '#ffa33c' : '#cfe6ff');
     rctx.beginPath(); rctx.arc(x,y, isB?5:3, 0, 7); rctx.fill();
-    if(isB){ rctx.strokeStyle = '#ff3b30'; rctx.beginPath(); rctx.arc(x,y,8,0,7); rctx.stroke(); }
+    if(isB){ rctx.strokeStyle = '#ff4d6d'; rctx.beginPath(); rctx.arc(x,y,8,0,7); rctx.stroke(); }
   }
   for(const f of friendlies){
     const x = c + f.position.x*k, y = c + f.position.z*k;
     if(Math.hypot(x-c,y-c) > c-5) continue;
-    rctx.fillStyle = '#7fd8ff';
+    rctx.fillStyle = '#62e8ff';
     rctx.beginPath(); rctx.arc(x,y,4,0,7); rctx.fill();
-    rctx.strokeStyle = 'rgba(127,216,255,.55)';
+    rctx.strokeStyle = 'rgba(98,232,255,.55)';
     rctx.beginPath(); rctx.arc(x,y,7.5,0,7); rctx.stroke();
   }
-  rctx.fillStyle = '#f2a516'; rctx.fillRect(c-1.5,c-1.5,3,3);
+  rctx.fillStyle = '#ffa33c'; rctx.fillRect(c-1.5,c-1.5,3,3);
   radar.className = (S.lockT>=1) ? 'alarm' : '';
 }
 
@@ -3291,8 +3547,8 @@ function drawOverlay(){
     if(front && Math.abs(p.x) < 1 && Math.abs(p.y) < 1){
       const x = (p.x*.5+.5)*w, y = (-p.y*.5+.5)*h;
       const s = clamp(2600/dist, 14, 90);
-      fxc.strokeStyle = amico ? '#7fd8ff'
-                      : (locked ? '#ff3b30' : (seek ? '#f2a516' : 'rgba(207,227,208,.75)'));
+      fxc.strokeStyle = amico ? '#62e8ff'
+                      : (locked ? '#ff4d6d' : (seek ? '#ffa33c' : 'rgba(186,220,255,.75)'));
       fxc.lineWidth = locked ? 2 : 1.2;
       const c = s*.34;
       [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(q=>{
@@ -3306,10 +3562,10 @@ function drawOverlay(){
       fxc.font = '11px "Share Tech Mono",monospace';
       fxc.textAlign = 'center';
       fxc.fillText(Math.round(dist)+' M', x, y+s+15);
-      if(j.userData.boss) fxc.fillText('F-35', x, y-s-7);
-      if(amico) fxc.fillText(j.userData.name + ' · AMICO', x, y-s-7);
+      if(j.userData.boss) fxc.fillText('LEVIATHAN', x, y-s-7);
+      if(amico) fxc.fillText(j.userData.name + ' · ALLEATO', x, y-s-7);
       if(locked){
-        fxc.fillText('AGGANCIATO', x, y-s-7);
+        fxc.fillText('ENERGY LOCK', x, y-s-7);
         fxc.beginPath(); fxc.arc(x,y,s*1.35,0,7); fxc.stroke();
       }
     } else {
@@ -3322,8 +3578,8 @@ function drawOverlay(){
       const ey = h*.5;
       const x = clamp(ex, 40, w-40);
       fxc.save(); fxc.translate(x, ey); fxc.rotate(rel > 0 ? 0 : Math.PI);
-      fxc.fillStyle = amico ? 'rgba(127,216,255,.75)'
-                    : (j.userData.mode === 'attack' ? '#f2a516' : 'rgba(207,227,208,.55)');
+      fxc.fillStyle = amico ? 'rgba(98,232,255,.75)'
+                    : (j.userData.mode === 'attack' ? '#ffa33c' : 'rgba(186,220,255,.55)');
       fxc.beginPath(); fxc.moveTo(14,0); fxc.lineTo(-6,-8); fxc.lineTo(-6,8); fxc.closePath(); fxc.fill();
       fxc.restore();
     }
@@ -3336,7 +3592,7 @@ function drawOverlay(){
     const front = fwd.dot(lp.clone().sub(camera.position)) > 0;
     const p = lp.clone().project(camera);
     const good = S.leadErr < cfg.leadTol;
-    const colr = good ? (S.uncaged ? '#79f06a' : '#cfe3d0') : '#f2a516';
+    const colr = good ? (S.uncaged ? '#6effc0' : '#cfe6ff') : '#ffa33c';
     if(front && Math.abs(p.x) < 1.15 && Math.abs(p.y) < 1.15){
       const x = (p.x*.5+.5)*w, y = (-p.y*.5+.5)*h;
       const r = good ? 15 : 19;
@@ -3351,8 +3607,8 @@ function drawOverlay(){
       fxc.setLineDash([]);
       fxc.fillStyle = colr; fxc.textAlign = 'center';
       fxc.font = '11px "Share Tech Mono",monospace';
-      fxc.fillText(good ? 'PARAMETRI OTTIMALI' : 'ANTICIPO', x, y - r - 8);
-      fxc.fillText('VOLO ' + S.lead.tof.toFixed(1) + ' s', x, y + r + 14);
+      fxc.fillText(good ? 'VETTORE OTTIMALE' : 'VETTORE', x, y - r - 8);
+      fxc.fillText('ETA ' + S.lead.tof.toFixed(1) + ' s', x, y + r + 14);
     }
   }
 
@@ -3360,7 +3616,7 @@ function drawOverlay(){
   if(mouse.mode !== 'locked' && mouse.active){
     const nx = (mouse.x - w*.5)/(w*.5), ny = (mouse.y - h*.5)/(h*.5);
     const push = Math.max(Math.abs(nx), Math.abs(ny));
-    fxc.strokeStyle = push > .10 ? 'rgba(242,165,22,.85)' : 'rgba(207,227,208,.35)';
+    fxc.strokeStyle = push > .10 ? 'rgba(255,163,60,.85)' : 'rgba(186,220,255,.35)';
     fxc.lineWidth = 1.4;
     fxc.beginPath(); fxc.arc(mouse.x, mouse.y, 11, 0, 7); fxc.stroke();
     if(push > .10){
@@ -3368,7 +3624,7 @@ function drawOverlay(){
       fxc.lineTo(mouse.x - nx*16, mouse.y - ny*16); fxc.stroke();
     }
     fxc.setLineDash([4,6]);
-    fxc.strokeStyle = 'rgba(207,227,208,.18)';
+    fxc.strokeStyle = 'rgba(186,220,255,.18)';
     fxc.beginPath(); fxc.arc(w*.5, h*.5, Math.min(w,h)*.10, 0, 7); fxc.stroke();
     fxc.setLineDash([]);
   }
@@ -3377,8 +3633,8 @@ function drawOverlay(){
   const cx = w/2, cy = h/2;
   const lock = S.lockT;
   const r = lerp(64, 40, lock) * (S.zoom>.5 ? .8 : 1);
-  fxc.strokeStyle = S.uncaged ? '#79f06a'
-                  : (lock >= 1 ? '#ff3b30' : (lock > 0 ? '#f2a516' : 'rgba(207,227,208,.7)'));
+  fxc.strokeStyle = S.uncaged ? '#6effc0'
+                  : (lock >= 1 ? '#ff4d6d' : (lock > 0 ? '#ffa33c' : 'rgba(186,220,255,.7)'));
   fxc.lineWidth = lock >= 1 ? 2 : 1.4;
   fxc.beginPath(); fxc.arc(cx,cy,r,0,7); fxc.stroke();
   [[0,-1],[0,1],[-1,0],[1,0]].forEach(d=>{
@@ -3389,7 +3645,7 @@ function drawOverlay(){
   fxc.fillStyle = fxc.strokeStyle; fxc.fillRect(cx-1.5,cy-1.5,3,3);
   // arco di avanzamento dell'aggancio
   if(lock > 0 && lock < 1){
-    fxc.strokeStyle = '#f2a516'; fxc.lineWidth = 3;
+    fxc.strokeStyle = '#ffa33c'; fxc.lineWidth = 3;
     fxc.beginPath(); fxc.arc(cx,cy,r+12,-Math.PI/2,-Math.PI/2 + lock*Math.PI*2); fxc.stroke();
   }
 }
@@ -3446,7 +3702,7 @@ function animate(){
       document.getElementById('reloadfill').style.width = clamp((1 - S.reload/2.4)*100,0,100)+'%';
       if(S.reload <= 0){
         S.loaded = true; bar.style.display = 'none'; AU.beep(880,.09,.05);
-        feed('NUOVO COMPLESSO IN SPALLA — ATTIVA LA BCU [E]');
+        feed('LANCIA RIGENERATA — INNESTA LA ENERGY CELL [E]');
       }
     }
 
@@ -3455,19 +3711,19 @@ function animate(){
       S.coolT -= dt;
       if(S.coolT <= 0){
         S.bcu = 'ready'; S.coolant = cfg.coolant;
-        AU.beep(1400,.10,.06); feed('SENSORE RAFFREDDATO — PRONTO ALL\'AGGANCIO','#cfe3d0');
+        AU.beep(1400,.10,.06); feed('NUCLEO STABILE — PRONTO ALL\'ENERGY LOCK','#cfe6ff');
       }
     } else if(S.bcu === 'ready'){
       S.coolant -= dt;
-      if(S.coolant <= 8 && S.coolant + dt > 8) feed('ARGON IN ESAURIMENTO','#f2a516');
+      if(S.coolant <= 8 && S.coolant + dt > 8) feed('NUCLEO IN DECADIMENTO','#ffa33c');
       if(S.coolant <= 0){
         S.bcu = 'none'; S.locked = null; S.lockT = 0; S.uncaged = false;
         AU.lock(false);
         if(cfg.keepRound){
-          feed('BCU ESAURITA — INSERISCINE UNA NUOVA [E]','#ff3b30');
+          feed('ENERGY CELL SCARICA — INNESTANE UNA NUOVA [E]','#ff4d6d');
         } else {
           // il complesso resta senza alimentazione: va sostituito
-          feed('BCU ESAURITA — COMPLESSO DA SOSTITUIRE','#ff3b30');
+          feed('ENERGY CELL SCARICA — LANCIA DA RIGENERARE','#ff4d6d');
           if(S.ammo > 0){ S.loaded = false; S.reload = 2.4; S.ammo--; }
         }
       }
@@ -3475,7 +3731,7 @@ function animate(){
     /* --- rifornimento d'emergenza --- */
     if(S.ammo <= 0){
       S.ammoTimer += dt;
-      if(S.ammoTimer > 12){ S.ammoTimer = 0; S.ammo += 4; feed('RIFORNIMENTO: +4 MISSILI','#cfe3d0'); hud(); }
+      if(S.ammoTimer > 12){ S.ammoTimer = 0; S.ammo += 4; feed('SINTESI COMPLETATA: +4 PHOTON LANCE','#cfe6ff'); hud(); }
     } else S.ammoTimer = 0;
 
     /* --- gestione ondate --- */
@@ -3496,7 +3752,7 @@ function animate(){
         S.waveActive = false; S.waveTimer = 3.2;
         if(S.wave < WAVES.length-1){
           S.score += 500;
-          banner('SETTORE LIBERO','ONDATA SUCCESSIVA IN ARRIVO — RIFORNIMENTO COMPLETATO');
+          banner('SETTORE BONIFICATO','ONDATA SUCCESSIVA IN ARRIVO — CELLE RISINTETIZZATE');
         } else { endGame(true); }
         hud();
       }
@@ -3527,20 +3783,20 @@ function animate(){
 
     /* --- stato dell'arma a schermo --- */
     const ll = document.getElementById('lockline');
-    if(S.crouch > .6){ ll.textContent = 'AL RIPARO — ARMA ABBASSATA'; ll.className = 'warn'; }
-    else if(!S.loaded){ ll.textContent = 'SOSTITUZIONE DEL COMPLESSO…'; ll.className = ''; }
-    else if(S.bcu === 'none'){ ll.textContent = 'INSERISCI E ATTIVA LA BCU [E]'; ll.className = 'warn'; }
-    else if(S.bcu === 'cooling'){ ll.textContent = 'RAFFREDDAMENTO ALL\'ARGON…'; ll.className = 'warn'; }
-    else if(S.uncaged){ ll.textContent = 'CONSENSO AL LANCIO — FUOCO [SPAZIO]'; ll.className = 'lock'; }
-    else if(S.lockT >= 1){ ll.textContent = 'AGGANCIO IR — SBLOCCA IL SENSORE [C]'; ll.className = 'lock'; }
-    else if(S.lockT > 0){ ll.textContent = 'ACQUISIZIONE… TIENI IL BERSAGLIO'; ll.className = 'warn'; }
-    else { ll.textContent = 'RICERCA INFRAROSSI…'; ll.className = ''; }
+    if(S.crouch > .6){ ll.textContent = 'SCUDO DEFLETTORE ATTIVO — LANCIA INIBITA'; ll.className = 'warn'; }
+    else if(!S.loaded){ ll.textContent = 'RIGENERAZIONE DELLA LANCIA…'; ll.className = ''; }
+    else if(S.bcu === 'none'){ ll.textContent = 'INNESTA LA ENERGY CELL [E]'; ll.className = 'warn'; }
+    else if(S.bcu === 'cooling'){ ll.textContent = 'STABILIZZAZIONE DEL NUCLEO…'; ll.className = 'warn'; }
+    else if(S.uncaged){ ll.textContent = 'ENERGY LOCK PIENO — SCARICA [SPAZIO]'; ll.className = 'lock'; }
+    else if(S.lockT >= 1){ ll.textContent = 'SIGNATURE AGGANCIATA — RILASCIA [C]'; ll.className = 'lock'; }
+    else if(S.lockT > 0){ ll.textContent = 'ACQUISIZIONE… MANTIENI LA SIGNATURE'; ll.className = 'warn'; }
+    else { ll.textContent = 'SCANSIONE SIGNATURE…'; ll.className = ''; }
 
     document.getElementById('tubeval').textContent = S.loaded ? 'PRONTO' : 'RICARICA';
     const bv = document.getElementById('bcuval');
     bv.textContent = S.bcu === 'ready' ? Math.ceil(S.coolant)+' s'
-                   : S.bcu === 'cooling' ? 'ARGON…' : 'ASSENTE';
-    bv.style.color = S.bcu === 'ready' ? (S.coolant < 10 ? '#ff3b30' : '#7fd8ff') : '#f2a516';
+                   : S.bcu === 'cooling' ? 'CARICA…' : 'VUOTO';
+    bv.style.color = S.bcu === 'ready' ? (S.coolant < 10 ? '#ff4d6d' : '#62e8ff') : '#ffa33c';
     const cf = document.getElementById('coolfill');
     cf.style.width = (S.bcu === 'ready' ? S.coolant/cfg.coolant*100
                     : S.bcu === 'cooling' ? (1-S.coolT/cfg.bcuCool)*100 : 0)+'%';
@@ -3560,11 +3816,11 @@ function animate(){
       if(i === step && waiting && Math.sin(performance.now()*.008) > 0) c += ' done';
       el.className = c;
     }
-    const STEPNAME = ['','AVVISTAMENTO','BCU / ARGON','AGGANCIO IR','ANTICIPO','SBLOCCO · FUOCO'];
+    const STEPNAME = ['','RILEVAMENTO','ENERGY CELL','ENERGY LOCK','VETTORE','RILASCIO · FUOCO'];
     document.getElementById('procmini').textContent = 'FASE ' + step + ' · ' + STEPNAME[step];
 
     // i pulsanti a schermo si accendono quando tocca a loro
-    if(TOUCH){
+    {
       const hot = (id,c)=>{ const el = document.getElementById(id); if(el) el.classList.toggle('hot', c); };
       hot('tBcu',    S.loaded && S.bcu === 'none');
       hot('tUncage', S.lockT >= 1 && !S.uncaged);
@@ -3572,6 +3828,17 @@ function animate(){
     }
 
     /* --- spia del mirino e vampa di coda --- */
+    if(weapon.userData.core){
+      // il nucleo si accende progressivamente con la stabilizzazione
+      const lit = S.bcu === 'ready' ? 1 : S.bcu === 'cooling' ? 1 - S.coolT/cfg.bcuCool : 0;
+      const puls = .55 + .45*Math.sin(performance.now()*(S.uncaged ? .012 : .004));
+      weapon.userData.core.material.color.setRGB(
+        .15 + .35*lit*puls, .55*lit*puls + .05, .75*lit*puls + .08);
+      weapon.userData.core.scale.set(.4 + lit*.8, 1, .4 + lit*.8);
+      if(weapon.userData.cell)
+        weapon.userData.cell.material.color.setHex(
+          S.bcu === 'ready' ? 0xa96bff : S.bcu === 'cooling' ? 0x4a2a7a : 0x1a1626);
+    }
     if(weapon.userData.lamp){
       weapon.userData.lamp.material.color.setHex(
         S.uncaged ? 0x53ff6a : (S.lockT >= 1 ? 0xff3b30 :
