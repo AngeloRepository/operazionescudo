@@ -2090,8 +2090,10 @@ function loadScenario(name){
    che sono l'unica via di scrittura consentita.
    ========================================================================= */
 const BACKEND = {
-  url: 'https://cmdibydnwcbntteqodjd.supabase.co',            // es. 'https://abcdefgh.supabase.co'
-  key: 'sb_publishable_G2y-xhKUT4omAZM9WP2uYQ_cJdGPkqf'             // chiave pubblica: sb_publishable_... (o la vecchia anon eyJ...)
+  // Leave both empty to run on local storage only.
+  // Requires supabase_schema_v2.sql to be installed on the project.
+  url: 'https://cmdibydnwcbntteqodjd.supabase.co',
+  key: 'sb_publishable_G2y-xhKUT4omAZM9WP2uYQ_cJdGPkqf'   // publishable key — never the secret one
 };
 const GAME_VER = '2.0.0';
 
