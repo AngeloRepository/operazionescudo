@@ -406,6 +406,22 @@ body.touch .touchkeys{display:grid}
 #nameMsg.ok{color:#62e8ff}
 #nameMsg button{background:transparent;border:1px solid var(--amber);color:var(--amber);
   font-family:'Share Tech Mono',monospace;font-size:11px;padding:3px 9px;margin-left:6px;cursor:pointer}
+#codeRow{display:none;margin-top:12px}
+#codeRow.on{display:block}
+#codeInput{width:100%;background:rgba(0,0,0,.5);border:1px solid var(--amber);
+  color:#fff;font-family:'Share Tech Mono',monospace;font-size:19px;letter-spacing:.35em;
+  padding:12px 14px;outline:none;text-align:center;text-transform:uppercase}
+#newCode{display:none;text-align:left;border:1px solid var(--amber);
+  background:rgba(255,163,60,.07);padding:14px;margin-top:12px}
+#newCode.on{display:block}
+#newCode b{display:block;color:var(--amber);letter-spacing:.2em;font-size:10px;margin-bottom:8px}
+#newCode .code{font-family:'Share Tech Mono',monospace;font-size:26px;letter-spacing:.3em;
+  color:#fff;text-align:center;padding:10px;border:1px dashed var(--line);margin-bottom:10px}
+#newCode p{font-size:10.5px;line-height:1.7;color:rgba(186,220,255,.7);margin-bottom:10px}
+#newCode button{width:100%;margin-top:6px;padding:10px;font-family:'Oswald',sans-serif;
+  letter-spacing:.16em;font-size:12px;background:transparent;border:1px solid var(--line);
+  color:var(--data);cursor:pointer}
+#newCode button.prim{background:var(--amber);border-color:var(--amber);color:#060b18}
 #idscreen .go.alt{background:transparent;border:1px solid var(--line);color:var(--data);
   font-size:12px;padding:11px;margin-top:8px}
 #idscreen .go.alt:hover{border-color:var(--amber);color:var(--amber)}
@@ -518,6 +534,8 @@ body.playing #ops{display:flex}
 #opBadge button{background:transparent;border:1px solid var(--line);color:var(--dim);
   font-family:'Share Tech Mono',monospace;font-size:10px;padding:4px 7px;cursor:pointer;letter-spacing:.1em}
 #opBadge button:hover{border-color:var(--amber);color:var(--amber)}
+#opBadge #logoutBtn{border-color:rgba(255,77,109,.5);color:#ff8ea1}
+#opBadge #logoutBtn:hover{border-color:var(--red);color:var(--red)}
 
 @media (max-width:760px){
   .pfGrid{grid-template-columns:repeat(2,1fr)}
@@ -668,6 +686,7 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
         <button onclick="Net.openBoard()">LEADERBOARD</button>
         <button onclick="Net.openProfile()">PROFILE</button>
         <button onclick="Net.rename()">RENAME</button>
+        <button onclick="Net.logout()" id="logoutBtn">LOGOUT</button>
       </div>
       <div class="hClass">TRAINING SIMULATION · AETHER-9 SECTOR</div>
       <div class="hTime">
@@ -786,8 +805,24 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
     <input id="nameInput" type="text" maxlength="20" autocomplete="off" autocapitalize="off"
            autocorrect="off" spellcheck="false" inputmode="text" enterkeyhint="go"
            placeholder="e.g. Vega_07">
+    <div id="codeRow">
+      <label for="codeInput">ACCESS CODE</label>
+      <input id="codeInput" type="text" maxlength="9" autocomplete="one-time-code"
+             autocapitalize="characters" autocorrect="off" spellcheck="false"
+             inputmode="text" enterkeyhint="go" placeholder="XXXX-XXXX">
+    </div>
     <div id="nameMsg">3 to 20 characters: letters, numbers and underscore.</div>
     <button class="go" id="nameGo">PLAY</button>
+
+    <div id="newCode">
+      <b>ACCESS CODE — SAVE IT NOW</b>
+      <div class="code" id="codeText">---------</div>
+      <p>This is the only time it is shown. You need it to sign in to
+         <em id="codeWho"></em> from another device. Without it the account
+         stays on this browser.</p>
+      <button id="codeCopy">COPY CODE</button>
+      <button id="codeGo" class="prim">I SAVED IT — CONTINUE</button>
+    </div>
     <button class="go alt" id="nameGuest">QUICK PLAY AS GUEST</button>
     <p class="consent">Your callsign and scores are stored to build the leaderboard.
        See how in the <a href="#" id="privLink">data notice</a>.</p>
@@ -2066,28 +2101,111 @@ const Net = {
   lb:{ period:'all', board:'best', limit:10, timer:null, rows:[] },
   lastRank:null, t0:0, pending:null,
 
-  /* ───────────────── identità persistente ───────────────── */
+  /* ───────────────── identità: tre livelli distinti ─────────────────
+     device  → UUID del browser. Persiste al logout, non è l'identità.
+     session → token rilasciato dal server. Uno per dispositivo, molti per
+               account, tutti validi insieme.
+     account → il nominativo. Univoco, vive sul server, è la fonte
+               autorevole: un secondo dispositivo vi accede, non lo registra.
+     ------------------------------------------------------------------- */
+  device:null, token:null, account:null,
+
   init(){
     this.online = !!(BACKEND.url && BACKEND.key);
-    let id = null;
-    try{ id = JSON.parse(localStorage.getItem('scudo.identity') || 'null'); }catch(e){}
-    if(!id || !id.uuid){
-      id = { uuid: (crypto.randomUUID ? crypto.randomUUID() : 'x'+Date.now()+Math.random().toString(16).slice(2)),
-             name: null };
-      this.save(id);
+
+    // dispositivo: creato una volta sola, mai cancellato dal logout
+    let d = null;
+    try{ d = JSON.parse(localStorage.getItem('scudo.device') || 'null'); }catch(e){}
+    if(!d || !d.device){
+      d = { device: this.newId() };
+      try{ localStorage.setItem('scudo.device', JSON.stringify(d)); }catch(e){}
     }
-    this.uuid = id.uuid; this.name = id.name;
+    this.device = d.device;
+
+    // migrazione dalla v1: l'identità vecchia diventa un account locale
+    try{
+      const old = JSON.parse(localStorage.getItem('scudo.identity') || 'null');
+      if(old && old.name && !localStorage.getItem('scudo.session')){
+        this.saveSession({ account:old.uuid, name:old.name, token:null, local:true });
+      }
+    }catch(e){}
 
     document.getElementById('netNote').innerHTML = this.online
-      ? 'Global leaderboard active. Callsigns are unique across all players.'
+      ? 'Global leaderboard active. Your callsign works on any device you log in from.'
       : 'No server configured: scores stay on this device.<br>'+
         'For the shared leaderboard see <b>LEGGIMI-online.md</b>.';
 
     this.bindUI();
-    if(this.name){ this.refreshMe(); this.paintBadge(); }
-    else this.askName();
+    this.resume();
   },
-  save(id){ try{ localStorage.setItem('scudo.identity', JSON.stringify(id)); }catch(e){} },
+
+  newId(){
+    return crypto.randomUUID ? crypto.randomUUID()
+      : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c=>{
+          const r = Math.random()*16|0; return (c === 'x' ? r : (r&0x3|0x8)).toString(16); });
+  },
+
+  session(){
+    try{ return JSON.parse(localStorage.getItem('scudo.session') || 'null'); }catch(e){ return null; }
+  },
+  saveSession(o){ try{ localStorage.setItem('scudo.session', JSON.stringify(o)); }catch(e){} },
+  clearSession(){ try{ localStorage.removeItem('scudo.session'); }catch(e){} },
+
+  /* Rientro silenzioso: aggiornamento di pagina, riapertura del browser.
+     Se il token non è più valido si torna alla schermata di accesso senza
+     toccare nulla dell'account. */
+  async resume(){
+    const ses = this.session();
+    if(!ses){ this.askName(); return; }
+    this.name = ses.name; this.account = ses.account; this.token = ses.token;
+
+    if(this.online && ses.token){
+      const r = await this.rpcSafe('resume_session', { p_token: ses.token });
+      if(r && r.ok){
+        this.applyLogin(r);
+        return;
+      }
+      this.clearSession(); this.name = this.token = this.account = null;
+      this.toast('Session expired — log in again','bad');
+      this.askName(); return;
+    }
+    // modalità locale
+    this.paintBadge(); this.refreshMe();
+  },
+
+  applyLogin(r){
+    this.name = r.username; this.account = r.account; this.token = r.token || null;
+    this.me = { best:r.best||0, games:r.games||0, rank:r.rank||null,
+                average:r.average||0, level:r.level||0 };
+    this.lastRank = r.rank || null;
+    this.saveSession({ account:this.account, name:this.name, token:this.token, local:!this.online });
+    document.getElementById('idscreen').classList.remove('on');
+    this.paintBadge();
+  },
+
+  /* ───────────────── uscita ─────────────────
+     Chiude la sola sessione di questo dispositivo. Account, nominativo,
+     punteggi, classifica e sessioni degli altri dispositivi restano. */
+  async logout(){
+    if(!this.name) return;
+    if(!confirm('Log out ' + this.name + '?\n\nYour account, scores and leaderboard position are kept. '
+              + 'You can log back in from any device with your access code.')) return;
+    if(this.online && this.token) await this.rpcSafe('logout_session', { p_token:this.token });
+    this.clearSession();
+    try{ localStorage.removeItem('scudo.identity'); }catch(e){}   // residuo v1
+    this.name = this.token = this.account = null;
+    this.me = { best:0, games:0, rank:null, average:0, level:0 };
+    this.lastRank = null;
+    this.paintBadge();
+    this.closeProfile(); this.closeBoard();
+    if(S){ S.running = false; goHome(); }
+    document.getElementById('nameInput').value = '';
+    document.getElementById('codeRow').classList.remove('on');
+    document.getElementById('codeInput').value = '';
+    this.pendingName = null;
+    this.askName();
+    this.toast('Session closed on this device','good');
+  },
 
   /* ───────────────── trasporto ───────────────── */
   async rpc(fn, body){
@@ -2102,32 +2220,63 @@ const Net = {
     return r.json();
   },
 
-  /* ───────────────── archivio locale di riserva ───────────────── */
+  async rpcSafe(fn, body){
+    if(!this.online) return null;
+    try{ return await this.rpc(fn, body); }
+    catch(e){ return null; }
+  },
+
+  /* ───────────────── archivio locale di riserva ─────────────────
+     Anche senza server esistono account distinti sullo stesso browser, con
+     codice di accesso: così login, logout e cambio account si comportano
+     esattamente come in linea. */
   db(){
     try{ return JSON.parse(localStorage.getItem('scudo.db') || '{"players":{},"scores":[]}'); }
     catch(e){ return {players:{}, scores:[]}; }
   },
   dbSave(d){ try{ localStorage.setItem('scudo.db', JSON.stringify(d)); }catch(e){} },
 
-  localClaim(name){
-    const d = this.db();
-    const key = name.toLowerCase();
-    const taken = Object.values(d.players).find(p => p.username.toLowerCase() === key && p.uuid !== this.uuid);
-    if(taken) return { ok:false, error:'occupato', suggestion:name.slice(0,16) + Math.floor(100+Math.random()*900),
-                       message:'Callsign already assigned to another Guardian.' };
-    const prev = d.players[this.uuid] || { uuid:this.uuid, games:0, best_score:0, best_level:0,
-                                           best_time:0, total_score:0, created_at:Date.now() };
-    prev.username = name; prev.last_seen = Date.now();
-    d.players[this.uuid] = prev; this.dbSave(d);
-    return { ok:true, username:name };
+  hash(str){                       // sufficiente per un archivio locale
+    let h = 5381;
+    for(let i=0;i<str.length;i++) h = ((h*33) ^ str.charCodeAt(i)) >>> 0;
+    return 'h' + h.toString(16);
   },
+  localExists(name){
+    const d = this.db();
+    return Object.values(d.players).some(p => p.username.toLowerCase() === name.toLowerCase());
+  },
+  localRegister(name, code){
+    const d = this.db();
+    if(this.localExists(name))
+      return { ok:false, error:'taken', suggestion:name.slice(0,16)+Math.floor(100+Math.random()*900),
+               message:'That callsign already exists on this device.' };
+    const acc = this.newId();
+    d.players[acc] = { uuid:acc, username:name, code:this.hash(code), games:0, best_score:0,
+                       best_level:0, best_time:0, total_score:0,
+                       created_at:Date.now(), last_seen:Date.now() };
+    this.dbSave(d);
+    return { ok:true, account:acc, token:null, username:name, best:0, games:0, average:0, rank:1 };
+  },
+  localLogin(name, code){
+    const d = this.db();
+    const p = Object.values(d.players).find(x => x.username.toLowerCase() === name.toLowerCase());
+    if(!p) return { ok:false, error:'unknown', message:'No account with that callsign on this device.' };
+    if(p.code && p.code !== this.hash(code))
+      return { ok:false, error:'code', message:'Wrong access code.' };
+    if(!p.code){ p.code = this.hash(code); this.dbSave(d); }   // account creato prima dei codici
+    const rank = Object.values(d.players).filter(x => x.best_score > p.best_score).length + 1;
+    return { ok:true, account:p.uuid, token:null, username:p.username, best:p.best_score,
+             games:p.games, average:Math.round(p.total_score/Math.max(p.games,1)),
+             rank:rank, level:p.best_level };
+  },
+
   localSubmit(p){
     if(p.duration < 25) return { ok:false, error:'rifiutato', message:'run too short' };
     if(p.score > 3000 + p.duration*260) return { ok:false, error:'rifiutato', message:'implausible score' };
     const d = this.db();
-    const pl = d.players[this.uuid];
+    const pl = d.players[this.account];
     if(!pl) return { ok:false, error:'ignoto' };
-    d.scores.push({ uuid:this.uuid, username:pl.username, score:p.score, level:p.level,
+    d.scores.push({ uuid:this.account, username:pl.username, score:p.score, level:p.level,
                     duration_s:p.duration, scenario:p.scenario, difficulty:p.difficulty,
                     version:p.version, created_at:Date.now() });
     if(d.scores.length > 400) d.scores = d.scores.slice(-400);
@@ -2183,21 +2332,38 @@ const Net = {
   },
 
   /* ───────────────── operazioni ad alto livello ───────────────── */
-  async claim(name){
+  async exists(name){
     if(this.online){
-      try{ return await this.rpc('claim_name', { p_uuid:this.uuid, p_name:name }); }
-      catch(e){ this.toast('Server unreachable: falling back to local storage','bad');
-                this.online = false; }
+      const r = await this.rpcSafe('account_exists', { p_name:name });
+      if(r === null){ this.toast('Server unreachable: falling back to local storage','bad');
+                      this.online = false; return this.localExists(name); }
+      return !!r;
     }
-    return this.localClaim(name);
+    return this.localExists(name);
+  },
+  async register(name, code){
+    if(this.online){
+      const r = await this.rpcSafe('register_account', { p_name:name, p_code:code, p_device:this.device });
+      if(r) return r;
+      this.online = false;
+    }
+    return this.localRegister(name, code);
+  },
+  async login(name, code){
+    if(this.online){
+      const r = await this.rpcSafe('login_account', { p_name:name, p_code:code, p_device:this.device });
+      if(r) return r;
+      this.online = false;
+    }
+    return this.localLogin(name, code);
   },
   async submit(p){
     if(this.online){
+      if(!this.token) return { ok:false, error:'expired', message:'no active session' };
       try{ return await this.rpc('submit_score', {
-        p_uuid:this.uuid, p_name:this.name, p_score:p.score, p_level:p.level,
-        p_duration:p.duration, p_scenario:p.scenario, p_difficulty:p.difficulty,
-        p_version:p.version }); }
-      catch(e){ return { ok:false, error:'rete', message:'score not sent: server unreachable' }; }
+        p_token:this.token, p_score:p.score, p_level:p.level, p_duration:p.duration,
+        p_scenario:p.scenario, p_difficulty:p.difficulty, p_version:p.version }); }
+      catch(e){ return { ok:false, error:'network', message:'score not sent: server unreachable' }; }
     }
     return this.localSubmit(p);
   },
@@ -2231,25 +2397,66 @@ const Net = {
   askName(){
     const box = document.getElementById('idscreen');
     box.classList.add('on');
+    document.getElementById('codeRow').classList.remove('on');
+    document.getElementById('newCode').classList.remove('on');
+    this.pendingName = null;
     const inp = document.getElementById('nameInput');
-    inp.value = this.name || '';
+    inp.value = '';
     // Niente focus automatico: iOS non apre comunque la tastiera senza un
     // gesto dell'utente, e su Android sposta la pagina mentre si legge.
     if(!TOUCH) setTimeout(()=>inp.focus(), 150);
     this.validate();
   },
-  rename(){ this.askName(); },
+  async rename(){
+    if(!this.name){ this.askName(); return; }
+    const v = (prompt('New callsign for ' + this.name + ':', this.name) || '').trim();
+    if(!v || v === this.name) return;
+    const err = this.checkName(v);
+    if(err){ this.toast(err,'bad'); return; }
+    if(this.online && this.token){
+      const r = await this.rpcSafe('rename_account', { p_token:this.token, p_name:v });
+      if(!r || !r.ok){ this.toast((r && r.message) || 'Rename failed','bad'); return; }
+      this.name = r.username;
+    } else {
+      const d = this.db();
+      if(this.localExists(v)){ this.toast('That callsign is already registered.','bad'); return; }
+      if(d.players[this.account]){ d.players[this.account].username = v; this.dbSave(d); }
+      this.name = v;
+    }
+    this.saveSession({ account:this.account, name:this.name, token:this.token, local:!this.online });
+    this.paintBadge(); this.refreshMe();
+    this.toast('Callsign changed to <b>' + this.name + '</b>','good');
+  },
   bindUI(){
     const inp = document.getElementById('nameInput');
     const go  = document.getElementById('nameGo');
     inp.addEventListener('input', ()=>this.validate());
     inp.addEventListener('keydown', e=>{ if(e.key === 'Enter') this.confirmName(); });
+    const ci = document.getElementById('codeInput');
+    ci.addEventListener('keydown', e=>{ if(e.key === 'Enter') this.confirmName(); });
+    ci.addEventListener('input', ()=>{
+      ci.value = ci.value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,8);
+    });
+    // cambiare nominativo annulla il passo del codice
+    inp.addEventListener('input', ()=>{
+      if(this.pendingName && inp.value.trim() !== this.pendingName){
+        this.pendingName = null;
+        document.getElementById('codeRow').classList.remove('on');
+        document.getElementById('nameGo').textContent = 'PLAY';
+      }
+    });
     go.addEventListener('click', ()=>this.confirmName());
     // Accesso rapido: un nominativo di riserva e via, senza digitare nulla.
     document.getElementById('nameGuest').addEventListener('click', async ()=>{
-      const g = 'Guardian_' + Math.floor(1000 + Math.random()*9000);
-      inp.value = g; this.validate(); await this.confirmName();
-      if(this.name) startGame('easy','ridge');
+      const g = 'Guardian_' + Math.floor(100000 + Math.random()*899999);
+      const code = this.makeCode();
+      const r = await this.register(g, code);
+      if(r && r.ok){
+        this.applyLogin(r);
+        document.getElementById('idscreen').classList.remove('on');
+        this.toast('Playing as <b>' + g + '</b> — set a callsign later from your profile','good');
+        startGame('easy','ridge');
+      } else { inp.value = g; this.validate(); }
     });
     document.getElementById('privLink').addEventListener('click', e=>{
       e.preventDefault(); document.getElementById('privBox').classList.toggle('on');
@@ -2286,18 +2493,61 @@ const Net = {
     go.disabled = !!err;
     return !err;
   },
+  /* Accesso in due passi.
+     Passo 1: si digita il nominativo. Il server dice solo se l'account esiste.
+       ├── non esiste → registrazione: si genera un codice e lo si mostra
+       └── esiste     → accesso: si chiede il codice, NON si dà errore
+     "Callsign already registered" resta possibile, ma solo in registrazione. */
   async confirmName(){
     if(!this.validate()) return;
-    const v = document.getElementById('nameInput').value.trim();
+    const v   = document.getElementById('nameInput').value.trim();
     const msg = document.getElementById('nameMsg');
-    const go = document.getElementById('nameGo');
+    const go  = document.getElementById('nameGo');
+    const codeRow = document.getElementById('codeRow');
+    const codeInp = document.getElementById('codeInput');
+
+    // ── passo 2: il codice è già stato richiesto ──
+    if(this.pendingName === v && codeRow.classList.contains('on')){
+      const code = codeInp.value.trim();
+      if(code.length < 6){ msg.className = 'err'; msg.textContent = 'Enter the 8-character access code.'; return; }
+      go.disabled = true; msg.className = ''; msg.textContent = 'Signing in…';
+      const r = await this.login(v, code);
+      if(r && r.ok){
+        this.applyLogin(r);
+        this.refreshMe();
+        this.toast('Welcome back, <b>' + this.name + '</b>','good');
+        if(typeof AU !== 'undefined'){ AU.init(); AU.beep(900,.09,.05); }
+      } else {
+        msg.className = 'err';
+        msg.textContent = (r && r.message) || 'Sign-in failed.';
+        go.disabled = false;
+      }
+      return;
+    }
+
+    // ── passo 1: esiste o no? ──
     go.disabled = true; msg.className = ''; msg.textContent = 'Checking callsign…';
-    const r = await this.claim(v);
+    const found = await this.exists(v);
+    this.pendingName = v;
+
+    if(found){
+      codeRow.classList.add('on');
+      codeInp.value = '';
+      msg.className = 'ok';
+      msg.innerHTML = 'Account found. Enter its <b>access code</b> to sign in from this device.';
+      go.textContent = 'SIGN IN';
+      go.disabled = false;
+      setTimeout(()=>{ if(!TOUCH) codeInp.focus(); }, 60);
+      return;
+    }
+
+    // nuovo account: si genera il codice e lo si mostra una volta sola
+    const code = this.makeCode();
+    const r = await this.register(v, code);
     if(r && r.ok){
-      this.name = r.username; this.save({ uuid:this.uuid, name:this.name });
-      document.getElementById('idscreen').classList.remove('on');
-      this.paintBadge(); this.refreshMe();
-      this.toast('Guardian <b>' + this.name + '</b> authenticated','good');
+      this.applyLogin(r);
+      this.showCode(code);
+      this.refreshMe();
       if(typeof AU !== 'undefined'){ AU.init(); AU.beep(900,.09,.05); }
     } else {
       msg.className = 'err';
@@ -2309,7 +2559,35 @@ const Net = {
       go.disabled = false;
     }
   },
-  useSuggestion(v){ document.getElementById('nameInput').value = v; this.validate(); this.confirmName(); },
+
+  makeCode(){
+    const A = 'ACDEFHJKLMNPRTUVWXY3479';     // niente caratteri confondibili
+    let c = '';
+    for(let i=0;i<8;i++) c += A[Math.floor(Math.random()*A.length)];
+    return c;
+  },
+  showCode(code){
+    const box = document.getElementById('newCode');
+    document.getElementById('codeText').textContent = code.slice(0,4) + '-' + code.slice(4);
+    document.getElementById('codeWho').textContent = this.name || '';
+    box.classList.add('on');
+    document.getElementById('codeCopy').onclick = ()=>{
+      if(navigator.clipboard) navigator.clipboard.writeText(code)
+        .then(()=>this.toast('Access code copied','good'))
+        .catch(()=>this.toast('Copy failed — write it down','bad'));
+    };
+    document.getElementById('codeGo').onclick = ()=>{
+      box.classList.remove('on');
+      document.getElementById('idscreen').classList.remove('on');
+    };
+  },
+
+  useSuggestion(v){
+    this.pendingName = null;
+    document.getElementById('codeRow').classList.remove('on');
+    document.getElementById('nameInput').value = v;
+    this.validate(); this.confirmName();
+  },
 
   /* ───────────────── avatar deterministico ───────────────── */
   avatar(seed, size){
@@ -2427,6 +2705,12 @@ const Net = {
         p.last_game.level + ' · ' + fmtT(p.last_game.duration_s) + ' · ' +
         (p.last_game.scenario === 'airbase' ? 'ORBITAL GATEWAY' : 'CLOUD CITADEL') +
         ' · ' + (p.last_game.difficulty === 'hard' ? 'COMBAT' : 'TRAINING') + '</div>' : '') +
+      (p.username.toLowerCase() === (this.name||'').toLowerCase()
+        ? '<div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">'
+          + '<button class="xbtn" style="position:static" onclick="Net.rename()">RENAME</button>'
+          + '<button class="xbtn" style="position:static;border-color:rgba(255,77,109,.5);color:#ff8ea1"'
+          + ' onclick="Net.logout()">LOGOUT</button></div>'
+        : '') +
       (tr !== null && tr !== undefined
         ? '<div style="margin-top:8px;font-size:10.5px;color:rgba(186,220,255,.42);line-height:1.7">' +
           'Improvement compares the average of the last five runs with the five before them.</div>'
@@ -2796,7 +3080,7 @@ function updateAttract(dt){
    ========================================================================= */
 function startGame(level, scen){
   AU.init();
-  if(!Net.name){ Net.askName(); return; }     // prima l'accreditamento
+  if(!Net.name){ Net.askName(); return; }     // serve una sessione attiva
   stopAttract();
   if(scen && scen !== SCN) loadScenario(scen);
   cfg = DIFF[level];
