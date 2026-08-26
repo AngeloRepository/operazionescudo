@@ -1,29 +1,31 @@
 
 :root{
-  /* SKY FORTRESS — palette AETHER-9
-     I nomi delle variabili restano quelli originali per non rompere le 187
-     righe di regole che li usano; cambiano solo i valori. --green è ora il
-     ciano energia, e gli alias in fondo rendono leggibile il codice nuovo. */
-  --bg:#070d1c;
+  /* SKY FORTRESS — palette allineata al gioco.
+     Questi valori sono gli stessi dichiarati in sky_fortress.html: cambiare
+     qui e là in modo indipendente è il modo più rapido per far divergere
+     landing e gioco, quindi restano volutamente identici. */
+  --ink:#060b18;
+  --bg:#060b18;
   --bg-deep:#03060f;
   --panel:#0a1224;
-  --panel-2:#0d1730;
+  --panel-2:#0d1830;
   --panel-3:#101d3a;
-  --text:#e8f0ff;
-  --muted:#8496b6;
-  --line:#22304f;
+  --text:#cfe6ff;
+  --data:#cfe6ff;
+  --muted:#7f93b8;
+  --dim:rgba(186,220,255,.55);
+  --line:rgba(120,190,255,.22);
+  --line-glow:rgba(120,190,255,.30);
   --line-soft:rgba(120,160,220,.18);
-  --green:#62e8ff;
+  --green:#62e8ff;          /* accento primario: ciano energia */
   --green-strong:#a8f2ff;
   --green-dim:#3f6f92;
+  --cyan:#62e8ff;
   --amber:#ffa33c;
-  --red:#ff6f86;
+  --red:#ff4d6d;
   --violet:#a96bff;
   --font:'Oswald','Arial Narrow',Trebuchet MS,Arial,sans-serif;
   --mono:'Share Tech Mono','Courier New',Consolas,monospace;
-  /* alias semantici */
-  --cyan:var(--green);
-  --cyan-strong:var(--green-strong);
 }
 
 *{box-sizing:border-box}
@@ -207,3 +209,48 @@ footer{border-top:1px solid var(--line);display:flex;align-items:center;justify-
   .sweep{animation:none}
   .pulse,.status i{animation:none}
 }
+
+
+/* ═══════════ ALLINEAMENTO AL GIOCO ═══════════
+   Il gioco usa Oswald 600 con crenatura larga per i titoli e Share Tech Mono
+   per i dati. La landing adotta le stesse regole tipografiche, così passare
+   dal sito al gioco non sembra un cambio di prodotto. */
+h1,h2,h3,.brand strong{font-family:var(--font);font-weight:600;letter-spacing:.06em}
+h1,h2{letter-spacing:.02em}
+.section-label,.eyebrow,.hero-hud,.ticker,.telemetry span,.mission-code{font-family:var(--mono)}
+
+/* Stemma: lo stesso esagono vettoriale del ponte di comando */
+.brand-mark{width:34px;height:34px;border:0;display:block}
+.brand-mark:before,.brand-mark:after{display:none}
+.brand-mark svg{width:100%;height:100%;display:block;
+  filter:drop-shadow(0 0 9px rgba(255,163,60,.45))}
+.brand strong{font-size:16px;letter-spacing:.20em}
+.brand small{letter-spacing:.18em}
+
+/* Pannelli con il filo ambra in testa, come i riquadri dell'HUD */
+.tactical-panel{border-top:2px solid var(--amber);
+  background:linear-gradient(180deg,rgba(10,18,32,.96),rgba(6,11,24,.96));
+  box-shadow:0 24px 70px rgba(0,0,0,.55)}
+.panel-head span:first-child,.system-card h3,.steps h3{letter-spacing:.14em}
+.panel-head{border-bottom:1px solid var(--line-glow)}
+.status i{box-shadow:0 0 8px var(--green)}
+
+/* Le pastiglie di stato riprendono i LED della console */
+.pulse{box-shadow:0 0 10px var(--green);animation:led 2.4s infinite}
+@keyframes led{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* Blip del radar: ostile ambra, alleato ciano, come nel gioco */
+.blip{box-shadow:0 0 12px currentColor}
+.b1{background:var(--green);color:var(--green)}
+.b2{background:var(--amber);color:var(--amber)}
+.b3{background:var(--violet);color:var(--violet)}
+.sweep{background:conic-gradient(from 0deg,transparent 0 78%,rgba(98,232,255,.30) 82%,transparent 86%)}
+
+/* Pulsanti: stessa lingua visiva dei comandi di lancio */
+.nav-cta,.btn-primary{border-color:var(--amber);color:var(--amber);
+  background:linear-gradient(180deg,rgba(255,163,60,.14),rgba(255,163,60,.05));
+  box-shadow:inset 0 0 22px rgba(255,163,60,.06)}
+.nav-cta:hover,.btn-primary:hover{background:var(--amber);color:#060b18}
+.btn-ghost:hover{border-color:var(--green);color:var(--green)}
+.card-icon{color:var(--green);text-shadow:0 0 16px rgba(98,232,255,.5)}
+h1 span,h2 span{text-shadow:0 0 34px rgba(98,232,255,.35)}

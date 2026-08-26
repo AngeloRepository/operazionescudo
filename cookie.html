@@ -5,25 +5,31 @@
 <meta name="description" content="Cookie and local storage policy for Sky Fortress.">
 <meta name="theme-color" content="#070d1c">
 <title>Cookie Policy — Sky Fortress</title>
-<link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23060b18'/%3E%3Cpolygon points='32,5 56,18 56,44 32,57 8,44 8,18' fill='none' stroke='%23ffa33c' stroke-width='3'/%3E%3Cpath d='M19 45 L44 20' stroke='%23cfe6ff' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
 <style>.legal{max-width:960px;margin:0 auto;padding:120px 5vw}.legal h1{font-size:clamp(48px,7vw,82px);line-height:.9;margin:0 0 24px}.legal h2{margin-top:42px;font-size:28px}.legal p,.legal li{color:#a7b6cc;line-height:1.65}.legal ul{padding-left:20px}.legal .meta{font:9px var(--mono);color:#7186a0;letter-spacing:.1em}.legal a{color:var(--green)}.legal-note{border:1px solid var(--line);background:#0a1224;padding:18px;margin:24px 0;color:#b5c2d8}.legal-note.warn{border-color:var(--amber);background:rgba(255,163,60,.07)}.back{display:inline-block;margin-top:30px}table.dt{width:100%;border-collapse:collapse;margin:18px 0;font-size:14px}table.dt th,table.dt td{border:1px solid var(--line);padding:10px 12px;text-align:left;color:#b5c2d8;vertical-align:top}table.dt th{font:9px var(--mono);letter-spacing:.12em;color:var(--green)}</style>
 </head>
 <body>
 <div class="scanlines" aria-hidden="true"></div>
-<header class="topbar"><a class="brand" href="index.html" aria-label="Sky Fortress home"><span class="brand-mark"><span></span></span><span><strong>SKY FORTRESS</strong><small>GUARDIAN TURRET DEFENSE</small></span></a><a class="nav-cta" href="index.html">HOME</a></header>
+<header class="topbar"><a class="brand" href="index.html" aria-label="Sky Fortress home"><span class="brand-mark"><svg viewBox="0 0 64 64" aria-hidden="true"><polygon points="32,3 58,17 58,45 32,60 6,45 6,17" fill="none" stroke="#ffa33c" stroke-width="1.8"/><circle cx="32" cy="32" r="15" fill="none" stroke="#cfe6ff" stroke-width=".9" stroke-dasharray="3 4" opacity=".8"/><path d="M19 45 L44 20" stroke="#cfe6ff" stroke-width="3.2" stroke-linecap="round"/><path d="M45 19 l-7 1.4 5.6 5.6z" fill="#ffa33c"/><path d="M24 40 l-5.6 -1.4 1.4 5.6z" fill="#cfe6ff" opacity=".75"/></svg></span><span><strong>SKY FORTRESS</strong><small>GUARDIAN TURRET DEFENSE</small></span></a><a class="nav-cta" href="index.html">HOME</a></header>
 
 <main class="legal">
 <div class="section-label">LEGAL // COOKIES</div><h1>COOKIE<br><span>POLICY.</span></h1>
 <p class="meta">LAST UPDATED: [DATE OF PUBLICATION]</p>
 
-<div class="legal-note warn"><strong>What changed.</strong> The landing page still sets no cookies. The <em>game</em>, however, now writes to your browser's local storage in order to remember your Guardian callsign — that is a storage operation on your device, and it belongs in this policy even though it is not technically a cookie.</div>
+<div class="legal-note warn"><strong>What changed.</strong> Two things this policy previously got wrong, now corrected. First, the game writes to your browser's local storage to remember your Guardian callsign — a storage operation on your device, which belongs here even though it is not technically a cookie. Second, both this site and the game load their typefaces from Google Fonts, which means your browser contacts a third-party server. Neither point was described before.</div>
 
 <h2>1. Cookies and equivalent storage</h2>
 <p>European rules on storing information on a user's device — Art. 5(3) of the ePrivacy Directive, transposed in Italy at Art. 122 of the Data Protection Code — apply to cookies and to any equivalent technique, including <code>localStorage</code>. What matters is not the technology but whether the storage is strictly necessary for a service the user has expressly requested.</p>
 
 <h2>2. What this landing page uses</h2>
-<p>Nothing. This page sets no cookies of its own, embeds no analytics, no advertising pixel, no video player, no map and no remote fonts. Typefaces are resolved from those already installed on your device, which is why no request leaves for a font provider.</p>
-<p>For this reason no consent banner is shown on this page.</p>
+<p>This page sets <strong>no cookies of its own</strong>. It embeds no analytics, no advertising pixel, no video player and no map. Nothing on this site profiles you or measures your behaviour.</p>
+<p>It does make one third-party request: the typefaces <em>Oswald</em> and <em>Share Tech Mono</em> are loaded from Google Fonts, so that the site and the game share one visual identity. Loading a font causes your browser to connect to <code>fonts.googleapis.com</code> and <code>fonts.gstatic.com</code>, which necessarily discloses your IP address and browser details to Google. Google states that Fonts sets no cookies and does not use the data for advertising, but the connection itself is a transfer and is disclosed here for that reason.</p>
+<p>If you would rather avoid it entirely, the fonts can be self-hosted: download the two families, serve them from this domain and remove the two <code>&lt;link&gt;</code> tags. The site degrades gracefully to system typefaces in the meantime. <strong>[Controller: decide and record which option is live.]</strong></p>
+<p>Because no cookies or equivalent non-essential storage are set by this page, no consent banner is shown on it. Fonts are loaded from a third party but store nothing on your device.</p>
 
 <h2>3. What the game stores on your device</h2>
 <table class="dt">
@@ -38,7 +44,7 @@
 <p>Removing local storage does not erase scores already submitted to an online leaderboard: for those, see the rights section of the <a href="privacy.html">Privacy Policy</a>.</p>
 
 <h2>5. External services</h2>
-<p>The Play links open the game, hosted on GitHub Pages. Opening any external domain may involve technical processing by that provider under its own policies. Where the online leaderboard is enabled, the game also contacts the database provider named in the Privacy Policy in order to submit and read scores; that connection is initiated only after you have entered a callsign and finished a run.</p>
+<p>The game loads the same typefaces from Google Fonts described in section 2. The Play links open the game, hosted on GitHub Pages. Opening any external domain may involve technical processing by that provider under its own policies. Where the online leaderboard is enabled, the game also contacts the database provider named in the Privacy Policy in order to submit and read scores; that connection is initiated only after you have entered a callsign and finished a run.</p>
 
 <h2>6. If tracking is ever added</h2>
 <p>Should analytics, advertising, embedded video or any other non-essential technique be introduced later, this page must be updated and a compliant consent mechanism — with the ability to refuse and to withdraw — must be in place <em>before</em> those tools are loaded, not after.</p>
