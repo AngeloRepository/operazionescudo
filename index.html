@@ -1,57 +1,70 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Operazione Scudo — Air Defense Simulator. Un gioco browser tattico ambientato in una postazione di difesa aerea. Identifica, acquisisci e ingaggia i bersagli prima che attraversino il settore.">
-  <meta name="theme-color" content="#07100d">
-  <title>Operazione Scudo — Air Defense Simulator</title>
+  <meta name="description" content="Sky Fortress — a browser air-defense game set in the AETHER-9 system. Detect, seat the cell, lock the signature, lead the vector, fire. Free, no download.">
+  <meta name="theme-color" content="#070d1c">
+  <link rel="canonical" href="https://angelorepository.github.io/operazionescudo/">
+  <title>Sky Fortress — Guardian Turret Defense</title>
+
+  <!-- Open Graph: senza questi il link condiviso su Discord, X o WhatsApp
+       compare come testo nudo, e su un gioco è metà della battaglia. -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sky Fortress — Guardian Turret Defense">
+  <meta property="og:description" content="Four waves. One Guardian. Hold the cloud ocean of AETHER-9 against THE NULL. Free in your browser.">
+  <meta property="og:url" content="https://angelorepository.github.io/operazionescudo/">
+  <meta name="twitter:card" content="summary_large_image">
+
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="scanlines" aria-hidden="true"></div>
+
   <header class="topbar">
-    <a class="brand" href="#top" aria-label="Operazione Scudo home">
+    <a class="brand" href="#top" aria-label="Sky Fortress home">
       <span class="brand-mark"><span></span></span>
       <span>
-        <strong>OPERAZIONE SCUDO</strong>
-        <small>AIR DEFENSE SIMULATOR</small>
+        <strong>SKY FORTRESS</strong>
+        <small>GUARDIAN TURRET DEFENSE</small>
       </span>
     </a>
-    <nav aria-label="Navigazione principale">
+    <nav aria-label="Main navigation">
       <a href="#briefing">Briefing</a>
-      <a href="#systems">Sistemi</a>
-      <a href="#mission">Missione</a>
+      <a href="#systems">Systems</a>
+      <a href="#sectors">Sectors</a>
+      <a href="#mission">Mission</a>
     </nav>
-    <a class="nav-cta" href="https://angelorepository.github.io/operazionescudo/game" target="_blank" rel="noopener">GIOCA GRATIS</a>
+    <a class="nav-cta" href="https://angelorepository.github.io/operazionescudo/game" target="_blank" rel="noopener">PLAY FREE</a>
   </header>
 
   <main id="top">
     <section class="hero">
-      <div class="hero-hud hud-tl">GRID K7-04 // NODE 01</div>
-      <div class="hero-hud hud-tr">SECURE LINK <b>●</b></div>
+      <div class="hero-hud hud-tl">AETHER-9 // SECTOR 04</div>
+      <div class="hero-hud hud-tr">AEGIS LINK <b>●</b></div>
       <div class="hero-corner c-tl"></div><div class="hero-corner c-tr"></div><div class="hero-corner c-bl"></div><div class="hero-corner c-br"></div>
+
       <div class="hero-grid">
         <div class="hero-copy">
-          <div class="eyebrow"><span class="pulse"></span> MISSIONE SETTORE KILO-7 // ESERCITAZIONE</div>
-          <h1>QUATTRO ONDATE.<br><span>UN SOLO OPERATORE.</span></h1>
-          <p class="lead">Avvista. Identifica. Aggancia. Calcola l'anticipo. Ingaggia il bersaglio prima che attraversi il settore.</p>
+          <div class="eyebrow"><span class="pulse"></span> CLOUD CITADEL // TRAINING SIMULATION</div>
+          <h1>FOUR WAVES.<br><span>ONE GUARDIAN.</span></h1>
+          <p class="lead">There is no ground below — only the cloud ocean of AETHER-9. Seat the cell, hold the signature, lead the vector, release the lance. Miss a step and nothing leaves the rail.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="https://angelorepository.github.io/operazionescudo/game" target="_blank" rel="noopener">▶ GIOCA NEL BROWSER</a>
-            <a class="btn btn-ghost" href="#briefing">LEGGI IL BRIEFING</a>
+            <a class="btn btn-primary" href="https://angelorepository.github.io/operazionescudo/game" target="_blank" rel="noopener">▶ PLAY IN BROWSER</a>
+            <a class="btn btn-ghost" href="#briefing">READ THE BRIEFING</a>
           </div>
           <div class="hero-meta">
             <span>NO DOWNLOAD</span>
             <span>HTML5</span>
-            <span>SINGLE PLAYER</span>
-            <span>DATI SIMULATI</span>
+            <span>DESKTOP &amp; MOBILE</span>
+            <span>GLOBAL LEADERBOARD</span>
           </div>
         </div>
 
-        <div class="tactical-panel" aria-label="Pannello tattico dimostrativo">
+        <div class="tactical-panel" aria-label="Tactical scanner demo panel">
           <div class="panel-head">
-            <span>QUADRO TATTICO</span>
-            <span class="status"><i></i> SISTEMI PRONTI</span>
+            <span>TACTICAL SCANNER</span>
+            <span class="status"><i></i> SYSTEMS READY</span>
           </div>
           <div class="radar-wrap">
             <div class="radar">
@@ -62,72 +75,99 @@
               <span class="center-dot"></span>
             </div>
             <div class="radar-readout">
-              <div><small>CONTACTS</small><strong>03</strong></div>
+              <div><small>SIGNATURES</small><strong>03</strong></div>
               <div><small>RANGE</small><strong>3.2 KM</strong></div>
-              <div><small>I.R. SEEKER</small><strong class="amber">SEARCH</strong></div>
+              <div><small>ENERGY LOCK</small><strong class="amber">SEARCH</strong></div>
             </div>
           </div>
-          <div class="command-strip"><span>THREAT FEED</span><b>CONTATTO PRIORITARIO</b><i>27°</i><small>03.2 KM</small></div>
+          <div class="command-strip"><span>THREAT FEED</span><b>PRIORITY SIGNATURE</b><i>27°</i><small>03.2 KM</small></div>
           <div class="panel-bottom">
-            <span>RADAR DI SCOPERTA <b>ATTIVO</b></span>
-            <span>IFF <b>READY</b></span>
-            <span>DATALINK <b>LINKED</b></span>
+            <span>TACTICAL SCANNER <b>ACTIVE</b></span>
+            <span>SIGNAL SCAN <b>READY</b></span>
+            <span>AEGIS DATALINK <b>LINKED</b></span>
           </div>
         </div>
       </div>
+
       <div class="ticker">
-        <span>MISSION 01</span><b>TRAINING EXERCISE</b><span>WAVE 1 / 4</span><span>THREAT STATUS: <em>UNKNOWN</em></span><span>ZULU 04:50:17</span>
+        <span>OPERATION 01</span><b>TRAINING SIMULATION</b><span>WAVE 1 / 4</span><span>THREAT: <em>THE NULL</em></span><span>ZULU 04:50:17</span>
       </div>
     </section>
 
     <section class="telemetry">
-      <div><span>MISSION</span><b>01</b></div><div><span>WAVES</span><b>04</b></div><div><span>CONTACTS</span><b>03</b></div><div><span>THREAT</span><b class="amber-text">HIGH</b></div><div><span>LINK</span><b>GREEN</b></div>
+      <div><span>SECTORS</span><b>02</b></div>
+      <div><span>WAVES</span><b>04</b></div>
+      <div><span>HOSTILE CLASSES</span><b>05</b></div>
+      <div><span>THREAT</span><b class="amber-text">HIGH</b></div>
+      <div><span>LINK</span><b>GREEN</b></div>
     </section>
 
     <section id="briefing" class="section briefing">
       <div class="section-label">01 // BRIEFING</div>
       <div class="section-head">
         <div>
-          <h2>NON È SOLO FUOCO.<br><span>È PROCEDURA.</span></h2>
+          <h2>IT IS NOT<br><span>JUST SHOOTING.</span></h2>
         </div>
-        <p>Operazione Scudo porta nel browser il ritmo e la pressione di una postazione di difesa aerea. La differenza tra un aggancio riuscito e un errore sta nella sequenza.</p>
+        <p>Sky Fortress puts the rhythm and the pressure of a real weapon sequence in your browser. The gap between a kill and a wasted charge is not aim — it is order.</p>
       </div>
       <div class="steps">
-        <article><span>01</span><h3>AVVISTAMENTO</h3><p>Individua il contatto e valuta velocità, direzione e priorità.</p></article>
-        <article><span>02</span><h3>BCU / ARGON</h3><p>Prepara il sistema e gestisci l'autonomia disponibile.</p></article>
-        <article><span>03</span><h3>AGGANCIO IR</h3><p>Acquisisci la firma termica e mantieni il bersaglio nel seeker.</p></article>
-        <article><span>04</span><h3>ANTICIPO</h3><p>Posiziona correttamente la mira rispetto al vettore del bersaglio.</p></article>
-        <article><span>05</span><h3>IFF / FUOCO</h3><p>Verifica l'identificazione e sblocca l'ingaggio al momento giusto.</p></article>
+        <article><span>01</span><h3>DETECT</h3><p>Read the scanner, judge speed and heading, decide which signature matters first.</p></article>
+        <article><span>02</span><h3>ENERGY CELL</h3><p>Seat the cell and wait for the core to stabilize. You get thirty-eight seconds of it.</p></article>
+        <article><span>03</span><h3>ENERGY LOCK</h3><p>Hold the target inside the seeker until the lance answers with a steady tone.</p></article>
+        <article><span>04</span><h3>VECTOR</h3><p>The lance leaves along the barrel, not toward the target. Lead it, or watch it burn energy turning.</p></article>
+        <article><span>05</span><h3>RELEASE &amp; FIRE</h3><p>Uncage the seeker, then pull. Fire without consent and the charge flies blind.</p></article>
       </div>
     </section>
 
     <section id="systems" class="section systems">
       <div class="section-label">02 // SYSTEMS</div>
       <div class="section-head compact">
-        <h2>UN POSTO DI<br><span>COMANDO TATTICO.</span></h2>
-        <p>Interfaccia tattica, stato sistemi, traffico messaggi e quadro operativo riuniti in una singola missione.</p>
+        <h2>A TACTICAL<br><span>COMMAND DECK.</span></h2>
+        <p>Scanner, systems status, message traffic and operation orders, all in one console — then you drop straight into the turret.</p>
       </div>
       <div class="systems-grid">
         <div class="system-card large">
           <div class="card-icon">⌁</div>
-          <h3>QUADRO TATTICO</h3>
-          <p>Segui il settore, seleziona l'area operativa e reagisci ai contatti in tempo reale.</p>
-          <div class="mini-console"><span>RADAR</span><b>ACTIVE</b><span>PTZ 04</span><b>LIVE</b></div>
+          <h3>AEGIS CONSOLE</h3>
+          <p>A live command deck: zulu clock, systems board, message channel and an interactive scanner where you pick the sector before you launch.</p>
+          <div class="mini-console"><span>SCANNER</span><b>ACTIVE</b><span>PTZ 04</span><b>LIVE</b></div>
         </div>
         <div class="system-card">
           <div class="card-icon">◉</div>
-          <h3>FIM-92 STINGER</h3>
-          <p>Gestisci tubo, BCU e ricerca infrarossa durante l'ingaggio.</p>
+          <h3>AETHER LANCE MK-IV</h3>
+          <p>Energy cell, core stabilization, signature lock and a lance that must be released before it will fire.</p>
         </div>
         <div class="system-card">
           <div class="card-icon">≋</div>
-          <h3>IFF</h3>
-          <p>Riduci il rischio d'errore prima di autorizzare il fuoco.</p>
+          <h3>SIGNAL SCAN</h3>
+          <p>The seeker reads heat, not markings. Identify the signature before you fire, or you will hit your own shuttles.</p>
         </div>
         <div class="system-card">
           <div class="card-icon">↗</div>
-          <h3>MISSION SCORE</h3>
-          <p>Precisione, bersagli abbattuti e sopravvivenza determinano il risultato.</p>
+          <h3>GLOBAL LEADERBOARD</h3>
+          <p>Claim a Guardian callsign and keep your record. Daily, weekly, monthly and all-time boards.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="sectors" class="section briefing">
+      <div class="section-label">03 // SECTORS</div>
+      <div class="section-head">
+        <div>
+          <h2>TWO SECTORS.<br><span>TWO PRESSURES.</span></h2>
+        </div>
+        <p>The same weapon, two entirely different reasons to keep your nerve.</p>
+      </div>
+      <div class="systems-grid" style="grid-template-columns:1fr 1fr">
+        <div class="system-card large" style="grid-row:auto;min-height:260px">
+          <div class="card-icon">◇</div>
+          <h3>CLOUD CITADEL</h3>
+          <p>The orbital batteries went dark one cycle ago. Four waves surface from the cloud ocean, and the last one is a Leviathan Class Destroyer that masks its signature and seeds Quantum Decoys. Survive, and the sector holds.</p>
+        </div>
+        <div class="system-card large" style="grid-row:auto;min-height:260px">
+          <div class="card-icon">◆</div>
+          <h3>ORBITAL GATEWAY</h3>
+          <p>Five Ark shuttles must carry civilians out. On departure a shuttle is clamped, slow and shieldless for twenty-nine seconds. THE NULL knows it, and it is not coming for you. Lose three, and the evacuation is over.</p>
         </div>
       </div>
     </section>
@@ -135,11 +175,11 @@
     <section id="mission" class="mission">
       <div class="mission-overlay"></div>
       <div class="mission-content">
-        <div class="section-label">03 // MISSION</div>
-        <div class="mission-code">KILO-7 / TRAINING // 04:50Z</div>
-        <h2>IL BERSAGLIO<br><span>NON ASPETTA.</span></h2>
-        <p>Esercitazione di fantasia ambientata nel settore Kilo-7: pochi secondi, informazioni incomplete e una procedura da eseguire senza saltare passaggi.</p>
-        <a class="btn btn-primary" href="https://angelorepository.github.io/operazionescudo/game" target="_blank" rel="noopener">▶ AVVIA LA MISSIONE</a>
+        <div class="section-label">04 // MISSION</div>
+        <div class="mission-code">CLOUD CITADEL / TRAINING // 04:50Z</div>
+        <h2>THE SIGNATURE<br><span>WILL NOT WAIT.</span></h2>
+        <p>A fictional exercise in the AETHER-9 system: a handful of seconds, incomplete information, and a sequence that punishes every skipped step.</p>
+        <a class="btn btn-primary" href="https://angelorepository.github.io/operazionescudo/game" target="_blank" rel="noopener">▶ LAUNCH THE OPERATION</a>
       </div>
     </section>
 
@@ -147,19 +187,19 @@
       <div class="cta-box">
         <div>
           <div class="section-label">FINAL CHECK</div>
-          <h2>SEI PRONTO<br><span>AL CONTATTO?</span></h2>
+          <h2>READY FOR<br><span>CONTACT?</span></h2>
         </div>
-        <a class="btn btn-primary btn-big" href="https://angelorepository.github.io/operazionescudo/game" target="_blank" rel="noopener">GIOCA GRATIS →</a>
+        <a class="btn btn-primary btn-big" href="https://angelorepository.github.io/operazionescudo/game" target="_blank" rel="noopener">PLAY FREE →</a>
       </div>
     </section>
   </main>
 
   <footer>
-    <div><strong>OPERAZIONE SCUDO</strong><span>AIR DEFENSE SIMULATOR</span></div>
-    <p>ESERCITAZIONE · DATI SIMULATI · SCENARIO DI FANTASIA</p>
-    <div class="footer-links" aria-label="Informazioni legali">
+    <div><strong>SKY FORTRESS</strong><span>GUARDIAN TURRET DEFENSE</span></div>
+    <p>FICTIONAL SETTING · SIMULATED DATA · NO REAL-WORLD SYSTEMS DEPICTED</p>
+    <div class="footer-links" aria-label="Legal information">
       <a href="privacy.html">PRIVACY</a>
-      <a href="cookie.html">COOKIE</a>
+      <a href="cookie.html">COOKIES</a>
       <a href="https://angelorepository.github.io/operazionescudo/game" target="_blank" rel="noopener">PLAY</a>
     </div>
   </footer>
