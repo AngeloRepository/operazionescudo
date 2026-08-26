@@ -701,7 +701,8 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
         <span class="nm"><b id="badgeName">—</b><span id="badgeSub">not authenticated</span></span>
         <button onclick="Net.openBoard()">LEADERBOARD</button>
         <button onclick="Net.openProfile()">PROFILE</button>
-        <button onclick="Net.rename()">RENAME</button>
+        <button onclick="Net.askName()" id="signinBtn">SIGN IN</button>
+        <button onclick="Net.rename()" id="renameBtn">RENAME</button>
         <button onclick="Net.logout()" id="logoutBtn">LOGOUT</button>
       </div>
       <div class="hClass">TRAINING SIMULATION · AETHER-9 SECTOR</div>
@@ -815,7 +816,7 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
       <path d="M24 40 l-5.6 -1.4 1.4 5.6z" fill="#cfe6ff" opacity=".75"/>
     </svg>
     <div class="kicker">SPIRE DEFENSE CORPS · CREDENTIALS</div>
-    <div class="title"><em>LANCEFALL</em></div>
+    <div class="title">SKY <em>FORTRESS</em></div>
     <div class="sub" style="margin-top:14px">Your Guardian callsign identifies your scores on the Corps leaderboard</div>
     <label for="nameInput">GUARDIAN CALLSIGN</label>
     <input id="nameInput" type="text" maxlength="20" autocomplete="off" autocapitalize="off"
@@ -828,9 +829,10 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
              inputmode="text" enterkeyhint="go" placeholder="XXXX-XXXX">
     </div>
     <div id="nameMsg">3 to 20 characters: letters, numbers and underscore.</div>
-    <button class="go" id="nameGo">PLAY</button>
+    <button class="go" id="nameGo">SIGN IN / CREATE</button>
 
-    <button class="go alt" id="nameGuest">QUICK PLAY AS GUEST</button>
+    <button class="go alt" id="nameGuest">KEEP PLAYING AS GUEST</button>
+    <button class="go alt" id="nameGuestOld" hidden></button>
     <p class="consent">Your callsign and scores are stored to build the leaderboard.
        See how in the <a href="#" id="privLink">data notice</a>.</p>
     <div id="privBox">
@@ -930,30 +932,65 @@ const DIFF = {
          bcuCool:1.8, coolant:38, leadTol:.055, uncageWin:7, strict:true,  gimbal:0.85, keepRound:false }
 };
 
-/* ---------- ondate: due campagne distinte ---------- */
-const WAVES_RIDGE = [
-  { title:'WAVE 1', sub:'INTERCEPTOR DRONES ON RECON', count:3, speed:150, aggro:.35, boss:false },
-  { title:'WAVE 2', sub:'NEBULA FIGHTERS DIVING',       count:4, speed:172, aggro:.75, boss:false },
-  { title:'WAVE 3', sub:'STORM HUNTERS — SATURATION',count:5, speed:196, aggro:1.0, boss:false },
-  { title:'FINAL WAVE', sub:'LEVIATHAN CLASS DESTROYER',count:0, speed:250, aggro:1.0, boss:true  }
-];
-const WAVES_BASE = [
-  { title:'DEPARTURE 1', sub:'SHUTTLE ARK-1 OUTBOUND',  count:2, speed:165, aggro:.5, dep:1 },
-  { title:'DEPARTURE 2', sub:'SHUTTLE ARK-2 — TWO HOSTILES', count:3, speed:182, aggro:.8, dep:1 },
-  { title:'DEPARTURE 3', sub:'TWO SHUTTLES IN SEQUENCE',     count:4, speed:196, aggro:1.0, dep:2 },
-  { title:'FINAL DEPARTURE', sub:'ESCORT AGAINST THE LEVIATHAN',      count:2, speed:200, aggro:1.0, dep:1, boss:true }
-];
+/* ═══════════════ REGISTRO DELLE MISSIONI ═══════════════
+   Tutto ciò che distingue una missione da un'altra vive qui dentro: profilo
+   del terreno, costruzioni, ondate, testi, posizione sul quadro tattico e
+   quali sottosistemi si attivano. Aggiungere una missione significa
+   aggiungere una voce a questo oggetto — non cercare quindici confronti
+   sparsi in sette file, come accadeva prima.
 
-/* Il profilo del terreno è parametrico: la cresta è stretta e montuosa,
-   la base aerea ha mezzo chilometro di piana per la pista.               */
-const SCEN = {
-  ridge:  { label:'CLOUD CITADEL',   waves:WAVES_RIDGE,
-            terr:{ flat:70,  ramp:240, mStart:1250, mRamp:1250, amp:250, mtn:760 } },
-  airbase:{ label:'ORBITAL GATEWAY', waves:WAVES_BASE,
-            terr:{ flat:640, ramp:520, mStart:2200, mRamp:1500, amp:130, mtn:600 } }
+   Gli identificativi 'ridge' e 'airbase' restano quelli storici perché
+   sono già scritti nella colonna scenario dei punteggi salvati: cambiarli
+   spezzerebbe le schede giocatore esistenti.                            */
+const MISSION = {
+
+  ridge: {
+    id:'ridge', code:'CITADEL', name:'CLOUD CITADEL',
+    map:{ x:-.34, y:-.30 },                    // dove appare sullo scanner
+    terrain:{ flat:70, ramp:240, mStart:1250, mRamp:1250, amp:250, mtn:760 },
+    build:null,                                // nessuna costruzione aggiuntiva
+    clearRadius:0,                             // vegetazione ovunque
+    escort:false,                              // nessun alleato da proteggere
+    iff:false,                                 // Signal Scan non necessario
+    hunt:0,                                    // quota di ostili che ignora il giocatore
+    hint:'ARROWS or MOUSE aim · <b>E</b> cell · <b>C</b> release · <b>SPACE</b> fire',
+    win:  'SECTOR CLEARED',
+    lose: 'The turret has been destroyed. Cloud Citadel lies open to the squadrons of THE NULL.',
+    winText:"The Leviathan broke apart beyond the cloud layer. No hostile signature remains in the sector: the turret held.",
+    waves:[
+      { title:'WAVE 1', sub:'INTERCEPTOR DRONES ON RECON',  count:3, speed:150, aggro:.35 },
+      { title:'WAVE 2', sub:'NEBULA FIGHTERS DIVING',       count:4, speed:172, aggro:.75 },
+      { title:'WAVE 3', sub:'STORM HUNTERS — SATURATION',   count:5, speed:196, aggro:1.0 },
+      { title:'FINAL WAVE', sub:'LEVIATHAN CLASS DESTROYER',count:0, speed:250, aggro:1.0, boss:true }
+    ]
+  },
+
+  airbase: {
+    id:'airbase', code:'GATEWAY', name:'ORBITAL GATEWAY',
+    map:{ x:.38, y:.26 },
+    terrain:{ flat:640, ramp:520, mStart:2200, mRamp:1500, amp:130, mtn:600 },
+    build:'buildAirbase',                      // funzione che erige il sedime
+    clearRadius:520,                           // niente cristalli sulle rampe
+    escort:true, iff:true, hunt:.7,
+    hint:'Sector with allied shuttles: <b>Q</b> identifies the signature before you fire',
+    win:  'EVACUATION COMPLETE',
+    lose: 'The turret has been destroyed: the Gateway is left without cover.',
+    winText:null,                              // testo costruito dai contatori
+    waves:[
+      { title:'DEPARTURE 1', sub:'SHUTTLE ARK-1 OUTBOUND',        count:2, speed:165, aggro:.5, dep:1 },
+      { title:'DEPARTURE 2', sub:'SHUTTLE ARK-2 — TWO HOSTILES',  count:3, speed:182, aggro:.8, dep:1 },
+      { title:'DEPARTURE 3', sub:'TWO SHUTTLES IN SEQUENCE',      count:4, speed:196, aggro:1.0, dep:2 },
+      { title:'FINAL DEPARTURE', sub:'ESCORT AGAINST THE LEVIATHAN', count:2, speed:200, aggro:1.0, dep:1, boss:true }
+    ]
+  }
+
 };
+
 let SCN = 'ridge';
-let WAVES = WAVES_RIDGE;
+/* Missione corrente. Da usare ovunque al posto dei confronti con la stringa
+   dello scenario: MIS().escort invece di SCN === 'airbase', e così via. */
+function MIS(id){ return MISSION[id || SCN] || MISSION.ridge; }
+let WAVES = MISSION.ridge.waves;
 let worldGroup = null;
 const RW_Z = -170, RW_LEN = 2400, RW_W = 60;      // geometria della pista
 const CALLSIGN = ['ARK-1','ARK-2','ARK-3','ARK-4','ARK-5','ARK-6'];
@@ -1334,7 +1371,7 @@ function ridged(x,y,oct){
 
 /* --- quota del terreno in un punto qualsiasi --- */
 function terrainH(x,z){
-  const T = SCEN[SCN].terr, s = .00085;
+  const T = MIS().terrain, s = .00085;
   let h = (fbm(x*s+11.3, z*s+7.1, 5)-.5)*T.amp;        // ondulazione ampia
   h += (fbm(x*s*4.3+3.7, z*s*4.3+9.2, 4)-.5)*36*(T.amp/250);
   const d = Math.hypot(x,z);
@@ -1490,7 +1527,7 @@ function buildWorld(){
     const a = Math.random()*Math.PI*2, r = 25 + Math.pow(Math.random(),.6)*900;
     const x = Math.cos(a)*r, z = Math.sin(a)*r;
     const s = .5 + Math.random()*2.2;
-    if(SCN === 'airbase' && Math.hypot(x,z) < 480){ continue; }
+    if(MIS().clearRadius && Math.hypot(x,z) < MIS().clearRadius - 40){ continue; }
     // una parte dei frammenti resta sospesa sopra il banco
     const lift = Math.random() < .45 ? 6 + Math.random()*26 : s*.35;
     dummy.position.set(x, terrainH(x,z) + lift, z);
@@ -1517,7 +1554,7 @@ function buildWorld(){
     const x = Math.cos(a)*r, z = Math.sin(a)*r;
     const h = terrainH(x,z);
     if(h > 420 || terrainSlope(x,z) > .62) continue;      // niente alberi su cime e pareti
-    if(SCN === 'airbase' && Math.hypot(x,z) < 520) continue;   // il sedime della base è sgombro
+    if(MIS().clearRadius && Math.hypot(x,z) < MIS().clearRadius) continue;   // area costruita sgombra
     const s = .8 + Math.random()*.9;
     dummy.rotation.set(0, Math.random()*3, 0);
     dummy.scale.set(s,s,s);
@@ -1650,7 +1687,7 @@ function buildWorld(){
   dish.position.set(-9.5,6.6,7.4); dish.rotation.x = -1.1; dish.castShadow = true; G.add(dish);
   G.userData.dish = dish;
 
-  if(SCN === "airbase") buildAirbase(G);
+  if(MIS().build && typeof window[MIS().build] === 'function') window[MIS().build](G);
   return G;
 }
 
@@ -2087,7 +2124,7 @@ function disposeTree(root){
 function loadScenario(name){
   if(worldGroup){ scene.remove(worldGroup); disposeTree(worldGroup); }
   SCN = name;
-  WAVES = SCEN[name].waves;
+  WAVES = MIS(name).waves;
   worldGroup = buildWorld();
   scene.add(worldGroup);
 }
@@ -2172,7 +2209,7 @@ const Net = {
      toccare nulla dell'account. */
   async resume(){
     const ses = this.session();
-    if(!ses){ this.askName(); return; }
+    if(!ses){ this.guestMode(); return; }   // ospite: si entra subito in gioco
     this.name = ses.name; this.account = ses.account; this.token = ses.token;
 
     if(this.configured() && ses.token){
@@ -2182,11 +2219,11 @@ const Net = {
         // collegamento caduto: la sessione NON va cancellata, potrebbe essere
         // ancora valida. Si avvisa e si lascia intatto tutto.
         this.toast('Database unreachable — your session is kept','bad');
-        this.paintBadge(); this.askName(); return;
+        this.paintBadge(); return;
       }
       this.clearSession(); this.name = this.token = this.account = null;
-      this.toast('Session expired — sign in again','bad');
-      this.askName(); return;
+      this.toast('Session expired — sign in again to keep scoring','bad');
+      this.guestMode(); return;
     }
     // modalità locale
     this.paintBadge(); this.refreshMe();
@@ -2200,6 +2237,14 @@ const Net = {
     this.saveSession({ account:this.account, name:this.name, token:this.token, local:!this.online });
     document.getElementById('idscreen').classList.remove('on');
     this.paintBadge();
+    // il punteggio ottenuto da ospite non va perso: si invia ora
+    if(this.pendingScore){
+      const p = this.pendingScore; this.pendingScore = null;
+      this.submit(p).then(r=>{
+        if(r && r.ok) this.toast('Your last run was added to the leaderboard: <b>#'
+          + r.rank + '</b>','good');
+      });
+    }
   },
 
   /* ───────────────── uscita ─────────────────
@@ -2223,8 +2268,8 @@ const Net = {
     document.getElementById('newCode').classList.remove('on');
     document.getElementById('codeInput').value = '';
     this.pendingName = null;
-    this.askName();
-    this.toast('Session closed on this device','good');
+    this.guestMode();
+    this.toast('Session closed — you can keep playing as a guest','good');
   },
 
   /* ───────────────── trasporto ───────────────── */
@@ -2501,6 +2546,23 @@ const Net = {
   },
 
   /* ───────────────── accreditamento ───────────────── */
+  /* CrazyGames pretende che si entri in gioco senza flussi di accesso e che
+     gli ospiti possano giocare. Quindi: nessun account viene creato per un
+     ospite, i punteggi semplicemente non vengono registrati finché non ci si
+     accredita — e chi lo fa vede il punteggio appena ottenuto salire in
+     classifica, invece di perderlo. */
+  guestMode(){
+    this.name = this.token = this.account = null;
+    this.me = { best:0, games:0, rank:null, average:0, level:0 };
+    document.getElementById('idscreen').classList.remove('on');
+    this.paintBadge();
+  },
+  isGuest(){ return !this.name; },
+  closeName(){
+    document.getElementById('idscreen').classList.remove('on');
+    document.getElementById('newCode').classList.remove('on');
+  },
+
   askName(){
     const box = document.getElementById('idscreen');
     box.classList.add('on');
@@ -2554,7 +2616,11 @@ const Net = {
     });
     go.addEventListener('click', ()=>this.confirmName());
     // Accesso rapido: un nominativo di riserva e via, senza digitare nulla.
-    document.getElementById('nameGuest').addEventListener('click', async ()=>{
+    document.getElementById('nameGuest').addEventListener('click', ()=>{
+      this.closeName();
+      this.toast('Playing as a guest — scores are not recorded','bad');
+    });
+    document.getElementById('nameGuestOld').addEventListener('click', async ()=>{
       const g = 'Guardian_' + Math.floor(100000 + Math.random()*899999);
       const code = this.makeCode();
       const r = await this.register(g, code);
@@ -2725,12 +2791,15 @@ const Net = {
   paintBadge(){
     const av = document.getElementById('badgeAv');
     if(!av) return;
+    const guest = this.isGuest();
+    const show = (id,v)=>{ const e=document.getElementById(id); if(e) e.style.display = v?'':'none'; };
+    show('signinBtn', guest); show('renameBtn', !guest); show('logoutBtn', !guest);
     av.innerHTML = this.name ? this.avatar(this.name, 30) : '';
-    document.getElementById('badgeName').textContent = this.name || '—';
+    document.getElementById('badgeName').textContent = this.name || 'GUEST';
     document.getElementById('badgeSub').textContent = this.name
-      ? ('record ' + this.me.best + (this.me.rank ? ' · #' + this.me.rank : '') +
-         ' · ' + this.me.games + ' operazioni')
-      : 'not authenticated';
+      ? ('best ' + this.me.best + (this.me.rank ? ' · #' + this.me.rank : '') +
+         ' · ' + this.me.games + ' runs')
+      : 'playing as guest · sign in for the leaderboard';
   },
 
   /* ───────────────── classifica ───────────────── */
@@ -2819,7 +2888,7 @@ const Net = {
       (p.last_game ? '<div style="margin-top:12px;font-size:11px;color:var(--dim);letter-spacing:.1em">' +
         'LAST RESULT: ' + p.last_game.score.toLocaleString('en-US') + ' points · wave ' +
         p.last_game.level + ' · ' + fmtT(p.last_game.duration_s) + ' · ' +
-        (p.last_game.scenario === 'airbase' ? 'ORBITAL GATEWAY' : 'CLOUD CITADEL') +
+        (MIS(p.last_game.scenario).name) +
         ' · ' + (p.last_game.difficulty === 'hard' ? 'COMBAT' : 'TRAINING') + '</div>' : '') +
       (p.username.toLowerCase() === (this.name||'').toLowerCase()
         ? '<div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">'
@@ -2859,6 +2928,14 @@ const Net = {
     const payload = { score:S.score, level:Math.max(1, Math.min(4, S.wave + 1)),
                       duration:dur, scenario:S.scen, difficulty:S.level, version:GAME_VER };
     const box = document.getElementById('overNet');
+    if(this.isGuest()){
+      this.pendingScore = payload;          // si registra al primo accesso
+      box.innerHTML = '<span class="big">' + S.score.toLocaleString('en-US') + '</span>' +
+        '<span class="k">Playing as a guest — this run is not on the leaderboard.</span><br>' +
+        '<button class="btn" style="margin-top:10px" onclick="Net.askName()">' +
+        'CLAIM A CALLSIGN AND SAVE THIS SCORE</button>';
+      return;
+    }
     box.innerHTML = '<span class="k">Submitting score…</span>';
 
     if(dur < 25){
@@ -2924,27 +3001,31 @@ const Net = {
    CONSOLE C4ISR — la schermata d'ingresso è un posto di comando: orologio
    zulu, quadro tattico interattivo, traffico messaggi e avvio del sistema.
    ========================================================================= */
-const AO = {
-  ridge:{ code:'CITADEL', name:'CLOUD CITADEL', x:-.34, y:-.30,
-    brief:`<p><b>CLOUD CITADEL — CYCLE 04:50.</b> There is no ground beneath the turret:
-           only the cloud ocean that wraps AETHER-9, and the drifting isles that mark the
-           edge of the sector. The Spire's orbital batteries went dark in three
-           minutes, one cycle ago. Long-range scan no longer answers.</p>
-           <p>At stellar dawn they will surface: first the <b>Interceptor Drones</b>, in
-           swarms, expecting an empty sky. Then a <b>Leviathan Class Destroyer</b>, masking
-           its own signature and seeding Quantum Decoys that can pull a Photon Lance off
-           course in mid-flight.</p>
-           <p class="pull">You get thirty-eight seconds of core stability per charge.
-           Spend them well.</p>` },
-  airbase:{ code:'GATEWAY', name:'ORBITAL GATEWAY', x:.38, y:.26,
-    brief:`<p><b>ORBITAL GATEWAY — CYCLE 05:40.</b> The cradles are loaded: five Ark-class
-           shuttles must carry out the civilians and the last squad left on the sector rim.</p>
-           <p>A shuttle on departure is the easiest prey in known space: clamped to the rail,
-           slow, shields down. Twenty-nine seconds in which it can do nothing to defend
-           itself. THE NULL knows this, and <b>it is not coming for you</b>.</p>
-           <p class="pull">Your lance reads energy signatures, not markings: only the Signal
-           Scan tells an ally from a hostile.</p>` }
+/* Le aree operative non sono più una seconda lista: derivano dal registro
+   delle missioni. Qui restano solo i testi del briefing, che sono materiale
+   redazionale e non di gioco. */
+const BRIEF = {
+  ridge:`<p><b>CLOUD CITADEL — CYCLE 04:50.</b> There is no ground beneath the turret:
+         only the cloud ocean that wraps AETHER-9, and the drifting isles that mark the
+         edge of the sector. The Spire's orbital batteries went dark in three
+         minutes, one cycle ago. Long-range scan no longer answers.</p>
+         <p>At stellar dawn they will surface: first the <b>Interceptor Drones</b>, in
+         swarms, expecting an empty sky. Then a <b>Leviathan Class Destroyer</b>, masking
+         its own signature and seeding Quantum Decoys that can pull a Photon Lance off
+         course in mid-flight.</p>
+         <p class="pull">You get thirty-eight seconds of core stability per charge.
+         Spend them well.</p>`,
+  airbase:`<p><b>ORBITAL GATEWAY — CYCLE 05:40.</b> The cradles are loaded: five Ark-class
+         shuttles must carry out the civilians and the last squad left on the sector rim.</p>
+         <p>A shuttle on departure is the easiest prey in known space: clamped to the rail,
+         slow, shields down. Twenty-nine seconds in which it can do nothing to defend
+         itself. THE NULL knows this, and <b>it is not coming for you</b>.</p>
+         <p class="pull">Your lance reads energy signatures, not markings: only the Signal
+         Scan tells an ally from a hostile.</p>`
 };
+const AO = Object.fromEntries(Object.values(MISSION).map(m => [m.id, {
+  code:m.code, name:m.name, x:m.map.x, y:m.map.y, brief:BRIEF[m.id] || ''
+}]));
 let selAO = 'ridge';
 let tacCv, tacX, tacHit = [], tacT = 0, conT = 0, msgT = 3, booted = false, tacSkip = 0;
 
@@ -2994,9 +3075,7 @@ function selectAO(key){
   document.getElementById('aoTitle').textContent = 'ORDINE DI OPERAZIONE · ' + AO[key].name;
   document.getElementById('brief').innerHTML = AO[key].brief;
   const h = document.getElementById('fHint');
-  if(h) h.innerHTML = key === 'airbase'
-    ? 'Sector with allied shuttles: <b>Q</b> identifies the signature before you fire'
-    : 'ARROWS or MOUSE aim · <b>E</b> cell · <b>C</b> release · <b>SPACE</b> fire';
+  if(h) h.innerHTML = MIS(key).hint;
 }
 function launchMission(level){ startGame(level, selAO); }
 
@@ -3196,7 +3275,8 @@ function updateAttract(dt){
    ========================================================================= */
 function startGame(level, scen){
   AU.init();
-  if(!Net.name){ Net.askName(); return; }     // serve una sessione attiva
+  // nessun requisito di accesso: gli ospiti giocano, i punteggi si registrano
+  // soltanto per chi si è accreditato
   stopAttract();
   if(scen && scen !== SCN) loadScenario(scen);
   cfg = DIFF[level];
@@ -3212,9 +3292,9 @@ function startGame(level, scen){
     iff:'', iffKnown:false
   };
   Net.gameStart();
-  document.getElementById('depline').style.display = SCN === 'airbase' ? 'block' : 'none';
-  document.getElementById('iffline').style.display = SCN === 'airbase' ? 'block' : 'none';
-  document.body.classList.toggle('base', SCN === 'airbase');
+  document.getElementById('depline').style.display = MIS().escort ? 'block' : 'none';
+  document.getElementById('iffline').style.display = MIS().iff ? 'block' : 'none';
+  document.body.classList.toggle('base', !!MIS().iff);
   boss = null;
   document.getElementById('bossbar').style.display = 'none';
   banner('GUARDIAN ON STATION','CLOUD CITADEL — CLEARED TO FIRE');
@@ -3279,7 +3359,7 @@ function endGame(win, reason){
   if(!S || !S.running) return;
   S.running = false; AU.lock(false); AU.jets(0);
   if(document.pointerLockElement) document.exitPointerLock();
-  const base = S.scen === 'airbase';
+  const base = !!MIS(S.scen).escort;
   let title, desc;
   if(win){
     title = base ? 'EVACUAZIONE COMPLETATA' : 'SECTOR CLEARED';
@@ -3355,7 +3435,7 @@ function spawnJet(){
     hp:1, speed:w.speed*cfg.jetSpeed, vel:dir.multiplyScalar(w.speed*cfg.jetSpeed),
     mode:'ingress', timer:0, cool:1+Math.random()*2, bombLoad:1, roll:0,
     aggro:w.aggro*cfg.aggro, boss:false,
-    hunt:(SCN === 'airbase' && Math.random() < .7)   // sette su dieci puntano il trasporto
+    hunt:(Math.random() < MIS().hunt)   // quota dichiarata dalla missione
   };
   scene.add(j); jets.push(j);
 }
@@ -3366,7 +3446,7 @@ function spawnBoss(){
   boss.userData = {
     hp:cfg.bossHP, maxHp:cfg.bossHP, speed:WAVES[S.wave].speed, vel:new V3(-1,0,.4).normalize().multiplyScalar(250),
     mode:'ingress', timer:0, cool:3, aamCool:8, flareCool:6, flaring:0, roll:0, boss:true, dying:0,
-    hunt:(SCN === 'airbase')
+    hunt:(MIS().hunt > 0)
   };
   scene.add(boss); jets.push(boss);
   document.getElementById('bossbar').style.display = 'block';
@@ -3957,8 +4037,8 @@ function hud(){
   document.getElementById('waveval').textContent  = Math.max(1,S.wave+1)+' / '+WAVES.length;
   document.getElementById('airval').textContent   = jets.length;
   document.getElementById('ammoval').textContent  = S.ammo;
-  document.getElementById('sectorval').textContent = S.scen === 'airbase' ? 'GATEWAY' : 'CITADEL';
-  if(S.scen === 'airbase'){
+  document.getElementById('sectorval').textContent = MIS(S.scen).code;
+  if(MIS(S.scen).escort){
     const tot = WAVES.reduce((n,w)=>n + (w.dep||0), 0);
     document.getElementById('depval').textContent  = S.depSafe + ' / ' + tot;
     const lv = document.getElementById('lostval');
