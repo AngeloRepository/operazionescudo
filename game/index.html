@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -516,64 +516,64 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
 
 <div id="hud">
   <div id="mission" class="panel">
-    <span class="tag">OPERAZIONE</span>
-    <span class="k">SETTORE</span> <span class="v" id="sectorval">CITADEL</span><br>
-    <span class="k">ONDATA</span> <span class="v" id="waveval">1 / 4</span><br>
-    <span class="k">OSTILI</span> <span class="v" id="airval">0</span><br>
-    <span class="k">SCUDO</span> <span class="v" id="hpval">100%</span>
+    <span class="tag">OPERATION</span>
+    <span class="k">SECTOR</span> <span class="v" id="sectorval">CITADEL</span><br>
+    <span class="k">WAVE</span> <span class="v" id="waveval">1 / 4</span><br>
+    <span class="k">HOSTILES</span> <span class="v" id="airval">0</span><br>
+    <span class="k">SHIELD</span> <span class="v" id="hpval">100%</span>
     <div id="depline" style="display:none">
-      <span class="k">IN SALVO</span> <span class="v" id="depval">0 / 5</span>
-      &nbsp;<span class="k">PERSI</span> <span class="v" id="lostval">0</span>
+      <span class="k">SAFE</span> <span class="v" id="depval">0 / 5</span>
+      &nbsp;<span class="k">LOST</span> <span class="v" id="lostval">0</span>
     </div>
   </div>
 
   <div id="proc" class="panel">
-    <span class="tag">SEQUENZA DI SCARICA</span>
-    <div class="step" id="p1"><i></i>1 · RILEVAMENTO</div>
+    <span class="tag">DISCHARGE SEQUENCE</span>
+    <div class="step" id="p1"><i></i>1 · DETECT</div>
     <div class="step" id="p2"><i></i>2 · ENERGY CELL <b>[E]</b></div>
     <div class="step" id="p3"><i></i>3 · ENERGY LOCK</div>
-    <div class="step" id="p4"><i></i>4 · VETTORE</div>
-    <div class="step" id="p5"><i></i>5 · RILASCIO <b>[C]</b> · FUOCO</div>
+    <div class="step" id="p4"><i></i>4 · VECTOR</div>
+    <div class="step" id="p5"><i></i>5 · RELEASE <b>[C]</b> · FIRE</div>
   </div>
 
   <div id="score" class="panel">
-    <span class="tag">PUNTEGGIO</span>
+    <span class="tag">SCORE</span>
     <span class="big" id="scoreval">0</span><br>
-    <span class="k">ABBATTUTI</span> <span class="v" id="killval">0</span>
+    <span class="k">KILLS</span> <span class="v" id="killval">0</span>
   </div>
 
   <div id="weapon" class="panel">
     <span class="tag">AETHER LANCE MK-IV</span>
-    <div id="lockline">SCANSIONE SIGNATURE…</div>
-    <span class="k">LANCIA</span> <span class="v" id="tubeval">PRONTO</span>
-    &nbsp;<span class="k">CELLE</span> <span class="v" id="ammoval">0</span><br>
-    <span class="k">NUCLEO</span> <span class="v" id="bcuval">ASSENTE</span>
+    <div id="lockline">SCANNING SIGNATURES…</div>
+    <span class="k">LANCE</span> <span class="v" id="tubeval">READY</span>
+    &nbsp;<span class="k">CELLS</span> <span class="v" id="ammoval">0</span><br>
+    <span class="k">CORE</span> <span class="v" id="bcuval">EMPTY</span>
     <div id="iffline" style="display:none"><span class="k">SCAN</span> <span class="v" id="iffval">—</span></div>
     <div id="coolbar"><div id="coolfill"></div></div>
     <div id="reloadbar"><div id="reloadfill"></div></div>
-    <div id="procmini">FASE 1 · RILEVAMENTO</div>
+    <div id="procmini">STEP 1 · DETECT</div>
   </div>
 
   <div id="bossbar">
-    <div class="name">LEVIATHAN CLASS DESTROYER — NUCLEO PRIORITARIO</div>
+    <div class="name">LEVIATHAN CLASS DESTROYER — PRIORITY CORE</div>
     <div id="bosstrack"><div id="bossfill"></div></div>
   </div>
 
   <div id="ops">
     <span class="op">GUARDIAN<b id="opsName">—</b></span>
-    <i>PUNTI<b id="opsScore">0</b></i>
-    <i class="rec" id="opsRecWrap">RECORD<b id="opsRec">0</b></i>
-    <i>POS<b id="opsRank">—</b></i>
-    <i>ONDATA<b id="opsLvl">1</b></i>
-    <i>SCUDO<b id="opsHp">100%</b></i>
-    <i>TEMPO<b id="opsTime">00:00</b></i>
+    <i>SCORE<b id="opsScore">0</b></i>
+    <i class="rec" id="opsRecWrap">BEST<b id="opsRec">0</b></i>
+    <i>RANK<b id="opsRank">—</b></i>
+    <i>WAVE<b id="opsLvl">1</b></i>
+    <i>SHIELD<b id="opsHp">100%</b></i>
+    <i>TIME<b id="opsTime">00:00</b></i>
   </div>
   <div id="bossIntro">
     <div class="bars"></div>
-    <div class="tag">FIRMA DIMENSIONALE IN EMERSIONE</div>
+    <div class="tag">DIMENSIONAL SIGNATURE SURFACING</div>
     <div class="nm">LEVIATHAN</div>
     <div class="cl">CLASS DESTROYER · THE NULL</div>
-    <div class="wr">NUCLEO DI SINGOLARITÀ ESPOSTO — COLPISCILO QUANDO I DECOY SI SPENGONO</div>
+    <div class="wr">SINGULARITY CORE EXPOSED — STRIKE IT WHEN THE DECOYS BURN OUT</div>
   </div>
   <div id="feed"></div>
   <div id="alert"></div>
@@ -582,15 +582,15 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
 
 <div id="touch">
   <button class="tbtn" id="tPause">II</button>
-  <button class="tbtn" id="tBcu">CELL<small>nucleo</small></button>
-  <button class="tbtn" id="tUncage">RILASCIO<small>lancia</small></button>
+  <button class="tbtn" id="tBcu">CELL<small>core</small></button>
+  <button class="tbtn" id="tUncage">RELEASE<small>lance</small></button>
   <button class="tbtn" id="tZoom">ZOOM</button>
-  <button class="tbtn" id="tIff">SCAN<small>identifica</small></button>
-  <button class="tbtn" id="tCrouch">SCUDO<small>tieni</small></button>
-  <button class="tbtn" id="tFire">FUOCO</button>
+  <button class="tbtn" id="tIff">SCAN<small>identify</small></button>
+  <button class="tbtn" id="tCrouch">SHIELD<small>hold</small></button>
+  <button class="tbtn" id="tFire">FIRE</button>
 </div>
 
-<div id="rotate">RUOTA IL DISPOSITIVO IN ORIZZONTALE PER GIOCARE</div>
+<div id="rotate">ROTATE YOUR DEVICE TO LANDSCAPE TO PLAY</div>
 
 <div id="radarwrap">
   <canvas id="radar" width="186" height="186"></canvas>
@@ -618,81 +618,81 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
         </svg>
         <div class="hName">
           <b>SKY FORTRESS</b>
-          <span>AEGIS NET · PONTE DI COMANDO DELLA SKY FORTRESS</span>
+          <span>AEGIS NET · SKY FORTRESS COMMAND DECK</span>
         </div>
       </div>
       <div id="opBadge">
         <span class="av" id="badgeAv"></span>
-        <span class="nm"><b id="badgeName">—</b><span id="badgeSub">non accreditato</span></span>
-        <button onclick="Net.openBoard()">CLASSIFICA</button>
-        <button onclick="Net.openProfile()">PROFILO</button>
-        <button onclick="Net.rename()">RINOMINA</button>
+        <span class="nm"><b id="badgeName">—</b><span id="badgeSub">not authenticated</span></span>
+        <button onclick="Net.openBoard()">LEADERBOARD</button>
+        <button onclick="Net.openProfile()">PROFILE</button>
+        <button onclick="Net.rename()">RENAME</button>
       </div>
-      <div class="hClass">SIMULAZIONE ADDESTRATIVA · SETTORE AETHER-9</div>
+      <div class="hClass">TRAINING SIMULATION · AETHER-9 SECTOR</div>
       <div class="hTime">
         <div><b id="zulu">00:00:00</b><span>ZULU</span></div>
-        <div><b id="loc">00:00:00</b><span>LOCALE</span></div>
+        <div><b id="loc">00:00:00</b><span>LOCAL</span></div>
       </div>
     </header>
 
     <section class="col" id="cLeft">
-      <h3>STATO SISTEMI</h3>
+      <h3>SYSTEMS STATUS</h3>
       <ul class="sys">
-        <li><i class="led ok"></i>TACTICAL SCANNER<b>ATTIVO</b></li>
-        <li><i class="led ok"></i>SIGNAL SCAN<b>MODO 4</b></li>
-        <li><i class="led ok"></i>AEGIS DATALINK<b>SINCRONO</b></li>
-        <li><i class="led warn"></i>BATTERIE ORBITALI<b>OFFLINE</b></li>
-        <li><i class="led ok"></i>TORRETTA GUARDIAN<b>IN LINEA</b></li>
+        <li><i class="led ok"></i>TACTICAL SCANNER<b>ACTIVE</b></li>
+        <li><i class="led ok"></i>SIGNAL SCAN<b>MODE 4</b></li>
+        <li><i class="led ok"></i>AEGIS DATALINK<b>SYNCED</b></li>
+        <li><i class="led warn"></i>ORBITAL BATTERIES<b>OFFLINE</b></li>
+        <li><i class="led ok"></i>GUARDIAN TURRET<b>ONLINE</b></li>
       </ul>
 
-      <h3>DOTAZIONE TORRETTA</h3>
+      <h3>TURRET LOADOUT</h3>
       <ul class="kv">
         <li>PHOTON LANCE<b>23</b></li>
         <li>ENERGY CELL<b>23</b></li>
         <li>GUARDIAN PILOT<b>1</b></li>
-        <li>STABILITÀ NUCLEO<b>38 s</b></li>
+        <li>CORE STABILITY<b>38 s</b></li>
       </ul>
 
-      <h3>CONDIZIONI DI STRATO</h3>
+      <h3>LAYER CONDITIONS</h3>
       <ul class="kv">
-        <li>CORRENTI<b>060° / 12 nodi</b></li>
-        <li>VISIBILITÀ<b>&gt; 10 km</b></li>
-        <li>TEMPESTE IONICHE<b>SPARSE</b></li>
-        <li>ALBA STELLARE<b>05:12 Z</b></li>
+        <li>CURRENTS<b>060° / 12 kn</b></li>
+        <li>VISIBILITY<b>&gt; 10 km</b></li>
+        <li>ION STORMS<b>SCATTERED</b></li>
+        <li>STELLAR DAWN<b>05:12 Z</b></li>
       </ul>
     </section>
 
     <section id="cCenter">
       <div id="feedwin">
-        <span class="lbl">FEED OTTICO 01 · TORRETTA GUARDIAN</span>
-        <span class="rec">● IN DIRETTA</span>
+        <span class="lbl">OPTICAL FEED 01 · GUARDIAN TURRET</span>
+        <span class="rec">● LIVE</span>
         <span class="tele">PTZ 04 · f/2.8 · IR OFF</span>
         <b class="c tl"></b><b class="c tr"></b><b class="c bl"></b><b class="c br"></b>
       </div>
       <div id="tac">
         <canvas id="tacCanvas"></canvas>
-        <span class="lbl">TACTICAL SCANNER · TOCCA UN SETTORE PER SELEZIONARLO</span>
+        <span class="lbl">TACTICAL SCANNER · TAP A SECTOR TO SELECT IT</span>
       </div>
     </section>
 
     <section class="col" id="cRight">
-      <h3>CANALE AEGIS</h3>
+      <h3>AEGIS CHANNEL</h3>
       <div id="msgs"></div>
-      <h3 id="aoTitle">DIRETTIVA OPERATIVA</h3>
+      <h3 id="aoTitle">OPERATION ORDER</h3>
       <div id="brief"></div>
     </section>
 
     <footer id="cFoot">
       <div class="fSel">
-        <span>SETTORE SELEZIONATO</span>
+        <span>SELECTED SECTOR</span>
         <b id="aoSel">CITADEL</b>
       </div>
       <div class="fBtns">
-        <button class="gobtn" onclick="launchMission('easy')">ADDESTRAMENTO<small>scan automatico · ostili prudenti</small></button>
-        <button class="gobtn hot" onclick="launchMission('hard')">OPERATIVO<small>sequenza manuale · scan [Q]</small></button>
-        <button class="gobtn" onclick="Net.openBoard()">CLASSIFICA<small>del Corpo, per ciclo</small></button>
+        <button class="gobtn" onclick="launchMission('easy')">TRAINING<small>auto scan · cautious hostiles</small></button>
+        <button class="gobtn hot" onclick="launchMission('hard')">COMBAT<small>manual sequence · scan [Q]</small></button>
+        <button class="gobtn" onclick="Net.openBoard()">LEADERBOARD<small>Corps ranking, by cycle</small></button>
       </div>
-      <div class="fHint" id="fHint">FRECCE o MOUSE mira · <b>E</b> cella · <b>C</b> rilascio · <b>SPAZIO</b> scarica</div>
+      <div class="fHint" id="fHint">ARROWS or MOUSE aim · <b>E</b> cell · <b>C</b> release · <b>SPACE</b> fire</div>
     </footer>
 
   </div>
@@ -700,31 +700,31 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
 
 <!-- PAUSA -->
 <div class="screen" id="pause" style="display:none">
-  <h2>SISTEMA IN STANDBY</h2>
-  <h1>PAUSA</h1>
+  <h2>SYSTEM STANDBY</h2>
+  <h1>PAUSED</h1>
   <div style="margin-top:22px">
-    <button class="btn primary" onclick="togglePause()">RIPRENDI</button><br>
-    <button class="btn" onclick="resetGame()">RICOMINCIA LA MISSIONE</button><br>
-    <button class="btn" onclick="goHome()">MENU PRINCIPALE</button>
+    <button class="btn primary" onclick="togglePause()">RESUME</button><br>
+    <button class="btn" onclick="resetGame()">RESTART OPERATION</button><br>
+    <button class="btn" onclick="goHome()">MAIN MENU</button>
   </div>
 </div>
 
 <!-- FINE PARTITA -->
 <div class="screen" id="over" style="display:none">
-  <h2 id="overtag">RAPPORTO DI FINE OPERAZIONE</h2>
-  <h1 id="overtitle">POSTAZIONE DISTRUTTA</h1>
+  <h2 id="overtag">OPERATION DEBRIEF</h2>
+  <h1 id="overtitle">TURRET DESTROYED</h1>
   <p id="overdesc"></p>
   <div id="overNet"></div>
   <div class="stats">
-    PUNTEGGIO FINALE <span id="fscore">0</span><br>
-    OSTILI DISINTEGRATI <span id="fkills">0</span><br>
-    PHOTON LANCE SCARICATE <span id="fshots">0</span> — PRECISIONE <span id="facc">0%</span>
+    FINAL SCORE <span id="fscore">0</span><br>
+    HOSTILES DESTROYED <span id="fkills">0</span><br>
+    PHOTON LANCE FIRED <span id="fshots">0</span> — ACCURACY <span id="facc">0%</span>
   </div>
   <div class="overBtns">
-    <button class="btn primary" onclick="resetGame()">GIOCA ANCORA</button>
-    <button class="btn" onclick="Net.openBoard()">CLASSIFICA</button>
-    <button class="btn" onclick="Net.share()">CONDIVIDI</button>
-    <button class="btn" onclick="goHome()">CENTRO DI COMANDO</button>
+    <button class="btn primary" onclick="resetGame()">PLAY AGAIN</button>
+    <button class="btn" onclick="Net.openBoard()">LEADERBOARD</button>
+    <button class="btn" onclick="Net.share()">SHARE</button>
+    <button class="btn" onclick="goHome()">COMMAND DECK</button>
   </div>
 </div>
 
@@ -738,35 +738,35 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
       <path d="M45 19 l-7 1.4 5.6 5.6z" fill="#ffa33c"/>
       <path d="M24 40 l-5.6 -1.4 1.4 5.6z" fill="#cfe6ff" opacity=".75"/>
     </svg>
-    <div class="kicker">SKY FORTRESS DEFENSE CORPS · ACCREDITAMENTO</div>
+    <div class="kicker">SKY FORTRESS DEFENSE CORPS · CREDENTIALS</div>
     <div class="title">SKY <em>FORTRESS</em></div>
-    <div class="sub" style="margin-top:14px">Il tuo nominativo Guardian identifica i punteggi nella classifica del Corpo</div>
-    <label for="nameInput">NOMINATIVO GUARDIAN</label>
+    <div class="sub" style="margin-top:14px">Your Guardian callsign identifies your scores on the Corps leaderboard</div>
+    <label for="nameInput">GUARDIAN CALLSIGN</label>
     <input id="nameInput" maxlength="20" autocomplete="off" autocapitalize="off"
            spellcheck="false" placeholder="es. Vega_07">
-    <div id="nameMsg">Da 3 a 20 caratteri: lettere, numeri e underscore.</div>
-    <button class="go" id="nameGo">GIOCA</button>
+    <div id="nameMsg">3 to 20 characters: letters, numbers and underscore.</div>
+    <button class="go" id="nameGo">PLAY</button>
     <div class="note" id="netNote"></div>
   </div>
 </div>
 
-<!-- ══════════════ CLASSIFICA GLOBALE ══════════════ -->
+<!-- ══════════════ GLOBAL LEADERBOARD ══════════════ -->
 <div class="ovl" id="board">
   <div class="box" style="position:relative">
-    <button class="xbtn" onclick="Net.closeBoard()">CHIUDI</button>
-    <h2>CLASSIFICA GLOBALE</h2>
+    <button class="xbtn" onclick="Net.closeBoard()">CLOSE</button>
+    <h2>GLOBAL LEADERBOARD</h2>
     <div class="sub" id="lbMode">—</div>
     <div class="tabs" id="lbPeriod">
-      <button class="tab on" data-p="all">STORICA</button>
-      <button class="tab" data-p="day">GIORNO</button>
-      <button class="tab" data-p="week">SETTIMANA</button>
-      <button class="tab" data-p="month">MESE</button>
+      <button class="tab on" data-p="all">ALL TIME</button>
+      <button class="tab" data-p="day">TODAY</button>
+      <button class="tab" data-p="week">WEEK</button>
+      <button class="tab" data-p="month">MONTH</button>
     </div>
     <div class="tabs" id="lbBoard">
-      <button class="tab on" data-b="best">PUNTEGGIO</button>
-      <button class="tab" data-b="levels">LIVELLI COMPLETATI</button>
-      <button class="tab" data-b="time">MIGLIOR TEMPO</button>
-      <button class="tab" data-b="games">PIÙ PARTITE</button>
+      <button class="tab on" data-b="best">SCORE</button>
+      <button class="tab" data-b="levels">WAVES CLEARED</button>
+      <button class="tab" data-b="time">LONGEST RUN</button>
+      <button class="tab" data-b="games">MOST GAMES</button>
     </div>
     <div class="tabs" id="lbLimit">
       <button class="tab on" data-l="10">TOP 10</button>
@@ -775,7 +775,7 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
     </div>
     <div id="lbBody"></div>
     <div id="lbFoot">
-      <span><span class="livedot"></span><span id="lbLive">aggiornamento automatico</span></span>
+      <span><span class="livedot"></span><span id="lbLive">auto refresh</span></span>
       <span id="lbStats"></span>
     </div>
   </div>
@@ -784,14 +784,14 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
 <!-- ══════════════ SCHEDA GIOCATORE ══════════════ -->
 <div class="ovl" id="profile">
   <div class="box" style="position:relative">
-    <button class="xbtn" onclick="Net.closeProfile()">CHIUDI</button>
+    <button class="xbtn" onclick="Net.closeProfile()">CLOSE</button>
     <div id="pfBody"></div>
   </div>
 </div>
 
 <div id="toasts"></div>
 
-<div id="loading">SINCRONIZZAZIONE DELLA TORRETTA GUARDIAN…</div>
+<div id="loading">SYNCHRONIZING GUARDIAN TURRET…</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
@@ -817,16 +817,16 @@ const DIFF = {
 
 /* ---------- ondate: due campagne distinte ---------- */
 const WAVES_RIDGE = [
-  { title:'ONDATA 1', sub:'INTERCEPTOR DRONE IN RICOGNIZIONE', count:3, speed:150, aggro:.35, boss:false },
-  { title:'ONDATA 2', sub:'NEBULA FIGHTER IN PICCHIATA',       count:4, speed:172, aggro:.75, boss:false },
-  { title:'ONDATA 3', sub:'STORM HUNTER — SATURAZIONE',count:5, speed:196, aggro:1.0, boss:false },
-  { title:'ONDATA FINALE', sub:'LEVIATHAN CLASS DESTROYER',count:0, speed:250, aggro:1.0, boss:true  }
+  { title:'WAVE 1', sub:'INTERCEPTOR DRONES ON RECON', count:3, speed:150, aggro:.35, boss:false },
+  { title:'WAVE 2', sub:'NEBULA FIGHTERS DIVING',       count:4, speed:172, aggro:.75, boss:false },
+  { title:'WAVE 3', sub:'STORM HUNTERS — SATURATION',count:5, speed:196, aggro:1.0, boss:false },
+  { title:'FINAL WAVE', sub:'LEVIATHAN CLASS DESTROYER',count:0, speed:250, aggro:1.0, boss:true  }
 ];
 const WAVES_BASE = [
-  { title:'DISTACCO 1', sub:'SHUTTLE ALFA IN USCITA',  count:2, speed:165, aggro:.5, dep:1 },
-  { title:'DISTACCO 2', sub:'SHUTTLE BRAVO — DUE OSTILI', count:3, speed:182, aggro:.8, dep:1 },
-  { title:'DISTACCO 3', sub:'DUE SHUTTLE IN SEQUENZA',     count:4, speed:196, aggro:1.0, dep:2 },
-  { title:'ULTIMO DISTACCO', sub:'SCORTA CONTRO IL LEVIATHAN',      count:2, speed:200, aggro:1.0, dep:1, boss:true }
+  { title:'DEPARTURE 1', sub:'SHUTTLE ARK-1 OUTBOUND',  count:2, speed:165, aggro:.5, dep:1 },
+  { title:'DEPARTURE 2', sub:'SHUTTLE ARK-2 — TWO HOSTILES', count:3, speed:182, aggro:.8, dep:1 },
+  { title:'DEPARTURE 3', sub:'TWO SHUTTLES IN SEQUENCE',     count:4, speed:196, aggro:1.0, dep:2 },
+  { title:'FINAL DEPARTURE', sub:'ESCORT AGAINST THE LEVIATHAN',      count:2, speed:200, aggro:1.0, dep:1, boss:true }
 ];
 
 /* Il profilo del terreno è parametrico: la cresta è stretta e montuosa,
@@ -1665,12 +1665,12 @@ function bindInput(){
   });
 
   document.addEventListener('pointerlockchange', ()=>{
-    if(locked()){ mouse.mode = 'locked'; mouse.active = false; feed('MIRA LIBERA ATTIVA — ESC PER USCIRE'); }
+    if(locked()){ mouse.mode = 'locked'; mouse.active = false; feed('FREE AIM ACTIVE — ESC TO EXIT'); }
     else if(mouse.mode === 'locked'){ mouse.mode = 'auto'; }
   });
   document.addEventListener('pointerlockerror', ()=>{
     mouse.mode = 'cursor';
-    feed('MIRA A CURSORE: ALLONTANA IL PUNTATORE DAL CENTRO','#ffa33c');
+    feed('CURSOR AIM: MOVE THE POINTER AWAY FROM CENTRE','#ffa33c');
   });
   /* ---------- trascinamento per ruotare il lanciatore ----------
      Si segue un solo dito, identificato dal suo id, così l'altro pollice
@@ -1868,8 +1868,8 @@ function spawnDeparture(){
   };
   S.depTotal++;
   scene.add(f); friendlies.push(f);
-  feed('PARTENZA ' + f.userData.name + ' IN DISTACCO — PROTEGGILO', '#62e8ff');
-  alertMsg('SHUTTLE IN DISTACCO — NON LASCIARLO SOLO', 3);
+  feed('PARTENZA ' + f.userData.name + ' DEPARTING — PROTECT IT', '#62e8ff');
+  alertMsg('SHUTTLE DEPARTING — DO NOT LEAVE IT ALONE', 3);
   AU.beep(520,.25,.06,'sine');
 }
 
@@ -1881,7 +1881,7 @@ function updateFriendlies(dt){
       d.v = Math.min(86, d.v + 7*dt);
       f.position.x += d.v*dt;
       d.vel.set(d.v,0,0);
-      if(d.v > 72){ d.state = 'climb'; feed(d.name + ' STACCATO — IN SALITA','#62e8ff'); }
+      if(d.v > 72){ d.state = 'climb'; feed(d.name + ' AIRBORNE — CLIMBING','#62e8ff'); }
     } else if(d.state === 'climb'){
       d.v = Math.min(165, d.v + 4*dt);
       const c = Math.cos(.22), sn = Math.sin(.22);
@@ -1906,7 +1906,7 @@ function updateFriendlies(dt){
       }
       if(f.position.y > 460 || f.position.x > 1750){
         S.depSafe++; S.score += 1500;
-        feed(d.name + ' FUORI PORTATA — IN SALVO  +1500','#62e8ff');
+        feed(d.name + ' OUT OF RANGE — SAFE  +1500','#62e8ff');
         AU.beep(760,.3,.06,'sine');
         scene.remove(f); friendlies.splice(i,1); hud();
       }
@@ -1925,22 +1925,22 @@ function hurtFriendly(f, dmg, at){
     S.depLost++;
     S.score = Math.max(0, S.score - 800);
     feed(d.name + ' DISINTEGRATO', '#ff4d6d');
-    alertMsg('SHUTTLE PERDUTO', 3);
+    alertMsg('SHUTTLE LOST', 3);
     hud();
     if(S.depLost >= 3) endGame(false, 'friendly');
   } else {
-    feed(d.name + ' COLPITO — SCUDO REGGE', '#ffa33c');
+    feed(d.name + ' HIT — SHIELD HOLDING', '#ffa33c');
   }
 }
 
 /* --- Signal Scan: la lancia legge le firme, non le insegne --- */
 function interrogate(){
   if(!S || !S.running || S.paused) return;
-  if(!S.locked){ feed('SCAN: NESSUNA SIGNATURE DA IDENTIFICARE','#ffa33c'); AU.deny(); return; }
+  if(!S.locked){ feed('SCAN: NO SIGNATURE TO IDENTIFY','#ffa33c'); AU.deny(); return; }
   S.iffKnown = true;
   const amico = !!S.locked.userData.friendly;
   AU.beep(amico ? 900 : 420, .2, .06, 'sine');
-  feed(amico ? 'SCAN: SIGNATURE ALLEATA — NON SCARICARE' : 'SCAN: NESSUNA RISPOSTA — OSTILE',
+  feed(amico ? 'SCAN: FRIENDLY SIGNATURE — DO NOT FIRE' : 'SCAN: NO REPLY — HOSTILE',
        amico ? '#62e8ff' : '#ff4d6d');
 }
 
@@ -1965,7 +1965,7 @@ function loadScenario(name){
 
 
 /* =========================================================================
-   IDENTITÀ, PUNTEGGI E CLASSIFICA GLOBALE
+   IDENTITÀ, PUNTEGGI E GLOBAL LEADERBOARD
    -------------------------------------------------------------------------
    Per attivare la classifica condivisa basta compilare le due righe qui
    sotto con i dati del progetto Supabase (Impostazioni → API) e caricare
@@ -2001,9 +2001,9 @@ const Net = {
     this.uuid = id.uuid; this.name = id.name;
 
     document.getElementById('netNote').innerHTML = this.online
-      ? 'Classifica globale attiva. Il nominativo è univoco fra tutti i giocatori.'
-      : 'Nessun server configurato: i punteggi restano su questo dispositivo.<br>'+
-        'Per la classifica condivisa vedi <b>LEGGIMI-online.md</b>.';
+      ? 'Global leaderboard active. Callsigns are unique across all players.'
+      : 'No server configured: scores stay on this device.<br>'+
+        'For the shared leaderboard see <b>LEGGIMI-online.md</b>.';
 
     this.bindUI();
     if(this.name){ this.refreshMe(); this.paintBadge(); }
@@ -2036,7 +2036,7 @@ const Net = {
     const key = name.toLowerCase();
     const taken = Object.values(d.players).find(p => p.username.toLowerCase() === key && p.uuid !== this.uuid);
     if(taken) return { ok:false, error:'occupato', suggestion:name.slice(0,16) + Math.floor(100+Math.random()*900),
-                       message:'Nome già assegnato a un altro operatore.' };
+                       message:'Callsign already assigned to another Guardian.' };
     const prev = d.players[this.uuid] || { uuid:this.uuid, games:0, best_score:0, best_level:0,
                                            best_time:0, total_score:0, created_at:Date.now() };
     prev.username = name; prev.last_seen = Date.now();
@@ -2044,8 +2044,8 @@ const Net = {
     return { ok:true, username:name };
   },
   localSubmit(p){
-    if(p.duration < 25) return { ok:false, error:'rifiutato', message:'partita troppo breve' };
-    if(p.score > 3000 + p.duration*260) return { ok:false, error:'rifiutato', message:'punteggio implausibile' };
+    if(p.duration < 25) return { ok:false, error:'rifiutato', message:'run too short' };
+    if(p.score > 3000 + p.duration*260) return { ok:false, error:'rifiutato', message:'implausible score' };
     const d = this.db();
     const pl = d.players[this.uuid];
     if(!pl) return { ok:false, error:'ignoto' };
@@ -2108,7 +2108,7 @@ const Net = {
   async claim(name){
     if(this.online){
       try{ return await this.rpc('claim_name', { p_uuid:this.uuid, p_name:name }); }
-      catch(e){ this.toast('Server non raggiungibile: passo all\'archivio locale','bad');
+      catch(e){ this.toast('Server unreachable: falling back to local storage','bad');
                 this.online = false; }
     }
     return this.localClaim(name);
@@ -2119,7 +2119,7 @@ const Net = {
         p_uuid:this.uuid, p_name:this.name, p_score:p.score, p_level:p.level,
         p_duration:p.duration, p_scenario:p.scenario, p_difficulty:p.difficulty,
         p_version:p.version }); }
-      catch(e){ return { ok:false, error:'rete', message:'punteggio non inviato: server non raggiungibile' }; }
+      catch(e){ return { ok:false, error:'rete', message:'score not sent: server unreachable' }; }
     }
     return this.localSubmit(p);
   },
@@ -2143,7 +2143,7 @@ const Net = {
       const wasRank = this.lastRank;
       this.me = { best:p.best_score, games:p.games, rank:p.rank, average:p.average, level:p.best_level };
       if(wasRank !== null && p.rank > wasRank)
-        this.toast('Sei stato superato: ora sei <b>#' + p.rank + '</b> in classifica','bad');
+        this.toast('You were overtaken: now <b>#' + p.rank + '</b> on the board','bad');
       this.lastRank = p.rank;
       this.paintBadge();
     }
@@ -2179,10 +2179,10 @@ const Net = {
     }));
   },
   checkName(v){
-    if(v !== v.trim())            return 'Niente spazi all\'inizio o alla fine.';
-    if(v.length < 3)              return 'Almeno 3 caratteri.';
-    if(v.length > 20)             return 'Massimo 20 caratteri.';
-    if(!/^[A-Za-z0-9_]+$/.test(v))return 'Solo lettere, numeri e underscore.';
+    if(v !== v.trim())            return 'No leading or trailing spaces.';
+    if(v.length < 3)              return 'At least 3 characters.';
+    if(v.length > 20)             return '20 characters maximum.';
+    if(!/^[A-Za-z0-9_]+$/.test(v))return 'Letters, numbers and underscore only.';
     return null;
   },
   validate(){
@@ -2191,8 +2191,8 @@ const Net = {
     const go = document.getElementById('nameGo');
     const err = this.checkName(v);
     msg.className = err && v.length ? 'err' : '';
-    msg.textContent = v.length === 0 ? 'Da 3 a 20 caratteri: lettere, numeri e underscore.'
-                    : (err || 'Nominativo valido.');
+    msg.textContent = v.length === 0 ? '3 to 20 characters: letters, numbers and underscore.'
+                    : (err || 'Callsign available.');
     if(!err && v.length) msg.className = 'ok';
     go.disabled = !!err;
     return !err;
@@ -2202,21 +2202,21 @@ const Net = {
     const v = document.getElementById('nameInput').value.trim();
     const msg = document.getElementById('nameMsg');
     const go = document.getElementById('nameGo');
-    go.disabled = true; msg.className = ''; msg.textContent = 'Verifica del nominativo…';
+    go.disabled = true; msg.className = ''; msg.textContent = 'Checking callsign…';
     const r = await this.claim(v);
     if(r && r.ok){
       this.name = r.username; this.save({ uuid:this.uuid, name:this.name });
       document.getElementById('idscreen').classList.remove('on');
       this.paintBadge(); this.refreshMe();
-      this.toast('Guardian <b>' + this.name + '</b> accreditato','good');
+      this.toast('Guardian <b>' + this.name + '</b> authenticated','good');
       if(typeof AU !== 'undefined'){ AU.init(); AU.beep(900,.09,.05); }
     } else {
       msg.className = 'err';
       if(r && r.suggestion){
-        msg.innerHTML = (r.message || 'Nome non disponibile.') +
-          ' Proposta: <b>' + r.suggestion + '</b>' +
-          '<button onclick="Net.useSuggestion(\'' + r.suggestion + '\')">USA</button>';
-      } else msg.textContent = (r && r.message) || 'Nominativo non accettato.';
+        msg.innerHTML = (r.message || 'Callsign unavailable.') +
+          ' Suggested: <b>' + r.suggestion + '</b>' +
+          '<button onclick="Net.useSuggestion(\'' + r.suggestion + '\')">USE</button>';
+      } else msg.textContent = (r && r.message) || 'Callsign rejected.';
       go.disabled = false;
     }
   },
@@ -2247,7 +2247,7 @@ const Net = {
     document.getElementById('badgeSub').textContent = this.name
       ? ('record ' + this.me.best + (this.me.rank ? ' · #' + this.me.rank : '') +
          ' · ' + this.me.games + ' operazioni')
-      : 'non accreditato';
+      : 'not authenticated';
   },
 
   /* ───────────────── classifica ───────────────── */
@@ -2263,25 +2263,25 @@ const Net = {
   },
   async paintBoard(silent){
     const body = document.getElementById('lbBody');
-    const names = { all:'storica', day:'ultime 24 ore', week:'ultimi 7 giorni', month:'ultimi 30 giorni' };
-    const bn = { best:'miglior punteggio', time:'partita più lunga', games:'più partite giocate',
-                 levels:'più livelli completati' };
+    const names = { all:'all time', day:'last 24 hours', week:'last 7 days', month:'last 30 days' };
+    const bn = { best:'best score', time:'longest run', games:'most games played',
+                 levels:'most waves cleared' };
     document.getElementById('lbMode').textContent =
-      (this.online ? 'CLASSIFICA CONDIVISA' : 'ARCHIVIO LOCALE — non condiviso') +
+      (this.online ? 'CLASSIFICA CONDIVISA' : 'LOCAL STORAGE — not shared') +
       ' · ' + names[this.lb.period] + ' · ' + bn[this.lb.board];
-    if(!silent) body.innerHTML = '<div class="lbEmpty">Interrogazione in corso…</div>';
+    if(!silent) body.innerHTML = '<div class="lbEmpty">Querying…</div>';
 
     const rows = await this.board(this.lb.period, this.lb.board, this.lb.limit);
-    if(!rows){ body.innerHTML = '<div class="lbEmpty">Classifica non raggiungibile.</div>'; return; }
+    if(!rows){ body.innerHTML = '<div class="lbEmpty">Leaderboard unreachable.</div>'; return; }
     if(!rows.length){
-      body.innerHTML = '<div class="lbEmpty">Nessun punteggio in questo periodo.<br>'+
-                       'La prima partita che concludi apre la classifica.</div>';
+      body.innerHTML = '<div class="lbEmpty">No scores in this period.<br>'+
+                       'The first run you finish opens the board.</div>';
       document.getElementById('lbStats').textContent = '';
       return;
     }
     const fmtT = s => Math.floor(s/60) + ':' + String(s%60).padStart(2,'0');
-    let h = '<table class="lbTable"><thead><tr><th>POS</th><th>GUARDIAN</th>'+
-            '<th>MIGLIOR PUNTEGGIO</th><th class="lv">ONDATA</th><th>OPERAZIONI</th><th class="lv">TEMPO</th>'+
+    let h = '<table class="lbTable"><thead><tr><th>RANK</th><th>GUARDIAN</th>'+
+            '<th>BEST SCORE</th><th class="lv">WAVE</th><th>RUNS</th><th class="lv">TIME</th>'+
             '</tr></thead><tbody>';
     for(const r of rows){
       const me = this.name && r.username.toLowerCase() === this.name.toLowerCase();
@@ -2289,7 +2289,7 @@ const Net = {
            '<td class="num">' + String(r.rank).padStart(2,'0') + '</td>' +
            '<td><a class="who" onclick="Net.openProfile(\'' + r.username.replace(/'/g,"") + '\')">' +
              r.username + '</a></td>' +
-           '<td class="sc">' + r.score.toLocaleString('it-IT') + '</td>' +
+           '<td class="sc">' + r.score.toLocaleString('en-US') + '</td>' +
            '<td class="lv">' + r.level + '</td>' +
            '<td>' + r.games + '</td>' +
            '<td class="lv">' + fmtT(r.duration_s || 0) + '</td></tr>';
@@ -2299,10 +2299,10 @@ const Net = {
 
     const mine = rows.find(r => this.name && r.username.toLowerCase() === this.name.toLowerCase());
     document.getElementById('lbStats').textContent = mine
-      ? ('la tua posizione: #' + mine.rank + ' su ' + rows.length + ' in elenco')
-      : (this.name ? 'non sei ancora in questa classifica' : '');
+      ? ('your position: #' + mine.rank + ' of ' + rows.length + ' listed')
+      : (this.name ? 'you are not on this board yet' : '');
     document.getElementById('lbLive').textContent = this.online
-      ? 'aggiornamento automatico ogni 12 secondi' : 'archivio locale';
+      ? 'auto refresh every 12 seconds' : 'local storage';
   },
 
   /* ───────────────── scheda giocatore ───────────────── */
@@ -2312,9 +2312,9 @@ const Net = {
     const el = document.getElementById('profile');
     const body = document.getElementById('pfBody');
     el.classList.add('on');
-    body.innerHTML = '<div class="lbEmpty">Caricamento scheda…</div>';
+    body.innerHTML = '<div class="lbEmpty">Loading record…</div>';
     const p = await this.profile(who);
-    if(!p || !p.ok){ body.innerHTML = '<div class="lbEmpty">Nessuna scheda per questo operatore.</div>'; return; }
+    if(!p || !p.ok){ body.innerHTML = '<div class="lbEmpty">No record for this Guardian.</div>'; return; }
     const fmtT = s => Math.floor(s/60) + ':' + String(s%60).padStart(2,'0');
     const d = p.last_game ? new Date(p.last_game.at) : null;
     const tr = p.trend;
@@ -2323,24 +2323,24 @@ const Net = {
       '<div><b>' + p.username + '</b><span>POSIZIONE GLOBALE #' + p.rank +
       ' · ' + p.games + ' PARTITE</span></div></div>' +
       '<div class="pfGrid">' +
-        '<div><span>RECORD PERSONALE</span><b>' + p.best_score.toLocaleString('it-IT') + '</b></div>' +
-        '<div><span>MEDIA PUNTEGGI</span><b>' + Number(p.average).toLocaleString('it-IT') + '</b></div>' +
-        '<div><span>ONDATA MASSIMA</span><b>' + p.best_level + '</b></div>' +
-        '<div><span>PARTITA PIÙ LUNGA</span><b>' + fmtT(p.best_time || 0) + '</b></div>' +
-        '<div><span>MIGLIORAMENTO</span><b class="' + (tr > 0 ? 'up' : tr < 0 ? 'down' : '') + '">' +
+        '<div><span>PERSONAL BEST</span><b>' + p.best_score.toLocaleString('en-US') + '</b></div>' +
+        '<div><span>AVERAGE SCORE</span><b>' + Number(p.average).toLocaleString('en-US') + '</b></div>' +
+        '<div><span>HIGHEST WAVE</span><b>' + p.best_level + '</b></div>' +
+        '<div><span>LONGEST RUN</span><b>' + fmtT(p.best_time || 0) + '</b></div>' +
+        '<div><span>IMPROVEMENT</span><b class="' + (tr > 0 ? 'up' : tr < 0 ? 'down' : '') + '">' +
           (tr === null || tr === undefined ? '—' : (tr > 0 ? '+' : '') + tr + '%') + '</b></div>' +
-        '<div><span>ULTIMA OPERAZIONE</span><b style="font-size:14px">' +
-          (d ? d.toLocaleDateString('it-IT') + ' ' + d.toLocaleTimeString('it-IT').slice(0,5) : '—') +
+        '<div><span>LAST RUN</span><b style="font-size:14px">' +
+          (d ? d.toLocaleDateString('en-GB') + ' ' + d.toLocaleTimeString('en-GB').slice(0,5) : '—') +
         '</b></div>' +
       '</div>' +
       (p.last_game ? '<div style="margin-top:12px;font-size:11px;color:var(--dim);letter-spacing:.1em">' +
-        'ULTIMO ESITO: ' + p.last_game.score.toLocaleString('it-IT') + ' punti · ondata ' +
+        'LAST RESULT: ' + p.last_game.score.toLocaleString('en-US') + ' points · wave ' +
         p.last_game.level + ' · ' + fmtT(p.last_game.duration_s) + ' · ' +
         (p.last_game.scenario === 'airbase' ? 'ORBITAL GATEWAY' : 'CLOUD CITADEL') +
-        ' · ' + (p.last_game.difficulty === 'hard' ? 'OPERATIVO' : 'ADDESTRAMENTO') + '</div>' : '') +
+        ' · ' + (p.last_game.difficulty === 'hard' ? 'COMBAT' : 'TRAINING') + '</div>' : '') +
       (tr !== null && tr !== undefined
         ? '<div style="margin-top:8px;font-size:10.5px;color:rgba(186,220,255,.42);line-height:1.7">' +
-          'Il miglioramento confronta la media delle ultime cinque partite con quella delle cinque precedenti.</div>'
+          'Improvement compares the average of the last five runs with the five before them.</div>'
         : '');
   },
   closeProfile(){ document.getElementById('profile').classList.remove('on'); },
@@ -2370,18 +2370,18 @@ const Net = {
     const payload = { score:S.score, level:Math.max(1, Math.min(4, S.wave + 1)),
                       duration:dur, scenario:S.scen, difficulty:S.level, version:GAME_VER };
     const box = document.getElementById('overNet');
-    box.innerHTML = '<span class="k">Invio del punteggio in corso…</span>';
+    box.innerHTML = '<span class="k">Submitting score…</span>';
 
     if(dur < 25){
-      box.innerHTML = '<span class="big">' + S.score.toLocaleString('it-IT') + '</span>' +
-        '<span class="k">Partita troppo breve per essere registrata in classifica.</span>';
+      box.innerHTML = '<span class="big">' + S.score.toLocaleString('en-US') + '</span>' +
+        '<span class="k">Run too short to be recorded on the leaderboard.</span>';
       return;
     }
     const r = await this.submit(payload);
     if(!r || !r.ok){
-      box.innerHTML = '<span class="big">' + S.score.toLocaleString('it-IT') + '</span>' +
-        '<span class="k">Punteggio non registrato: ' +
-        ((r && r.message) || 'errore di rete') + '</span>';
+      box.innerHTML = '<span class="big">' + S.score.toLocaleString('en-US') + '</span>' +
+        '<span class="k">Score not recorded: ' +
+        ((r && r.message) || 'network error') + '</span>';
       return;
     }
     this.me = { best:r.best, games:r.games, rank:r.rank, average:r.average, level:payload.level };
@@ -2390,33 +2390,33 @@ const Net = {
     this.pending = { score:S.score, rank:r.rank, level:payload.level };
 
     box.innerHTML =
-      '<span class="big">' + S.score.toLocaleString('it-IT') + '</span>' +
-      (r.record ? '<span class="rec">NUOVO RECORD PERSONALE</span><br>' : '') +
+      '<span class="big">' + S.score.toLocaleString('en-US') + '</span>' +
+      (r.record ? '<span class="rec">NEW PERSONAL BEST</span><br>' : '') +
       '<span class="k">POSIZIONE GLOBALE</span> <span class="v">#' + r.rank + '</span><br>' +
-      '<span class="k">RECORD PERSONALE</span> <span class="v">' + r.best.toLocaleString('it-IT') + '</span><br>' +
+      '<span class="k">PERSONAL BEST</span> <span class="v">' + r.best.toLocaleString('en-US') + '</span><br>' +
       '<span class="k">MEDIA SU ' + r.games + ' PARTITE</span> <span class="v">' +
-        Number(r.average).toLocaleString('it-IT') + '</span><br>' +
+        Number(r.average).toLocaleString('en-US') + '</span><br>' +
       (r.above_name
-        ? '<span class="k">DA SUPERARE</span> <span class="v">' + r.above_name +
-          '</span> <span class="k">a</span> <span class="v">+' +
-          Number(r.above_gap).toLocaleString('it-IT') + '</span>'
-        : '<span class="k">SEI IN TESTA ALLA CLASSIFICA</span>');
+        ? '<span class="k">TO BEAT</span> <span class="v">' + r.above_name +
+          '</span> <span class="k">by</span> <span class="v">+' +
+          Number(r.above_gap).toLocaleString('en-US') + '</span>'
+        : '<span class="k">YOU LEAD THE BOARD</span>');
 
-    if(r.record) this.toast('Nuovo record personale: <b>' + S.score.toLocaleString('it-IT') + '</b>','good');
-    if(r.rank <= 10) this.toast('Sei entrato nella <b>TOP 10</b> — posizione #' + r.rank,'good');
+    if(r.record) this.toast('New personal best: <b>' + S.score.toLocaleString('en-US') + '</b>','good');
+    if(r.rank <= 10) this.toast('You entered the <b>TOP 10</b> — rank #' + r.rank,'good');
   },
 
   share(){
     const p = this.pending || { score:(S ? S.score : 0), rank:this.me.rank, level:this.me.level };
     const txt = 'SKY FORTRESS — ' + (this.name || 'guardian') + ': ' +
-      p.score.toLocaleString('it-IT') + ' punti, ondata ' + p.level +
-      (p.rank ? ', posizione #' + p.rank + ' in classifica' : '') + '.';
+      p.score.toLocaleString('en-US') + ' points, wave ' + p.level +
+      (p.rank ? ', rank #' + p.rank + ' on the board' : '') + '.';
     if(navigator.share) navigator.share({ title:'Sky Fortress', text:txt, url:location.href })
                                 .catch(()=>{});
     else if(navigator.clipboard) navigator.clipboard.writeText(txt + ' ' + location.href)
-      .then(()=>this.toast('Risultato copiato negli appunti','good'))
-      .catch(()=>this.toast('Copia non riuscita','bad'));
-    else this.toast('Condivisione non disponibile su questo browser','bad');
+      .then(()=>this.toast('Result copied to clipboard','good'))
+      .catch(()=>this.toast('Copy failed','bad'));
+    else this.toast('Sharing not available in this browser','bad');
   },
 
   toast(html, kind){
@@ -2437,46 +2437,45 @@ const Net = {
    ========================================================================= */
 const AO = {
   ridge:{ code:'CITADEL', name:'CLOUD CITADEL', x:-.34, y:-.30,
-    brief:`<p><b>CLOUD CITADEL — CICLO 04:50.</b> Sotto la torretta non c'è terra: solo
-           l'oceano di nubi che avvolge AETHER-9 e le isole sospese che segnano il confine
-           del settore. Le batterie orbitali della Sky Fortress sono state spente in tre
-           minuti, nel ciclo precedente. Lo scanner a lungo raggio non risponde più.</p>
-           <p>All'alba stellare emergeranno: prima gli <b>Interceptor Drone</b>, a sciami,
-           convinti di trovare un cielo scoperto. Poi un <b>Leviathan Class Destroyer</b>,
-           che occulta la propria firma e semina Quantum Decoy capaci di deviare una
-           Photon Lance a mezza traiettoria.</p>
-           <p class="pull">Hai trentotto secondi di stabilità del nucleo per ogni carica.
-           Usali bene.</p>` },
+    brief:`<p><b>CLOUD CITADEL — CYCLE 04:50.</b> There is no ground beneath the turret:
+           only the cloud ocean that wraps AETHER-9, and the drifting isles that mark the
+           edge of the sector. The Sky Fortress orbital batteries went dark in three
+           minutes, one cycle ago. Long-range scan no longer answers.</p>
+           <p>At stellar dawn they will surface: first the <b>Interceptor Drones</b>, in
+           swarms, expecting an empty sky. Then a <b>Leviathan Class Destroyer</b>, masking
+           its own signature and seeding Quantum Decoys that can pull a Photon Lance off
+           course in mid-flight.</p>
+           <p class="pull">You get thirty-eight seconds of core stability per charge.
+           Spend them well.</p>` },
   airbase:{ code:'GATEWAY', name:'ORBITAL GATEWAY', x:.38, y:.26,
-    brief:`<p><b>ORBITAL GATEWAY — CICLO 05:40.</b> Le culle sono cariche: cinque shuttle
-           di classe Ark devono portare fuori i civili e l'ultima squadra rimasta sul
-           bordo del settore.</p>
-           <p>Uno shuttle in distacco è la preda più facile dell'universo conosciuto:
-           agganciato alla rampa, lento, senza scudo attivo. Ventinove secondi in cui non
-           può fare nulla per difendersi. THE NULL lo sa, e <b>non viene per te</b>.</p>
-           <p class="pull">La tua lancia legge le firme energetiche, non le insegne: solo
-           il Signal Scan distingue un alleato da un ostile.</p>` }
+    brief:`<p><b>ORBITAL GATEWAY — CYCLE 05:40.</b> The cradles are loaded: five Ark-class
+           shuttles must carry out the civilians and the last squad left on the sector rim.</p>
+           <p>A shuttle on departure is the easiest prey in known space: clamped to the rail,
+           slow, shields down. Twenty-nine seconds in which it can do nothing to defend
+           itself. THE NULL knows this, and <b>it is not coming for you</b>.</p>
+           <p class="pull">Your lance reads energy signatures, not markings: only the Signal
+           Scan tells an ally from a hostile.</p>` }
 };
 let selAO = 'ridge';
 let tacCv, tacX, tacHit = [], tacT = 0, conT = 0, msgT = 3, booted = false, tacSkip = 0;
 
 const MSGS = [
-  ['c','AEGIS: sincronizzazione dello strato completata'],
-  ['t','RICOGNIZIONE: attività NULL oltre il Nebula Rim'],
-  ['a','ALLERTA: firme multiple in emersione a spinward'],
-  ['t','LOGISTICA: 23 Photon Lance sintetizzate in torretta'],
-  ['c','SIGNAL SCAN: firme alleate del ciclo caricate'],
-  ['r','SETTORE 4: batteria orbitale non risponde'],
-  ['t','STRATO: correnti 060, tempeste ioniche in calo'],
-  ['a','DIRETTIVA: mantenere la cortina fino a nuovo ordine'],
-  ['c','GATEWAY: shuttle carichi, in attesa di finestra'],
-  ['t','ARCHE: 40 civili pronti al distacco'],
-  ['r','SIGINT: eco dimensionali del NULL in avvicinamento'],
-  ['c','TORRETTA GUARDIAN: pilota in linea'],
-  ['r','THE NULL: nessuna risposta ai protocolli di contatto'],
-  ['a','ARCHIVIO: la civiltà artificiale non negozia, converte'],
-  ['t','CRISTALLI: giacimento del settore stabile al 91%'],
-  ['c','PORTALE 3: firma dimensionale in decadimento']
+  ['c','AEGIS: layer synchronization complete'],
+  ['t','RECON: NULL activity beyond the Nebula Rim'],
+  ['a','ALERT: multiple signatures surfacing spinward'],
+  ['t','LOGISTICS: 23 Photon Lance synthesized in turret'],
+  ['c','SIGNAL SCAN: friendly keys for this cycle loaded'],
+  ['r','SECTOR 4: orbital battery not responding'],
+  ['t','LAYER: currents 060, ion storms easing'],
+  ['a','ORDER: hold the curtain until further notice'],
+  ['c','GATEWAY: shuttles loaded, awaiting window'],
+  ['t','ARKS: 40 civilians ready for departure'],
+  ['r','SIGINT: NULL dimensional echoes inbound'],
+  ['c','GUARDIAN TURRET: pilota in linea'],
+  ['r','THE NULL: no reply to contact protocols'],
+  ['a','ARCHIVE: the artificial civilization does not negotiate, it converts'],
+  ['t','CRYSTALS: sector deposit stable at 91%'],
+  ['c','GATE 3: dimensional signature decaying']
 ];
 
 function conClock(){
@@ -2507,8 +2506,8 @@ function selectAO(key){
   document.getElementById('brief').innerHTML = AO[key].brief;
   const h = document.getElementById('fHint');
   if(h) h.innerHTML = key === 'airbase'
-    ? 'Settore con shuttle alleati: <b>Q</b> identifica la firma prima di scaricare'
-    : 'FRECCE o MOUSE mira · <b>E</b> cella · <b>C</b> rilascio · <b>SPAZIO</b> scarica';
+    ? 'Sector with allied shuttles: <b>Q</b> identifies the signature before you fire'
+    : 'ARROWS or MOUSE aim · <b>E</b> cell · <b>C</b> release · <b>SPACE</b> fire';
 }
 function launchMission(level){ startGame(level, selAO); }
 
@@ -2582,7 +2581,7 @@ function drawTac(dt){
     if(on){
       tacX.font = '8.5px "Share Tech Mono",monospace';
       tacX.fillStyle = 'rgba(255,163,60,.85)';
-      tacX.fillText('SELEZIONATA', x, y+50);
+      tacX.fillText('SELECTED', x, y+50);
     }
   }
   tacX.fillStyle = 'rgba(98,232,255,.9)';
@@ -2599,16 +2598,16 @@ function tacClick(ev){
 
 /* --- sequenza di avvio --- */
 const BOOTLINES = [
-  'AVVIO NUCLEO AEGIS ....................... OK',
-  'ACCREDITAMENTO GUARDIAN .................. CONCESSO',
-  'TACTICAL SCANNER ......................... SINCRONIZZATO',
-  'SIGNAL SCAN MODO 4 ....................... FIRME CARICATE',
-  'AEGIS DATALINK ........................... AGGANCIATO',
-  'SINTESI PHOTON LANCE ..................... 23 CARICHE',
-  'BATTERIE ORBITALI ........................ OFFLINE',
-  'MAPPATURA DELLO STRATO ................... OK',
+  'AEGIS CORE BOOT .......................... OK',
+  'GUARDIAN CREDENTIALS ..................... GRANTED',
+  'TACTICAL SCANNER ......................... SYNCED',
+  'SIGNAL SCAN MODE 4 ....................... KEYS LOADED',
+  'AEGIS DATALINK ........................... LOCKED',
+  'PHOTON LANCE SYNTHESIS ................... 23 CHARGES',
+  'ORBITAL BATTERIES ........................ OFFLINE',
+  'LAYER MAPPING ............................ OK',
   '',
-  'PONTE DI COMANDO PRONTO — SELEZIONARE IL SETTORE'
+  'COMMAND DECK READY — SELECT A SECTOR'
 ];
 function runBoot(){
   const box = document.getElementById('bootlog');
@@ -2729,8 +2728,8 @@ function startGame(level, scen){
   document.body.classList.toggle('base', SCN === 'airbase');
   boss = null;
   document.getElementById('bossbar').style.display = 'none';
-  banner('GUARDIAN IN POSTAZIONE','CLOUD CITADEL — AUTORIZZATO A SCARICARE');
-  feed('MIRA: FRECCE O MOUSE — CLIC O SPAZIO PER SCARICARE');
+  banner('GUARDIAN ON STATION','CLOUD CITADEL — CLEARED TO FIRE');
+  feed('AIM: ARROWS OR MOUSE — CLICK OR SPACE TO FIRE');
   hud();
 }
 
@@ -2774,7 +2773,7 @@ function goHome(){
   const bx = document.getElementById('msgs');
   if(bx){
     const el = document.createElement('div');
-    el.innerHTML = '<span class="a">GUARDIAN RIENTRATO AL PONTE — OPERAZIONE INTERROTTA</span>';
+    el.innerHTML = '<span class="a">GUARDIAN RETURNED TO DECK — OPERATION ABORTED</span>';
     bx.insertBefore(el, bx.firstChild);
   }
   startAttract();
@@ -2794,19 +2793,19 @@ function endGame(win, reason){
   const base = S.scen === 'airbase';
   let title, desc;
   if(win){
-    title = base ? 'EVACUAZIONE COMPLETATA' : 'SETTORE BONIFICATO';
+    title = base ? 'EVACUAZIONE COMPLETATA' : 'SECTOR CLEARED';
     desc  = base
-      ? 'Tutti gli shuttle previsti hanno lasciato il Gateway: ' + S.depSafe + ' scafi in salvo'
-        + (S.depLost ? ', ' + S.depLost + ' perduti.' : ', nessuna perdita.')
-      : "Il Leviathan si è disintegrato oltre lo strato di nubi. Nessuna signature ostile resta nel settore: la torretta ha tenuto.";
+      ? 'Every scheduled shuttle has left the Gateway: ' + S.depSafe + ' hulls safe'
+        + (S.depLost ? ', ' + S.depLost + ' lost.' : ', no losses.')
+      : "The Leviathan broke apart beyond the cloud layer. No hostile signature remains in the sector: the turret held.";
   } else if(reason === 'friendly'){
-    title = 'EVACUAZIONE INTERROTTA';
-    desc  = 'Tre shuttle sono stati disintegrati durante il distacco. Il Gateway ha sospeso le uscite.';
+    title = 'EVACUATION FAILED';
+    desc  = 'Three shuttles were destroyed on departure. The Gateway has suspended all launches.';
   } else {
-    title = 'TORRETTA DISTRUTTA';
+    title = 'TURRET DESTROYED';
     desc  = base
-      ? 'La torretta è stata disintegrata: il Gateway resta senza copertura.'
-      : 'La torretta è stata disintegrata. Cloud Citadel è aperta alle squadre di THE NULL.';
+      ? 'The turret has been destroyed: the Gateway is left without cover.'
+      : 'The turret has been destroyed. Cloud Citadel lies open to the squadrons of THE NULL.';
   }
   document.getElementById('overtitle').textContent = title;
   document.getElementById('overtitle').style.color = win ? '#cfe6ff' : '#ff4d6d';
@@ -2848,7 +2847,7 @@ function nextWave(){
   banner(w.title, w.sub);
   S.ammo = cfg.ammo; S.loaded = true; S.reload = 0;
   S.bcu = 'none'; S.coolant = 0; S.uncaged = false; S.lockT = 0;
-  alertMsg('PREMI [E] PER INNESTARE LA ENERGY CELL', 3);
+  alertMsg('PRESS [E] TO SEAT THE ENERGY CELL', 3);
   S.waveActive = true;
   if(w.boss){ spawnBoss(); }
   if(w.count){ S.spawnQueue = w.count; S.spawnTimer = w.dep ? 5 : 0; }
@@ -2889,7 +2888,7 @@ function spawnBoss(){
   setTimeout(()=>bi.classList.remove('on'), 4200);
   AU.beep(70,1.8,.16,'sawtooth');
   AU.burst(.5,300,2.2,'lowpass');
-  alertMsg('SEGNATURA OCCULTATA — RILASCIA DECOY, ATTENDI CHE SVANISCANO', 5);
+  alertMsg('SIGNATURE MASKED — IT SEEDS DECOYS, WAIT FOR THEM TO FADE', 5);
 }
 
 /* =========================================================================
@@ -2900,12 +2899,12 @@ function spawnBoss(){
    raffredda il cercatore a infrarossi: senza, il missile non parte.          */
 function activateBCU(){
   if(!S || !S.running || S.paused) return;
-  if(S.bcu === 'cooling'){ feed('STABILIZZAZIONE GIÀ IN CORSO'); return; }
-  if(S.bcu === 'ready'){ feed('NUCLEO STABILE — ANCORA '+Math.ceil(S.coolant)+' s'); return; }
-  if(!S.loaded){ feed('ATTENDI LA RIGENERAZIONE DELLA LANCIA','#ffa33c'); AU.deny(); return; }
-  if(S.ammo <= 0){ feed('NESSUNA ENERGY CELL DISPONIBILE','#ffa33c'); AU.deny(); return; }
+  if(S.bcu === 'cooling'){ feed('ALREADY STABILIZING'); return; }
+  if(S.bcu === 'ready'){ feed('CORE STABLE — '+Math.ceil(S.coolant)+' s'); return; }
+  if(!S.loaded){ feed('WAIT FOR THE LANCE TO REGENERATE','#ffa33c'); AU.deny(); return; }
+  if(S.ammo <= 0){ feed('NO ENERGY CELL AVAILABLE','#ffa33c'); AU.deny(); return; }
   S.bcu = 'cooling'; S.coolT = cfg.bcuCool;
-  AU.argon(); feed('ENERGY CELL INNESTATA — STABILIZZAZIONE NUCLEO');
+  AU.argon(); feed('ENERGY CELL SEATED — CORE STABILIZING');
 }
 
 /* --- FASE 5a — sblocco del cercatore (uncage) ------------------------------
@@ -2913,15 +2912,15 @@ function activateBCU(){
    insegue il bersaglio da solo e libera il consenso al lancio.               */
 function uncage(){
   if(!S || !S.running || S.paused) return;
-  if(S.uncaged){ feed('LANCIA GIÀ RILASCIATA — SCARICA [SPAZIO]'); return; }
-  if(S.bcu !== 'ready'){ feed('RILASCIO NEGATO: NUCLEO NON ALIMENTATO [E]','#ff4d6d'); AU.deny(); return; }
-  if(S.lockT < 1){ feed('RILASCIO NEGATO: NESSUN ENERGY LOCK','#ff4d6d'); AU.deny(); return; }
+  if(S.uncaged){ feed('LANCE ALREADY RELEASED — FIRE [SPACE]'); return; }
+  if(S.bcu !== 'ready'){ feed('RELEASE DENIED: CORE UNPOWERED [E]','#ff4d6d'); AU.deny(); return; }
+  if(S.lockT < 1){ feed('RELEASE DENIED: NO ENERGY LOCK','#ff4d6d'); AU.deny(); return; }
   if(S.locked.userData.friendly && S.iffKnown){
-    feed('RILASCIO INIBITO: SIGNATURE ALLEATA','#62e8ff'); AU.deny();
-    alertMsg('SIGNATURE ALLEATA — NON PUOI INGAGGIARLA', 2); return;
+    feed('RELEASE INHIBITED: FRIENDLY SIGNATURE','#62e8ff'); AU.deny();
+    alertMsg('FRIENDLY SIGNATURE — YOU CANNOT ENGAGE IT', 2); return;
   }
   S.uncaged = true; S.uncageT = cfg.uncageWin;
-  AU.beep(1650,.14,.07); feed('LANCIA RILASCIATA — CENTRA IL VETTORE','#ffa33c');
+  AU.beep(1650,.14,.07); feed('LANCE RELEASED — CENTRE THE VECTOR','#ffa33c');
 }
 
 /* --- FASE 4 — punto di lancio: anticipo + superelevazione ------------------ */
@@ -2940,22 +2939,22 @@ function computeLead(t){
 /* --- FASE 5b — grilletto di lancio ---------------------------------------- */
 function fire(){
   if(!S || !S.running || S.paused) return;
-  if(S.crouch > .5){ feed('NON PUOI SCARICARE CON IL DEFLETTORE ALZATO','#ffa33c'); AU.deny(); return; }
+  if(S.crouch > .5){ feed('CANNOT FIRE WITH THE DEFLECTOR UP','#ffa33c'); AU.deny(); return; }
   if(!S.loaded) return;
-  if(S.ammo <= 0){ feed('CELLE ESAURITE — SINTESI IN CORSO','#ffa33c'); return; }
+  if(S.ammo <= 0){ feed('CELLS DEPLETED — SYNTHESIS UNDER WAY','#ffa33c'); return; }
   if(S.bcu !== 'ready'){
-    feed('NUCLEO NON ALIMENTATO — INNESTA LA ENERGY CELL [E]','#ff4d6d'); AU.deny();
-    alertMsg('PREMI [E]: INNESTA LA ENERGY CELL', 2); return;
+    feed('CORE UNPOWERED — SEAT THE ENERGY CELL [E]','#ff4d6d'); AU.deny();
+    alertMsg('PRESS [E]: SEAT THE ENERGY CELL', 2); return;
   }
 
   const guided = (S.lockT >= 1 && S.uncaged);
   if(!guided && !cfg.strict){
-    feed('CONSENSO MANCANTE — RILASCIA LA LANCIA [C]','#ff4d6d'); AU.deny();
-    alertMsg('PREMI [C]: RILASCIA LA LANCIA PRIMA DI SCARICARE', 2); return;
+    feed('NO CONSENT — RELEASE THE LANCE [C]','#ff4d6d'); AU.deny();
+    alertMsg('PRESS [C]: RELEASE THE LANCE BEFORE FIRING', 2); return;
   }
-  if(!guided) feed('SCARICA SENZA CONSENSO — PHOTON LANCE NON GUIDATA','#ffa33c');
-  else if(S.leadErr < cfg.leadTol) feed('VETTORE DI SCARICA OTTIMALE','#cfe6ff');
-  else if(S.leadErr > cfg.leadTol*3) feed('VETTORE IMPRECISO — TRAIETTORIA LUNGA','#ffa33c');
+  if(!guided) feed('FIRED WITHOUT CONSENT — PHOTON LANCE UNGUIDED','#ffa33c');
+  else if(S.leadErr < cfg.leadTol) feed('OPTIMAL FIRING VECTOR','#cfe6ff');
+  else if(S.leadErr > cfg.leadTol*3) feed('POOR VECTOR — LONG TRAJECTORY','#ffa33c');
 
   // il missile lascia il tubo lungo l'asse di puntamento, non verso il bersaglio
   const dir = new V3(); camera.getWorldDirection(dir);
@@ -3009,7 +3008,7 @@ function updateMissiles(dt){
         for(const f of flares){
           if(f.position.distanceTo(m.position) < 220 && Math.random() < cfg.decoy*dt*3){
             d.target = f; d.decoyed = true;
-            feed('PHOTON LANCE DEVIATA DA QUANTUM DECOY','#ffa33c'); break;
+            feed('PHOTON LANCE PULLED BY QUANTUM DECOY','#ffa33c'); break;
           }
         }
       }
@@ -3020,7 +3019,7 @@ function updateMissiles(dt){
       // limite di campo del cercatore: oltre il gimbal il bersaglio esce e il missile va balistico
       if(axis.angleTo(los) > cfg.gimbal){
         d.target = null;
-        feed('SIGNATURE FUORI DAL CAMPO DELLA LANCIA','#ffa33c');
+        feed('SIGNATURE OUTSIDE LANCE FIELD','#ffa33c');
       } else {
         // rotta di collisione: punta dove sarà il bersaglio, non dove si trova
         const tv  = d.target.userData.vel || new V3();
@@ -3069,7 +3068,7 @@ function updateMissiles(dt){
     if(!hit) for(const f of friendlies){
       if(f.userData.state !== 'falling' && nearSeg(f.position) < cfg.hitRadius*1.2){
         explode(m.position, 1.2); hit = true;
-        feed('SCARICA SU ALLEATO: ' + f.userData.name, '#ff4d6d');
+        feed('FRIENDLY FIRE ON ' + f.userData.name, '#ff4d6d');
         S.score = Math.max(0, S.score - 1500);
         hurtFriendly(f, 3, null);
         break;
@@ -3095,7 +3094,7 @@ function damageJet(t, at){
     document.getElementById('bossfill').style.width = (d.hp/d.maxHp*100)+'%';
     S.score += 400;
     if(d.hp <= 0){ killJet(t, true); }
-    else { feed('SCARICA A SEGNO SUL LEVIATHAN — SCUDO '+Math.round(d.hp/d.maxHp*100)+'%','#ffa33c'); }
+    else { feed('HIT ON THE LEVIATHAN — SHIELD '+Math.round(d.hp/d.maxHp*100)+'%','#ffa33c'); }
   } else {
     killJet(t, false);
   }
@@ -3109,13 +3108,13 @@ function killJet(t, isBoss){
   if(isBoss){
     boss = null;
     document.getElementById('bossbar').style.display = 'none';
-    feed('LEVIATHAN NEUTRALIZZATO','#cfe6ff');
+    feed('LEVIATHAN NEUTRALIZED','#cfe6ff');
     // caduta spettacolare
     const d = t.userData; d.dying = 1;
     fx.push({m:t, type:'crash', life:0, max:4.5, vel:d.vel.clone().multiplyScalar(.55), spin:new V3(2.2,.6,3.4)});
     for(let k=0;k<3;k++) explode(t.position.clone().add(new V3((Math.random()-.5)*12,(Math.random()-.5)*8,(Math.random()-.5)*12)), 1.2);
   } else {
-    feed(NULLNAMES[Math.floor(Math.random()*NULLNAMES.length)] + ' DISINTEGRATO +700');
+    feed(NULLNAMES[Math.floor(Math.random()*NULLNAMES.length)] + ' DESTROYED +700');
     scene.remove(t);
   }
   hud();
@@ -3179,7 +3178,7 @@ function updateJets(dt){
       const targeted = (S.locked === j && S.lockT >= 1) || missiles.some(m=>m.userData.target === j);
       if(d.flareCool <= 0 && (targeted || Math.random() < dt*.25)){
         deployFlares(j); d.flareCool = 7.5; d.flaring = 3.4;
-        alertMsg('QUANTUM DECOY ATTIVI — NON SCARICARE ADESSO', 2.4);
+        alertMsg('QUANTUM DECOYS ACTIVE — DO NOT FIRE NOW', 2.4);
       }
     }
 
@@ -3236,7 +3235,7 @@ function dropBomb(j){
   b.position.copy(j.position);
   b.userData = {vel:j.userData.vel.clone().multiplyScalar(.6)};
   scene.add(b); bombs.push(b);
-  alertMsg('CARICA AL PLASMA IN CADUTA — SHIFT PER IL DEFLETTORE', 1.8);
+  alertMsg('PLASMA CHARGE INCOMING — SHIFT FOR DEFLECTOR', 1.8);
 }
 
 function fireAAM(j){
@@ -3245,7 +3244,7 @@ function fireAAM(j){
   m.position.copy(j.position);
   m.userData = {vel:dir.multiplyScalar(190), life:0, trail:0};
   scene.add(m); aams.push(m);
-  alertMsg('SILURO IONICO IN ARRIVO — SHIFT PER IL DEFLETTORE', 2.6);
+  alertMsg('ION TORPEDO INBOUND — SHIFT FOR DEFLECTOR', 2.6);
   AU.beep(320,.5,.15,'sawtooth');
 }
 
@@ -3304,7 +3303,7 @@ function updateProjectiles(dt){
     if(b.position.y <= terrainH(b.position.x, b.position.z)){
       explode(b.position, 1.3);
       const d = b.position.distanceTo(PLAYER);
-      if(d < 45) hurt(cfg.bombDmg*(1-d/45), 'DETONAZIONE RAVVICINATA');
+      if(d < 45) hurt(cfg.bombDmg*(1-d/45), 'CLOSE DETONATION');
       scene.remove(b); bombs.splice(i,1);
     }
   }
@@ -3321,7 +3320,7 @@ function updateProjectiles(dt){
     if(d.trail > .04){ d.trail = 0; puff(m.position,.8,TEX.smoke,.5,5,.9); }
     if(m.position.distanceTo(PLAYER) < 26 || m.position.y < terrainH(m.position.x,m.position.z) || d.life > 14){
       explode(m.position, 1.5);
-      if(m.position.distanceTo(PLAYER) < 40) hurt(cfg.aamDmg, 'SILURO A SEGNO SULLA TORRETTA');
+      if(m.position.distanceTo(PLAYER) < 40) hurt(cfg.aamDmg, 'TORPEDO HIT ON THE TURRET');
       scene.remove(m); aams.splice(i,1);
     }
   }
@@ -3446,12 +3445,12 @@ function updateLock(dt){
     // In addestramento l'interrogatore risponde da solo; in operativo devi
     // premere [Q], e finché non lo fai non sai chi hai nel mirino.
     if(!cfg.strict) S.iffKnown = true;
-    S.iff = S.iffKnown ? (S.locked.userData.friendly ? 'AMICO' : 'OSTILE') : 'INTERROGA [Q]';
+    S.iff = S.iffKnown ? (S.locked.userData.friendly ? 'FRIEND' : 'HOSTILE') : 'SCAN [Q]';
   } else { S.lead = null; S.leadErr = 9; S.leadQ = 0; S.iff = ''; }
 
   if(S.uncaged){
     S.uncageT -= dt;
-    if(S.uncageT <= 0){ S.uncaged = false; feed('LANCIA RIBLOCCATA — RIPETI IL RILASCIO [C]','#ffa33c'); }
+    if(S.uncageT <= 0){ S.uncaged = false; feed('LANCE RE-CAGED — RELEASE AGAIN [C]','#ffa33c'); }
   }
 
   if(S.lockT >= 1) AU.lock(true);
@@ -3480,7 +3479,7 @@ function hud(){
   const iv = document.getElementById('iffval');
   if(iv){
     iv.textContent = S.iff || '—';
-    iv.className = 'v ' + (S.iff === 'AMICO' ? 'amico' : S.iff === 'OSTILE' ? 'ostile' : 'ignoto');
+    iv.className = 'v ' + (S.iff === 'FRIEND' ? 'amico' : S.iff === 'HOSTILE' ? 'ostile' : 'ignoto');
   }
 }
 
@@ -3563,7 +3562,7 @@ function drawOverlay(){
       fxc.textAlign = 'center';
       fxc.fillText(Math.round(dist)+' M', x, y+s+15);
       if(j.userData.boss) fxc.fillText('LEVIATHAN', x, y-s-7);
-      if(amico) fxc.fillText(j.userData.name + ' · ALLEATO', x, y-s-7);
+      if(amico) fxc.fillText(j.userData.name + ' · ALLY', x, y-s-7);
       if(locked){
         fxc.fillText('ENERGY LOCK', x, y-s-7);
         fxc.beginPath(); fxc.arc(x,y,s*1.35,0,7); fxc.stroke();
@@ -3607,7 +3606,7 @@ function drawOverlay(){
       fxc.setLineDash([]);
       fxc.fillStyle = colr; fxc.textAlign = 'center';
       fxc.font = '11px "Share Tech Mono",monospace';
-      fxc.fillText(good ? 'VETTORE OTTIMALE' : 'VETTORE', x, y - r - 8);
+      fxc.fillText(good ? 'OPTIMAL VECTOR' : 'VECTOR', x, y - r - 8);
       fxc.fillText('ETA ' + S.lead.tof.toFixed(1) + ' s', x, y + r + 14);
     }
   }
@@ -3702,7 +3701,7 @@ function animate(){
       document.getElementById('reloadfill').style.width = clamp((1 - S.reload/2.4)*100,0,100)+'%';
       if(S.reload <= 0){
         S.loaded = true; bar.style.display = 'none'; AU.beep(880,.09,.05);
-        feed('LANCIA RIGENERATA — INNESTA LA ENERGY CELL [E]');
+        feed('LANCE REGENERATED — SEAT THE ENERGY CELL [E]');
       }
     }
 
@@ -3711,19 +3710,19 @@ function animate(){
       S.coolT -= dt;
       if(S.coolT <= 0){
         S.bcu = 'ready'; S.coolant = cfg.coolant;
-        AU.beep(1400,.10,.06); feed('NUCLEO STABILE — PRONTO ALL\'ENERGY LOCK','#cfe6ff');
+        AU.beep(1400,.10,.06); feed('CORE STABLE — READY FOR ENERGY LOCK','#cfe6ff');
       }
     } else if(S.bcu === 'ready'){
       S.coolant -= dt;
-      if(S.coolant <= 8 && S.coolant + dt > 8) feed('NUCLEO IN DECADIMENTO','#ffa33c');
+      if(S.coolant <= 8 && S.coolant + dt > 8) feed('CORE DECAYING','#ffa33c');
       if(S.coolant <= 0){
         S.bcu = 'none'; S.locked = null; S.lockT = 0; S.uncaged = false;
         AU.lock(false);
         if(cfg.keepRound){
-          feed('ENERGY CELL SCARICA — INNESTANE UNA NUOVA [E]','#ff4d6d');
+          feed('ENERGY CELL DEPLETED — SEAT A NEW ONE [E]','#ff4d6d');
         } else {
           // il complesso resta senza alimentazione: va sostituito
-          feed('ENERGY CELL SCARICA — LANCIA DA RIGENERARE','#ff4d6d');
+          feed('ENERGY CELL DEPLETED — LANCE MUST REGENERATE','#ff4d6d');
           if(S.ammo > 0){ S.loaded = false; S.reload = 2.4; S.ammo--; }
         }
       }
@@ -3731,7 +3730,7 @@ function animate(){
     /* --- rifornimento d'emergenza --- */
     if(S.ammo <= 0){
       S.ammoTimer += dt;
-      if(S.ammoTimer > 12){ S.ammoTimer = 0; S.ammo += 4; feed('SINTESI COMPLETATA: +4 PHOTON LANCE','#cfe6ff'); hud(); }
+      if(S.ammoTimer > 12){ S.ammoTimer = 0; S.ammo += 4; feed('SYNTHESIS COMPLETE: +4 PHOTON LANCE','#cfe6ff'); hud(); }
     } else S.ammoTimer = 0;
 
     /* --- gestione ondate --- */
@@ -3752,7 +3751,7 @@ function animate(){
         S.waveActive = false; S.waveTimer = 3.2;
         if(S.wave < WAVES.length-1){
           S.score += 500;
-          banner('SETTORE BONIFICATO','ONDATA SUCCESSIVA IN ARRIVO — CELLE RISINTETIZZATE');
+          banner('SECTOR CLEARED','NEXT WAVE INBOUND — CELLS RESYNTHESIZED');
         } else { endGame(true); }
         hud();
       }
@@ -3783,19 +3782,19 @@ function animate(){
 
     /* --- stato dell'arma a schermo --- */
     const ll = document.getElementById('lockline');
-    if(S.crouch > .6){ ll.textContent = 'SCUDO DEFLETTORE ATTIVO — LANCIA INIBITA'; ll.className = 'warn'; }
-    else if(!S.loaded){ ll.textContent = 'RIGENERAZIONE DELLA LANCIA…'; ll.className = ''; }
-    else if(S.bcu === 'none'){ ll.textContent = 'INNESTA LA ENERGY CELL [E]'; ll.className = 'warn'; }
-    else if(S.bcu === 'cooling'){ ll.textContent = 'STABILIZZAZIONE DEL NUCLEO…'; ll.className = 'warn'; }
-    else if(S.uncaged){ ll.textContent = 'ENERGY LOCK PIENO — SCARICA [SPAZIO]'; ll.className = 'lock'; }
-    else if(S.lockT >= 1){ ll.textContent = 'SIGNATURE AGGANCIATA — RILASCIA [C]'; ll.className = 'lock'; }
-    else if(S.lockT > 0){ ll.textContent = 'ACQUISIZIONE… MANTIENI LA SIGNATURE'; ll.className = 'warn'; }
-    else { ll.textContent = 'SCANSIONE SIGNATURE…'; ll.className = ''; }
+    if(S.crouch > .6){ ll.textContent = 'SCUDO DEFLETTORE ACTIVE — LANCIA INIBITA'; ll.className = 'warn'; }
+    else if(!S.loaded){ ll.textContent = 'LANCE REGENERATING…'; ll.className = ''; }
+    else if(S.bcu === 'none'){ ll.textContent = 'SEAT THE ENERGY CELL [E]'; ll.className = 'warn'; }
+    else if(S.bcu === 'cooling'){ ll.textContent = 'CORE STABILIZING…'; ll.className = 'warn'; }
+    else if(S.uncaged){ ll.textContent = 'ENERGY LOCK FULL — FIRE [SPACE]'; ll.className = 'lock'; }
+    else if(S.lockT >= 1){ ll.textContent = 'SIGNATURE LOCKED — RELEASE [C]'; ll.className = 'lock'; }
+    else if(S.lockT > 0){ ll.textContent = 'ACQUIRING… HOLD THE SIGNATURE'; ll.className = 'warn'; }
+    else { ll.textContent = 'SCANNING SIGNATURES…'; ll.className = ''; }
 
-    document.getElementById('tubeval').textContent = S.loaded ? 'PRONTO' : 'RICARICA';
+    document.getElementById('tubeval').textContent = S.loaded ? 'READY' : 'REGEN';
     const bv = document.getElementById('bcuval');
     bv.textContent = S.bcu === 'ready' ? Math.ceil(S.coolant)+' s'
-                   : S.bcu === 'cooling' ? 'CARICA…' : 'VUOTO';
+                   : S.bcu === 'cooling' ? 'CHARGING…' : 'EMPTY';
     bv.style.color = S.bcu === 'ready' ? (S.coolant < 10 ? '#ff4d6d' : '#62e8ff') : '#ffa33c';
     const cf = document.getElementById('coolfill');
     cf.style.width = (S.bcu === 'ready' ? S.coolant/cfg.coolant*100
@@ -3816,8 +3815,8 @@ function animate(){
       if(i === step && waiting && Math.sin(performance.now()*.008) > 0) c += ' done';
       el.className = c;
     }
-    const STEPNAME = ['','RILEVAMENTO','ENERGY CELL','ENERGY LOCK','VETTORE','RILASCIO · FUOCO'];
-    document.getElementById('procmini').textContent = 'FASE ' + step + ' · ' + STEPNAME[step];
+    const STEPNAME = ['','DETECT','ENERGY CELL','ENERGY LOCK','VECTOR','RELEASE · FIRE'];
+    document.getElementById('procmini').textContent = 'STEP ' + step + ' · ' + STEPNAME[step];
 
     // i pulsanti a schermo si accendono quando tocca a loro
     {
