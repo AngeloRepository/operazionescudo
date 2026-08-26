@@ -411,8 +411,24 @@ body.touch .touchkeys{display:grid}
 #codeInput{width:100%;background:rgba(0,0,0,.5);border:1px solid var(--amber);
   color:#fff;font-family:'Share Tech Mono',monospace;font-size:19px;letter-spacing:.35em;
   padding:12px 14px;outline:none;text-align:center;text-transform:uppercase}
-#newCode{display:none;text-align:left;border:1px solid var(--amber);
-  background:rgba(255,163,60,.07);padding:14px;margin-top:12px}
+#newCode{
+  display:none;
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:min(420px, calc(100vw - 32px));
+  box-sizing:border-box;
+  z-index:99999;
+
+  text-align:left;
+  border:1px solid var(--amber);
+  background:rgba(6,11,24,.97);
+  padding:14px;
+  margin:0;
+
+  box-shadow:0 20px 60px rgba(0,0,0,.55);
+}
 #newCode.on{display:block}
 #newCode b{display:block;color:var(--amber);letter-spacing:.2em;font-size:10px;margin-bottom:8px}
 #newCode .code{font-family:'Share Tech Mono',monospace;font-size:26px;letter-spacing:.3em;
