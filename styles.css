@@ -1,6 +1,6 @@
 
 :root{
-  /* SKY FORTRESS — palette allineata al gioco.
+  /* LANCEFALL — palette allineata al gioco.
      Questi valori sono gli stessi dichiarati in sky_fortress.html: cambiare
      qui e là in modo indipendente è il modo più rapido per far divergere
      landing e gioco, quindi restano volutamente identici. */
@@ -62,7 +62,7 @@ nav{display:flex;gap:24px;font:9px var(--mono);color:#99a1a9;letter-spacing:.12e
 .hero-hud{position:absolute;top:20px;font:8px var(--mono);letter-spacing:.12em;color:#646d74}.hud-tl{left:5vw}.hud-tr{right:5vw}.hud-tr b{color:var(--green)}
 .hero-corner{position:absolute;width:34px;height:34px;border-color:rgba(108,135,209,.35)}.c-tl{left:3%;top:9%;border-left:1px solid;border-top:1px solid}.c-tr{right:3%;top:9%;border-right:1px solid;border-top:1px solid}.c-bl{left:3%;bottom:6%;border-left:1px solid;border-bottom:1px solid}.c-br{right:3%;bottom:6%;border-right:1px solid;border-bottom:1px solid}
 .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center;min-height:610px;max-width:1400px;margin:auto}
-.hero-copy:before{content:"SKY FORTRESS · AEGIS NET COMMAND DECK";display:block;color:#5f6a72;font:8px var(--mono);letter-spacing:.16em;margin-bottom:16px}
+.hero-copy:before{content:"LANCEFALL · AEGIS NET COMMAND DECK";display:block;color:#5f6a72;font:8px var(--mono);letter-spacing:.16em;margin-bottom:16px}
 .eyebrow{display:inline-flex;gap:8px;align-items:center;padding:8px 11px;border:1px solid var(--line);background:rgba(11,19,25,.72);color:#a5acb2;font:8px var(--mono);letter-spacing:.1em}.pulse{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 10px rgba(108,135,209,.7)}
 h1{font-size:clamp(64px,8vw,118px);line-height:.82;margin:18px 0 24px;letter-spacing:-.02em}h1 span,h2 span{color:var(--green-strong)}.lead{max-width:650px;font-size:21px;line-height:1.26;color:#b6bcc2;margin:0 0 28px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 17px;font:700 10px var(--mono);letter-spacing:.1em}.btn-ghost{border:1px solid var(--line);color:#a4abb1;background:rgba(6,11,15,.56)}.btn-ghost:hover{border-color:#465362;color:var(--text)}
 .hero-meta{display:flex;flex-wrap:wrap;gap:11px;margin-top:28px}.hero-meta span{font:8px var(--mono);letter-spacing:.1em;color:#636c73;padding-right:11px;border-right:1px solid var(--line)}.hero-meta span:last-child{border-right:0}

@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="description" content="Sky Fortress — hold the cloud ocean of AETHER-9 against THE NULL. Seat the cell, lock the signature, lead the vector, fire.">
+<meta name="description" content="Lancefall — hold the cloud ocean of AETHER-9 against THE NULL. Seat the cell, lock the signature, lead the vector, fire.">
 <meta name="theme-color" content="#060b18">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Sky Fortress — Guardian Turret Defense</title>
+<title>Lancefall — Guardian Turret Defense</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23060b18'/%3E%3Cpolygon points='32,5 56,18 56,44 32,57 8,44 8,18' fill='none' stroke='%23ffa33c' stroke-width='3'/%3E%3Cpath d='M19 45 L44 20' stroke='%23cfe6ff' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
 /* Caratteri incorporati: nessuna richiesta di rete verso terzi */
@@ -692,8 +692,8 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
           <path d="M24 40 l-5.6 -1.4 1.4 5.6z" fill="#cfe6ff" opacity=".75"/>
         </svg>
         <div class="hName">
-          <b>SKY FORTRESS</b>
-          <span>AEGIS NET · SKY FORTRESS COMMAND DECK</span>
+          <b>LANCEFALL</b>
+          <span>AEGIS NET · LANCEFALL COMMAND DECK</span>
         </div>
       </div>
       <div id="opBadge">
@@ -814,8 +814,8 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
       <path d="M45 19 l-7 1.4 5.6 5.6z" fill="#ffa33c"/>
       <path d="M24 40 l-5.6 -1.4 1.4 5.6z" fill="#cfe6ff" opacity=".75"/>
     </svg>
-    <div class="kicker">SKY FORTRESS DEFENSE CORPS · CREDENTIALS</div>
-    <div class="title">SKY <em>FORTRESS</em></div>
+    <div class="kicker">SPIRE DEFENSE CORPS · CREDENTIALS</div>
+    <div class="title"><em>LANCEFALL</em></div>
     <div class="sub" style="margin-top:14px">Your Guardian callsign identifies your scores on the Corps leaderboard</div>
     <label for="nameInput">GUARDIAN CALLSIGN</label>
     <input id="nameInput" type="text" maxlength="20" autocomplete="off" autocapitalize="off"
@@ -911,9 +911,9 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
 </script>
 <script>
 /* =========================================================================
-   SKY FORTRESS — difesa della città volante nel sistema AETHER-9
-   Guardian Pilot armato di AETHER LANCE MK-IV contro le squadre di THE NULL.
-   Motore: three.js r128 — tutto in un unico file.
+   LANCEFALL — defence of the flying city of the Spire, in the AETHER-9 system.
+   A Guardian Pilot with an AETHER LANCE MK-IV against the squadrons of THE NULL.
+   Engine: three.js r128 — everything in a single file.
    ========================================================================= */
 
 const V3 = THREE.Vector3;
@@ -1086,7 +1086,7 @@ const TEX = {};
    MODELLI 3D
    ========================================================================= */
 const MAT = {
-  /* Scafi: bianco perla e grafite, tipici della Sky Fortress */
+  /* Scafi: bianco perla e grafite, tipici della Spire */
   hull      : new THREE.MeshStandardMaterial({color:0xdfe7f2, roughness:.32, metalness:.65}),
   hullDark  : new THREE.MeshStandardMaterial({color:0x2b3446, roughness:.42, metalness:.8}),
   steel     : new THREE.MeshStandardMaterial({color:0xaeb9cc, roughness:.3,  metalness:.9}),
@@ -2220,6 +2220,7 @@ const Net = {
     if(S){ S.running = false; goHome(); }
     document.getElementById('nameInput').value = '';
     document.getElementById('codeRow').classList.remove('on');
+    document.getElementById('newCode').classList.remove('on');
     document.getElementById('codeInput').value = '';
     this.pendingName = null;
     this.askName();
@@ -2620,7 +2621,7 @@ const Net = {
       const r = await this.login(v, code);
       if(r && r.ok){
         this.applyLogin(r);
-        this.showCode(code);
+        this.refreshMe();          // il codice NON si rimostra: si sta rientrando
         this.toast('Welcome back, <b>' + this.name + '</b>','good');
         if(typeof AU !== 'undefined'){ AU.init(); AU.beep(900,.09,.05); }
       } else {
@@ -2688,10 +2689,12 @@ const Net = {
       if(navigator.clipboard) navigator.clipboard.writeText(code)
         .then(()=>this.toast('Access code copied','good'))
         .catch(()=>this.toast('Copy failed — write it down','bad'));
+      else this.toast('Copy not available — write it down','bad');
     };
     document.getElementById('codeGo').onclick = ()=>{
       box.classList.remove('on');
       document.getElementById('idscreen').classList.remove('on');
+      this.toast('Signed in as <b>' + this.name + '</b>','good');
     };
   },
 
@@ -2894,10 +2897,10 @@ const Net = {
 
   share(){
     const p = this.pending || { score:(S ? S.score : 0), rank:this.me.rank, level:this.me.level };
-    const txt = 'SKY FORTRESS — ' + (this.name || 'guardian') + ': ' +
+    const txt = 'LANCEFALL — ' + (this.name || 'guardian') + ': ' +
       p.score.toLocaleString('en-US') + ' points, wave ' + p.level +
       (p.rank ? ', rank #' + p.rank + ' on the board' : '') + '.';
-    if(navigator.share) navigator.share({ title:'Sky Fortress', text:txt, url:location.href })
+    if(navigator.share) navigator.share({ title:'Lancefall', text:txt, url:location.href })
                                 .catch(()=>{});
     else if(navigator.clipboard) navigator.clipboard.writeText(txt + ' ' + location.href)
       .then(()=>this.toast('Result copied to clipboard','good'))
@@ -2925,7 +2928,7 @@ const AO = {
   ridge:{ code:'CITADEL', name:'CLOUD CITADEL', x:-.34, y:-.30,
     brief:`<p><b>CLOUD CITADEL — CYCLE 04:50.</b> There is no ground beneath the turret:
            only the cloud ocean that wraps AETHER-9, and the drifting isles that mark the
-           edge of the sector. The Sky Fortress orbital batteries went dark in three
+           edge of the sector. The Spire's orbital batteries went dark in three
            minutes, one cycle ago. Long-range scan no longer answers.</p>
            <p>At stellar dawn they will surface: first the <b>Interceptor Drones</b>, in
            swarms, expecting an empty sky. Then a <b>Leviathan Class Destroyer</b>, masking
