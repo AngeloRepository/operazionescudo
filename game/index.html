@@ -2132,13 +2132,10 @@ const Net = {
       }
     }catch(e){}
 
-    document.getElementById('netNote').innerHTML = this.online
-      ? 'Global leaderboard active. Your callsign works on any device you log in from.'
-      : 'No server configured: scores stay on this device.<br>'+
-        'For the shared leaderboard see <b>LEGGIMI-online.md</b>.';
-
     this.bindUI();
-    this.resume();
+    // Prima si verifica il collegamento, poi si decide cosa mostrare: senza
+    // questo il gioco poteva credersi in linea e scoprirlo solo al primo errore.
+    this.linkCheck().then(()=> this.resume());
   },
 
   newId(){
@@ -2161,14 +2158,17 @@ const Net = {
     if(!ses){ this.askName(); return; }
     this.name = ses.name; this.account = ses.account; this.token = ses.token;
 
-    if(this.online && ses.token){
+    if(this.configured() && ses.token){
       const r = await this.rpcSafe('resume_session', { p_token: ses.token });
-      if(r && r.ok){
-        this.applyLogin(r);
-        return;
+      if(r && r.ok){ this.applyLogin(r); return; }
+      if(r === null){
+        // collegamento caduto: la sessione NON va cancellata, potrebbe essere
+        // ancora valida. Si avvisa e si lascia intatto tutto.
+        this.toast('Database unreachable — your session is kept','bad');
+        this.paintBadge(); this.askName(); return;
       }
       this.clearSession(); this.name = this.token = this.account = null;
-      this.toast('Session expired — log in again','bad');
+      this.toast('Session expired — sign in again','bad');
       this.askName(); return;
     }
     // modalità locale
@@ -2215,17 +2215,104 @@ const Net = {
        nell'header apikey; quelle vecchie (eyJ...) vogliono anche il Bearer. */
     const h = { 'Content-Type':'application/json', apikey:BACKEND.key };
     if(BACKEND.key.startsWith('eyJ')) h.Authorization = 'Bearer ' + BACKEND.key;
-    const r = await fetch(BACKEND.url + '/rest/v1/rpc/' + fn, {
-      method:'POST', headers:h, body: JSON.stringify(body)
-    });
-    if(!r.ok) throw new Error('HTTP ' + r.status);
+    let r;
+    try{
+      r = await fetch(BACKEND.url + '/rest/v1/rpc/' + fn, {
+        method:'POST', headers:h, body: JSON.stringify(body) });
+    }catch(net){
+      const e = new Error('network'); e.status = 0;
+      e.detail = 'Server unreachable (network, CORS or project paused).';
+      throw e;
+    }
+    if(!r.ok){
+      let txt = '';
+      try{ txt = JSON.stringify(await r.json()); }catch(x){ try{ txt = await r.text(); }catch(y){} }
+      const e = new Error('HTTP ' + r.status);
+      e.status = r.status;
+      e.detail = r.status === 404
+        ? 'Function "' + fn + '" not found: supabase_schema_v2.sql has not been installed.'
+        : r.status === 401 || r.status === 403
+        ? 'Key rejected: check the publishable key and the grant execute lines.'
+        : (txt || 'HTTP ' + r.status);
+      throw e;
+    }
     return r.json();
   },
 
+  /* Ripulisce gli account locali creati mentre il collegamento era rotto.
+     Non tocca nulla sul server. Da console: Net.clearLocal() */
+  clearLocal(){
+    try{ localStorage.removeItem('scudo.db'); localStorage.removeItem('scudo.identity'); }catch(e){}
+    console.log('Archivio locale azzerato. Il dispositivo e la sessione restano.');
+    return true;
+  },
+
+  /* Diagnosi: da usare anche dalla console del browser con Net.diag() */
+  async diag(){
+    const out = [];
+    if(!BACKEND.url || !BACKEND.key){ console.log('BACKEND non configurato'); return; }
+    for(const [fn, body] of [
+      ['global_stats',   {}],
+      ['account_exists', { p_name:'__ping__' }],
+      ['leaderboard',    { p_period:'all', p_board:'best', p_limit:1 }],
+      ['link_check',     {}]
+    ]){
+      try{ const r = await this.rpc(fn, body); out.push([fn, 'OK', JSON.stringify(r).slice(0,80)]); }
+      catch(e){ out.push([fn, e.message, e.detail || '']); }
+    }
+    console.table(out.map(([f,s2,d])=>({ funzione:f, esito:s2, dettaglio:d })));
+    return out;
+  },
+
+  /* Non degrada più in silenzio. Registra l'errore, lo mostra, e con un
+     backend configurato NON scrive nell'archivio locale: due database
+     paralleli con la stessa interfaccia sono la ricetta per l'account
+     fantasma e il "codice non valido" che ne consegue. */
   async rpcSafe(fn, body){
     if(!this.online) return null;
-    try{ return await this.rpc(fn, body); }
-    catch(e){ return null; }
+    try{ this.lastError = null; return await this.rpc(fn, body); }
+    catch(e){
+      this.lastError = e;
+      this.linkOk = false;
+      this.showLink();
+      return null;
+    }
+  },
+  configured(){ return !!(BACKEND.url && BACKEND.key); },
+  errText(){
+    const e = this.lastError;
+    return e ? (e.detail || e.message) : 'unknown error';
+  },
+  showLink(){
+    const n = document.getElementById('netNote');
+    if(!n) return;
+    if(!this.configured()){
+      n.innerHTML = 'No server configured: scores stay on this device.<br>'+
+                    'For the shared leaderboard see <b>LEGGIMI-online.md</b>.';
+      n.className = 'note'; return;
+    }
+    if(this.linkOk === true){
+      n.innerHTML = '<b style="color:#62e8ff">DATABASE LINK OK</b> — '
+        + (this.stats ? this.stats.players + ' guardians · ' + this.stats.games + ' runs recorded' : 'leaderboard online')
+        + '<br>Your callsign works on any device you sign in from.';
+    } else if(this.linkOk === false){
+      n.innerHTML = '<b style="color:#ff4d6d">DATABASE LINK FAILED</b><br>'
+        + this.errText() + '<br><span style="opacity:.6">Type Net.diag() in the browser console for details.</span>';
+    } else {
+      n.innerHTML = 'Checking database link…';
+    }
+    n.className = 'note';
+  },
+  async linkCheck(){
+    if(!this.configured()){ this.online = false; this.linkOk = null; this.showLink(); return; }
+    this.linkOk = null; this.showLink();
+    try{
+      this.stats = await this.rpc('global_stats', {});
+      this.linkOk = true; this.online = true;
+    }catch(e){
+      this.lastError = e; this.linkOk = false; this.online = false;
+    }
+    this.showLink();
   },
 
   /* ───────────────── archivio locale di riserva ─────────────────
@@ -2334,28 +2421,28 @@ const Net = {
   },
 
   /* ───────────────── operazioni ad alto livello ───────────────── */
+  /* Con un backend configurato il server è l'unica fonte: un fallimento
+     restituisce un errore, non un account locale che diverge da quello
+     remoto e produce poi "codice non valido". */
   async exists(name){
-    if(this.online){
+    if(this.configured()){
       const r = await this.rpcSafe('account_exists', { p_name:name });
-      if(r === null){ this.toast('Server unreachable: falling back to local storage','bad');
-                      this.online = false; return this.localExists(name); }
+      if(r === null) return { __fail:true };
       return !!r;
     }
     return this.localExists(name);
   },
   async register(name, code){
-    if(this.online){
+    if(this.configured()){
       const r = await this.rpcSafe('register_account', { p_name:name, p_code:code, p_device:this.device });
-      if(r) return r;
-      this.online = false;
+      return r || { ok:false, error:'link', message:'Database link failed: ' + this.errText() };
     }
     return this.localRegister(name, code);
   },
   async login(name, code){
-    if(this.online){
+    if(this.configured()){
       const r = await this.rpcSafe('login_account', { p_name:name, p_code:code, p_device:this.device });
-      if(r) return r;
-      this.online = false;
+      return r || { ok:false, error:'link', message:'Database link failed: ' + this.errText() };
     }
     return this.localLogin(name, code);
   },
@@ -2530,6 +2617,13 @@ const Net = {
     // ── passo 1: esiste o no? ──
     go.disabled = true; msg.className = ''; msg.textContent = 'Checking callsign…';
     const found = await this.exists(v);
+    if(found && found.__fail){
+      msg.className = 'err';
+      msg.innerHTML = '<b>Database link failed.</b><br>' + this.errText()
+        + '<br>Nothing was saved. Fix the link and try again.';
+      go.disabled = false;
+      return;
+    }
     this.pendingName = v;
 
     if(found){
