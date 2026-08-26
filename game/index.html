@@ -829,7 +829,7 @@ body.home #hud, body.home #radarwrap, body.home #touch, body.home #optics{displa
     </div>
     <div class="note" id="netNote"></div>
   </div>
-  
+
 </div>
     <div id="newCode">
       <b>ACCESS CODE — SAVE IT NOW</b>
@@ -2604,7 +2604,7 @@ const Net = {
       const r = await this.login(v, code);
       if(r && r.ok){
         this.applyLogin(r);
-        this.refreshMe();
+        this.showCode(code);
         this.toast('Welcome back, <b>' + this.name + '</b>','good');
         if(typeof AU !== 'undefined'){ AU.init(); AU.beep(900,.09,.05); }
       } else {
