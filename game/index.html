@@ -2641,8 +2641,8 @@ const Net = {
     const code = this.makeCode();
     const r = await this.register(v, code);
     if(r && r.ok){
-      this.applyLogin(r);
       this.showCode(code);
+      this.applyLogin(r);
       this.refreshMe();
       if(typeof AU !== 'undefined'){ AU.init(); AU.beep(900,.09,.05); }
     } else {
