@@ -89,13 +89,24 @@
           </ul>
         </div>
         <div class="itch-wrap">
-          <iframe class="itch-embed"
-                  src="https://itch.io/embed/4949544?border_width=1&amp;bg_color=0a1224&amp;fg_color=cfe6ff&amp;link_color=ffa33c&amp;border_color=2b3c60"
-                  width="552" height="167" loading="lazy"
-                  title="Lancefall on itch.io">
-            <a href="https://angeloig.itch.io/lancefall">Lancefall by AngeloIG</a>
-          </iframe>
-          <a class="btn btn-primary btn-big" href="https://angeloig.itch.io/lancefall" target="_blank" rel="noopener">OPEN ON ITCH.IO →</a>
+          <!-- Facciata al posto dell'iframe.
+               Il widget di itch.io veniva richiesto a ogni caricamento di
+               pagina, e il loro server risponde 429 quando le richieste sono
+               troppe. Qui la scheda è nostra, nei nostri colori, e non parte
+               alcuna richiesta verso terzi finché il visitatore non decide.
+               Il collegamento sotto funziona anche se itch è irraggiungibile. -->
+          <div class="itch-card" id="itchCard">
+            <img src="assets/shot-turret.jpg" alt="" aria-hidden="true" loading="lazy">
+            <div class="itch-meta">
+              <b>LANCEFALL</b>
+              <span>by AngeloIG · Browser · Free</span>
+              <a class="btn btn-primary" href="https://angeloig.itch.io/lancefall"
+                 target="_blank" rel="noopener">▶ PLAY IN BROWSER</a>
+              <button type="button" class="itch-load" id="itchLoad">
+                or load the itch.io widget here
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -185,6 +196,21 @@
   </footer>
 
   <script>
+    // Il widget di itch.io si carica solo se richiesto: evita il 429 e
+    // rimanda ogni contatto con un dominio terzo a dopo una scelta esplicita.
+    const itchLoad = document.getElementById('itchLoad');
+    if (itchLoad) itchLoad.addEventListener('click', () => {
+      const card = document.getElementById('itchCard');
+      const f = document.createElement('iframe');
+      f.className = 'itch-embed';
+      f.src = 'https://itch.io/embed/4949544?border_width=1&bg_color=0a1224'
+            + '&fg_color=cfe6ff&link_color=ffa33c&border_color=2b3c60';
+      f.width = 552; f.height = 167; f.loading = 'lazy';
+      f.title = 'Lancefall on itch.io';
+      card.replaceWith(f);
+      f.focus();
+    });
+
     document.querySelectorAll('a[href^="#"]').forEach(link => {
       link.addEventListener('click', event => {
         const target = document.querySelector(link.getAttribute('href'));

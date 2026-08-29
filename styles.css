@@ -387,3 +387,26 @@ p, li, figcaption, dd{ letter-spacing:normal }
   position:absolute;width:1px;height:1px;padding:0;margin:-1px;
   overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
 }
+
+/* ═══════════════ SCHEDA ITCH.IO ═══════════════
+   Facciata disegnata da noi: nessuna richiesta a itch.io al caricamento
+   della pagina, quindi niente 429 e nessun contatto con un dominio terzo
+   prima di una scelta del visitatore. Il widget vero si può ancora
+   caricare, ma solo su richiesta. */
+.itch-card{display:flex;gap:0;width:552px;max-width:100%;
+  border:1px solid var(--line);background:var(--panel);overflow:hidden}
+.itch-card>img{width:150px;height:auto;object-fit:cover;flex:none;
+  border-right:1px solid var(--line)}
+.itch-meta{padding:14px 16px;display:flex;flex-direction:column;gap:7px;
+  justify-content:center;flex:1;min-width:0}
+.itch-meta b{font-family:var(--font);font-size:19px;letter-spacing:.16em;color:#fff}
+.itch-meta span{font-size:12px;color:var(--muted)}
+.itch-meta .btn{width:100%;text-align:center;padding:11px 14px;margin-top:2px}
+.itch-load{background:none;border:0;padding:6px 0;cursor:pointer;
+  font-family:var(--mono);font-size:11px;color:var(--muted);
+  text-decoration:underline;text-underline-offset:3px;text-align:left}
+.itch-load:hover{color:var(--amber)}
+@media (max-width:520px){
+  .itch-card{flex-direction:column}
+  .itch-card>img{width:100%;height:130px;border-right:0;border-bottom:1px solid var(--line)}
+}

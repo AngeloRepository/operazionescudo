@@ -13,10 +13,11 @@
 <style>.legal{max-width:960px;margin:0 auto;padding:120px 5vw}.legal h1{font-size:clamp(48px,7vw,82px);line-height:.9;margin:0 0 24px}.legal h2{margin-top:42px;font-size:28px}.legal p,.legal li{color:#a7b6cc;line-height:1.65}.legal ul{padding-left:20px}.legal .meta{font:9px var(--mono);color:#7186a0;letter-spacing:.1em}.legal a{color:var(--green)}.legal-note{border:1px solid var(--line);background:#0a1224;padding:18px;margin:24px 0;color:#b5c2d8}.legal-note.warn{border-color:var(--amber);background:rgba(255,163,60,.07)}.back{display:inline-block;margin-top:30px}table.dt{width:100%;border-collapse:collapse;margin:18px 0;font-size:14px}table.dt th,table.dt td{border:1px solid var(--line);padding:10px 12px;text-align:left;color:#b5c2d8;vertical-align:top}table.dt th{font:9px var(--mono);letter-spacing:.12em;color:var(--green)}</style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 <div class="scanlines" aria-hidden="true"></div>
 <header class="topbar"><a class="brand" href="index.html" aria-label="Lancefall home"><span class="brand-mark"><svg viewBox="0 0 64 64" aria-hidden="true"><polygon points="32,3 58,17 58,45 32,60 6,45 6,17" fill="none" stroke="#ffa33c" stroke-width="1.8"/><circle cx="32" cy="32" r="15" fill="none" stroke="#cfe6ff" stroke-width=".9" stroke-dasharray="3 4" opacity=".8"/><path d="M19 45 L44 20" stroke="#cfe6ff" stroke-width="3.2" stroke-linecap="round"/><path d="M45 19 l-7 1.4 5.6 5.6z" fill="#ffa33c"/><path d="M24 40 l-5.6 -1.4 1.4 5.6z" fill="#cfe6ff" opacity=".75"/></svg></span><span><strong>LANCEFALL</strong><small>GUARDIAN TURRET DEFENSE</small></span></a><a class="nav-cta" href="index.html">HOME</a></header>
 
-<main class="legal">
+<main class="legal" id="main" tabindex="-1">
 <div class="section-label">LEGAL // COOKIES</div><h1>COOKIE<br><span>POLICY.</span></h1>
 <p class="meta">LAST UPDATED: [DATE OF PUBLICATION]</p>
 
@@ -33,7 +34,8 @@
 
 <h2>3. What the game stores on your device</h2>
 <table class="dt">
-<tr><th>Key</th><th>Contents</th><th>Purpose</th><th>Duration</th></tr>
+<caption class="sr-only">Browser storage used by the game: key, contents, purpose and duration</caption>
+<tr><th scope="col">Key</th><th scope="col">Contents</th><th scope="col">Purpose</th><th scope="col">Duration</th></tr>
 <tr><td><code>scudo.identity</code></td><td>Your Guardian callsign and a random identifier generated on first visit</td><td>Keeps your identity between runs so scores stay attached to you</td><td>Until you clear browser storage</td></tr>
 <tr><td><code>scudo.db</code></td><td>Your local scores and profile</td><td>Only used when no online leaderboard is configured, so the game works offline</td><td>Until you clear browser storage</td></tr>
 </table>
@@ -44,7 +46,7 @@
 <p>Removing local storage does not erase scores already submitted to an online leaderboard: for those, see the rights section of the <a href="privacy.html">Privacy Policy</a>.</p>
 
 <h2>5. External services</h2>
-<p>The game loads the same typefaces from Google Fonts described in section 2. The Play links open the game, hosted on GitHub Pages. Opening any external domain may involve technical processing by that provider under its own policies. Where the online leaderboard is enabled, the game also contacts the database provider named in the Privacy Policy in order to submit and read scores; that connection is initiated only after you have entered a callsign and finished a run.</p>
+<p>The game page card on this site is drawn locally: <strong>itch.io is not contacted when the page loads</strong>. Their embedded widget is fetched only if you click “load the itch.io widget here”, and the Play links only when you follow them. The game loads the same typefaces from Google Fonts described in section 2. The game itself is hosted on itch.io. Opening any external domain may involve technical processing by that provider under its own policies. Where the online leaderboard is enabled, the game also contacts the database provider named in the Privacy Policy in order to submit and read scores; that connection is initiated only after you have entered a callsign and finished a run.</p>
 
 <h2>6. If tracking is ever added</h2>
 <p>Should analytics, advertising, embedded video or any other non-essential technique be introduced later, this page must be updated and a compliant consent mechanism — with the ability to refuse and to withdraw — must be in place <em>before</em> those tools are loaded, not after.</p>
