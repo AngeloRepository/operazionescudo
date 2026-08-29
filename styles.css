@@ -309,13 +309,56 @@ h1 span,h2 span{text-shadow:0 0 34px rgba(98,232,255,.35)}
 @media (max-width:900px){
   .play-box,.shot-grid,.sector-grid{grid-template-columns:1fr}
   .itch-wrap{order:-1}
-  .hero-art{min-height:auto;padding-top:34vh}
-  .hero-art>img{object-position:66% center}
-  .hero-art::after{background:linear-gradient(0deg,rgba(6,11,24,.96) 30%,rgba(6,11,24,.55) 62%,rgba(6,11,24,.15) 100%)}
-  .mission-art{min-height:auto;padding-top:26vh}
-  .mission-art-copy{text-align:left;margin-left:0}
+
+  /* ═══ ARTWORK SU SCHERMO STRETTO ═══
+     A copertura, un'immagine 2.5:1 dentro un riquadro verticale mostrava il
+     23% della propria larghezza su un telefono: una fettina centrale
+     ingrandita. Qui l'immagine smette di fare da sfondo e diventa un blocco
+     con proporzioni proprie, con il testo sotto su fondo pieno. Si vede
+     l'illustrazione e il testo non ha più bisogno di velature. */
+  .hero-art, .mission-art{
+    display:block; min-height:0; padding:0; align-items:initial;
+  }
+  .hero-art>img, .mission-art>img{
+    position:relative; inset:auto;
+    width:100%; height:auto;
+    aspect-ratio:16/9;              /* ritaglio lieve: più presenza, titolo salvo */
+    object-position:center;
+  }
+  .hero-art::after, .mission-art::after{ display:none }
+  .hero-art-copy, .mission-art-copy{
+    position:relative; max-width:none; margin:0; text-align:left;
+    padding:24px 20px 30px;
+    background:linear-gradient(180deg,#080f21 0%,#060b18 100%);
+    border-top:1px solid var(--line);
+  }
+  .hero-art-copy h1{font-size:clamp(30px,8.4vw,44px)}
+  .mission-art-copy h2{font-size:clamp(26px,7.2vw,38px)}
   .mission-art-copy p{margin-left:0}
-  .mission-art::after{background:linear-gradient(0deg,rgba(6,11,24,.96) 34%,rgba(6,11,24,.4) 72%,rgba(6,11,24,.1) 100%)}
+  .hero-art-copy .lead, .mission-art-copy p{max-width:none}
+  .hero-actions .btn, .mission-art-copy .btn{width:100%;text-align:center}
+
+  /* la barra superiore va a capo invece di comprimere il marchio */
+  .topbar{flex-wrap:wrap;gap:8px;padding:10px 14px}
+  .topbar nav{order:3;width:100%;display:flex;flex-wrap:wrap;gap:2px 4px}
+  .nav-cta{margin-left:auto}
+
+  .telemetry{grid-template-columns:repeat(2,1fr)}
+  .shot-grid figcaption{font-size:12px}
+}
+
+/* Tablet in verticale: due colonne per le schermate le renderebbero minuscole. */
+@media (min-width:901px) and (max-width:1100px){
+  .shot-grid{grid-template-columns:1fr}
+  .play-box{grid-template-columns:1fr}
+  .itch-wrap{max-width:552px;margin:0 auto}
+}
+
+/* Telefoni stretti: l'immagine si alza ancora, le sezioni si stringono. */
+@media (max-width:520px){
+  .hero-art>img, .mission-art>img{aspect-ratio:3/2}
+  .section{padding-left:16px;padding-right:16px}
+  .steps{grid-template-columns:1fr}
 }
 
 
@@ -409,4 +452,26 @@ p, li, figcaption, dd{ letter-spacing:normal }
 @media (max-width:520px){
   .itch-card{flex-direction:column}
   .itch-card>img{width:100%;height:130px;border-right:0;border-bottom:1px solid var(--line)}
+}
+
+/* ═══════════════ CORREZIONI DI PRIORITÀ ═══════════════
+   Regole ereditate dal foglio originale nascondevano sotto i 650px il
+   pulsante di lancio e il sottotitolo del marchio: proprio l'elemento che
+   deve convertire. Queste vengono dopo, quindi prevalgono. */
+@media (max-width:650px){
+  .nav-cta{
+    display:inline-flex;align-items:center;
+    margin-left:auto;min-height:40px;padding:0 13px;font-size:11px;
+  }
+  .brand small{display:block;font-size:11px;letter-spacing:.14em}
+  .topbar{padding:10px 14px}
+  .hero-actions{flex-direction:column;gap:10px}
+}
+
+/* Le vecchie regole per l'hero a pannello agivano su elementi non più
+   presenti nel markup: restano innocue, ma si dichiara qui che l'artwork
+   non deve mai tornare a fondo a copertura sotto i 900px. */
+@media (max-width:900px){
+  .hero-art{padding-top:0 !important}
+  .mission-art{padding-top:0 !important}
 }
