@@ -3,98 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Lancefall — a browser air-defense game set in the AETHER-9 system. Detect, seat the cell, lock the signature, lead the vector, fire. Free, no download.">
+  <meta name="description" content="Lancefall — a browser turret-defence game set above the cloud ocean of AETHER-9. Seat the cell, lock the signature, lead the vector, fire. Free, no download.">
   <meta name="theme-color" content="#070d1c">
-  <link rel="canonical" href="https://angelorepository.github.io/operazionescudo/">
+  <link rel="canonical" href="https://angeloig.itch.io/lancefall">
   <title>Lancefall — Guardian Turret Defense</title>
 
-  <!-- Open Graph: senza questi il link condiviso su Discord, X o WhatsApp
-       compare come testo nudo, e su un gioco è metà della battaglia. -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Lancefall — Guardian Turret Defense">
   <meta property="og:description" content="Four waves. One Guardian. Hold the cloud ocean of AETHER-9 against THE NULL. Free in your browser.">
-  <meta property="og:url" content="https://angelorepository.github.io/operazionescudo/">
+  <meta property="og:image" content="assets/hero.jpg">
+  <meta property="og:url" content="https://angeloig.itch.io/lancefall">
   <meta name="twitter:card" content="summary_large_image">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23060b18'/%3E%3Cpolygon points='32,5 56,18 56,44 32,57 8,44 8,18' fill='none' stroke='%23ffa33c' stroke-width='3'/%3E%3Cpath d='M19 45 L44 20' stroke='%23cfe6ff' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="preload" as="image" href="assets/hero.jpg">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <div class="scanlines" aria-hidden="true"></div>
 
   <header class="topbar">
-    <a class="brand" href="#top" aria-label="Lancefall home">
-      <span class="brand-mark"><svg viewBox="0 0 64 64" aria-hidden="true"><polygon points="32,3 58,17 58,45 32,60 6,45 6,17" fill="none" stroke="#ffa33c" stroke-width="1.8"/><circle cx="32" cy="32" r="15" fill="none" stroke="#cfe6ff" stroke-width=".9" stroke-dasharray="3 4" opacity=".8"/><path d="M19 45 L44 20" stroke="#cfe6ff" stroke-width="3.2" stroke-linecap="round"/><path d="M45 19 l-7 1.4 5.6 5.6z" fill="#ffa33c"/><path d="M24 40 l-5.6 -1.4 1.4 5.6z" fill="#cfe6ff" opacity=".75"/></svg></span>
-      <span>
-        <strong>LANCEFALL</strong>
-        <small>GUARDIAN TURRET DEFENSE</small>
-      </span>
+    <a class="brand" href="#main" aria-label="Lancefall home">
+      <span class="brand-mark"><svg viewBox="0 0 64 64" aria-hidden="true">
+        <polygon points="32,3 58,17 58,45 32,60 6,45 6,17" fill="none" stroke="#ffa33c" stroke-width="1.8"/>
+        <circle cx="32" cy="32" r="15" fill="none" stroke="#cfe6ff" stroke-width=".9" stroke-dasharray="3 4" opacity=".8"/>
+        <path d="M19 45 L44 20" stroke="#cfe6ff" stroke-width="3.2" stroke-linecap="round"/>
+        <path d="M45 19 l-7 1.4 5.6 5.6z" fill="#ffa33c"/>
+        <path d="M24 40 l-5.6 -1.4 1.4 5.6z" fill="#cfe6ff" opacity=".75"/>
+      </svg></span>
+      <span><strong>LANCEFALL</strong><small>GUARDIAN TURRET DEFENSE</small></span>
     </a>
     <nav aria-label="Main navigation">
-      <a href="#briefing">Briefing</a>
-      <a href="#systems">Systems</a>
+      <a href="#play">Play</a>
+      <a href="#sequence">Sequence</a>
+      <a href="#shots">Screens</a>
       <a href="#sectors">Sectors</a>
-      <a href="#mission">Mission</a>
     </nav>
-    <a class="nav-cta" href="https://angelorepository.github.io/operazionescudo/game" target="_blank" rel="noopener">PLAY FREE</a>
+    <a class="nav-cta" href="https://angeloig.itch.io/lancefall" target="_blank" rel="noopener">PLAY ON ITCH.IO</a>
   </header>
 
-  <main id="top">
-    <section class="hero">
-      <div class="hero-hud hud-tl">AETHER-9 // SECTOR 04</div>
-      <div class="hero-hud hud-tr">AEGIS LINK <b>●</b></div>
-      <div class="hero-corner c-tl"></div><div class="hero-corner c-tr"></div><div class="hero-corner c-bl"></div><div class="hero-corner c-br"></div>
+  <main id="main" tabindex="-1">
 
-      <div class="hero-grid">
-        <div class="hero-copy">
-          <div class="eyebrow"><span class="pulse"></span> CLOUD CITADEL // TRAINING SIMULATION</div>
-          <h1>FOUR WAVES.<br><span>ONE GUARDIAN.</span></h1>
-          <p class="lead">There is no ground below — only the cloud ocean of AETHER-9. Seat the cell, hold the signature, lead the vector, release the lance. Miss a step and nothing leaves the rail.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="https://angelorepository.github.io/operazionescudo/game" target="_blank" rel="noopener">▶ PLAY IN BROWSER</a>
-            <a class="btn btn-ghost" href="#briefing">READ THE BRIEFING</a>
-          </div>
-          <div class="hero-meta">
-            <span>NO DOWNLOAD</span>
-            <span>HTML5</span>
-            <span>DESKTOP &amp; MOBILE</span>
-            <span>GLOBAL LEADERBOARD</span>
-          </div>
+    <!-- ═══════════ HERO: l'artwork del gioco al posto del pannello finto ═══════════ -->
+    <section class="hero-art">
+      <img src="assets/hero.jpg" alt="Lancefall — the Guardian turret facing drifting isles above the cloud ocean" fetchpriority="high">
+      <div class="hero-art-copy">
+        <div class="eyebrow"><span class="pulse"></span> AETHER-9 // SECTOR 04</div>
+        <h1>FOUR WAVES.<br><span>ONE GUARDIAN.</span></h1>
+        <p class="lead">There is no ground below — only the cloud ocean. Seat the cell, hold the signature,
+           lead the vector, release the lance. Miss a step and nothing leaves the rail.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#play">▶ PLAY FREE IN BROWSER</a>
+          <a class="btn btn-ghost" href="#sequence">THE FIRING SEQUENCE</a>
         </div>
-
-        <div class="tactical-panel" aria-label="Tactical scanner demo panel">
-          <div class="panel-head">
-            <span>TACTICAL SCANNER</span>
-            <span class="status"><i></i> SYSTEMS READY</span>
-          </div>
-          <div class="radar-wrap">
-            <div class="radar">
-              <span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span>
-              <span class="cross x"></span><span class="cross y"></span>
-              <span class="sweep"></span>
-              <span class="blip b1"></span><span class="blip b2"></span><span class="blip b3"></span>
-              <span class="center-dot"></span>
-            </div>
-            <div class="radar-readout">
-              <div><small>SIGNATURES</small><strong>03</strong></div>
-              <div><small>RANGE</small><strong>3.2 KM</strong></div>
-              <div><small>ENERGY LOCK</small><strong class="amber">SEARCH</strong></div>
-            </div>
-          </div>
-          <div class="command-strip"><span>THREAT FEED</span><b>PRIORITY SIGNATURE</b><i>27°</i><small>03.2 KM</small></div>
-          <div class="panel-bottom">
-            <span>TACTICAL SCANNER <b>ACTIVE</b></span>
-            <span>SIGNAL SCAN <b>READY</b></span>
-            <span>AEGIS DATALINK <b>LINKED</b></span>
-          </div>
+        <div class="hero-meta">
+          <span>NO DOWNLOAD</span><span>HTML5</span><span>DESKTOP &amp; MOBILE</span><span>GLOBAL LEADERBOARD</span>
         </div>
-      </div>
-
-      <div class="ticker">
-        <span>OPERATION 01</span><b>TRAINING SIMULATION</b><span>WAVE 1 / 4</span><span>THREAT: <em>THE NULL</em></span><span>ZULU 04:50:17</span>
       </div>
     </section>
 
@@ -102,98 +70,106 @@
       <div><span>SECTORS</span><b>02</b></div>
       <div><span>WAVES</span><b>04</b></div>
       <div><span>HOSTILE CLASSES</span><b>05</b></div>
-      <div><span>THREAT</span><b class="amber-text">HIGH</b></div>
-      <div><span>LINK</span><b>GREEN</b></div>
+      <div><span>FIRING STEPS</span><b>05</b></div>
+      <div><span>PRICE</span><b class="amber-text">FREE</b></div>
     </section>
 
-    <section id="briefing" class="section briefing">
-      <div class="section-label">01 // BRIEFING</div>
-      <div class="section-head">
-        <div>
-          <h2>IT IS NOT<br><span>JUST SHOOTING.</span></h2>
+    <!-- ═══════════ PLAY: il widget itch.io vestito coi colori della pagina ═══════════ -->
+    <section id="play" class="section play">
+      <div class="section-label">01 // LAUNCH</div>
+      <div class="play-box">
+        <div class="play-copy">
+          <h2>PLAY IT<br><span>RIGHT NOW.</span></h2>
+          <p>Runs in the browser, on desktop and mobile. No account needed — guests play immediately,
+             and a callsign only matters if you want your runs on the leaderboard.</p>
+          <ul class="ticks">
+            <li>Free, no download, no install</li>
+            <li>Works on phones, in landscape</li>
+            <li>Leaderboard: daily, weekly, monthly, all-time</li>
+          </ul>
         </div>
-        <p>Lancefall puts the rhythm and the pressure of a real weapon sequence in your browser. The gap between a kill and a wasted charge is not aim — it is order.</p>
+        <div class="itch-wrap">
+          <iframe class="itch-embed"
+                  src="https://itch.io/embed/4949544?border_width=1&amp;bg_color=0a1224&amp;fg_color=cfe6ff&amp;link_color=ffa33c&amp;border_color=2b3c60"
+                  width="552" height="167" loading="lazy"
+                  title="Lancefall on itch.io">
+            <a href="https://angeloig.itch.io/lancefall">Lancefall by AngeloIG</a>
+          </iframe>
+          <a class="btn btn-primary btn-big" href="https://angeloig.itch.io/lancefall" target="_blank" rel="noopener">OPEN ON ITCH.IO →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ SEQUENCE ═══════════ -->
+    <section id="sequence" class="section briefing">
+      <div class="section-label">02 // FIRING SEQUENCE</div>
+      <div class="section-head">
+        <div><h2>IT IS NOT<br><span>JUST SHOOTING.</span></h2></div>
+        <p>The gap between a kill and a wasted charge is not aim — it is order. Five steps, every
+           single shot, while something fast comes at you.</p>
       </div>
       <div class="steps">
         <article><span>01</span><h3>DETECT</h3><p>Read the scanner, judge speed and heading, decide which signature matters first.</p></article>
-        <article><span>02</span><h3>ENERGY CELL</h3><p>Seat the cell and wait for the core to stabilize. You get thirty-eight seconds of it.</p></article>
+        <article><span>02</span><h3>ENERGY CELL</h3><p>Seat the cell and wait for the core to stabilise. You get thirty-eight seconds of it.</p></article>
         <article><span>03</span><h3>ENERGY LOCK</h3><p>Hold the target inside the seeker until the lance answers with a steady tone.</p></article>
         <article><span>04</span><h3>VECTOR</h3><p>The lance leaves along the barrel, not toward the target. Lead it, or watch it burn energy turning.</p></article>
         <article><span>05</span><h3>RELEASE &amp; FIRE</h3><p>Uncage the seeker, then pull. Fire without consent and the charge flies blind.</p></article>
       </div>
     </section>
 
-    <section id="systems" class="section systems">
-      <div class="section-label">02 // SYSTEMS</div>
+    <!-- ═══════════ SCREENS: il gioco vero, senza ritocchi ═══════════ -->
+    <section id="shots" class="section shots">
+      <div class="section-label">03 // IN GAME</div>
       <div class="section-head compact">
-        <h2>A TACTICAL<br><span>COMMAND DECK.</span></h2>
-        <p>Scanner, systems status, message traffic and operation orders, all in one console — then you drop straight into the turret.</p>
+        <h2>THE TURRET<br><span>AND THE DECK.</span></h2>
+        <p>Captured in play, not staged. Above: the discharge sequence running live at Cloud Citadel.
+           Below: the AEGIS command deck, where you pick the sector before you drop in.</p>
       </div>
-      <div class="systems-grid">
-        <div class="system-card large">
-          <div class="card-icon">⌁</div>
-          <h3>AEGIS CONSOLE</h3>
-          <p>A live command deck: zulu clock, systems board, message channel and an interactive scanner where you pick the sector before you launch.</p>
-          <div class="mini-console"><span>SCANNER</span><b>ACTIVE</b><span>PTZ 04</span><b>LIVE</b></div>
-        </div>
-        <div class="system-card">
-          <div class="card-icon">◉</div>
-          <h3>AETHER LANCE MK-IV</h3>
-          <p>Energy cell, core stabilization, signature lock and a lance that must be released before it will fire.</p>
-        </div>
-        <div class="system-card">
-          <div class="card-icon">≋</div>
-          <h3>SIGNAL SCAN</h3>
-          <p>The seeker reads heat, not markings. Identify the signature before you fire, or you will hit your own shuttles.</p>
-        </div>
-        <div class="system-card">
-          <div class="card-icon">↗</div>
-          <h3>GLOBAL LEADERBOARD</h3>
-          <p>Claim a Guardian callsign and keep your record. Daily, weekly, monthly and all-time boards.</p>
-        </div>
+      <div class="shot-grid">
+        <figure>
+          <img src="assets/shot-turret.jpg" loading="lazy" alt="First-person view from the Guardian turret: discharge sequence panel, tactical scanner, drifting isles and hostile drones">
+          <figcaption>Step 2 of 5 — the core has to stabilise before the seeker will answer.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/shot-console.jpg" loading="lazy" alt="The AEGIS command deck: systems status, live optical feed, tactical scanner and operation order">
+          <figcaption>The command deck: live feed, message channel, and the scanner you tap to pick a sector.</figcaption>
+        </figure>
       </div>
     </section>
 
+    <!-- ═══════════ SECTORS ═══════════ -->
     <section id="sectors" class="section briefing">
-      <div class="section-label">03 // SECTORS</div>
+      <div class="section-label">04 // SECTORS</div>
       <div class="section-head">
-        <div>
-          <h2>TWO SECTORS.<br><span>TWO PRESSURES.</span></h2>
-        </div>
+        <div><h2>TWO SECTORS.<br><span>TWO PRESSURES.</span></h2></div>
         <p>The same weapon, two entirely different reasons to keep your nerve.</p>
       </div>
-      <div class="systems-grid" style="grid-template-columns:1fr 1fr">
-        <div class="system-card large" style="grid-row:auto;min-height:260px">
+      <div class="sector-grid">
+        <div class="system-card large">
           <div class="card-icon">◇</div>
           <h3>CLOUD CITADEL</h3>
-          <p>The orbital batteries went dark one cycle ago. Four waves surface from the cloud ocean, and the last one is a Leviathan Class Destroyer that masks its signature and seeds Quantum Decoys. Survive, and the sector holds.</p>
+          <p>The orbital batteries went dark one cycle ago. Four waves surface from the cloud ocean,
+             and the last one is a Leviathan Class Destroyer that masks its signature and seeds
+             Quantum Decoys. Survive, and the sector holds.</p>
         </div>
-        <div class="system-card large" style="grid-row:auto;min-height:260px">
+        <div class="system-card large">
           <div class="card-icon">◆</div>
           <h3>ORBITAL GATEWAY</h3>
-          <p>Five Ark shuttles must carry civilians out. On departure a shuttle is clamped, slow and shieldless for twenty-nine seconds. THE NULL knows it, and it is not coming for you. Lose three, and the evacuation is over.</p>
+          <p>Five Ark shuttles must carry civilians out. On departure a shuttle is clamped, slow and
+             shieldless for twenty-nine seconds. THE NULL knows it, and it is not coming for you.
+             Lose three, and the evacuation is over.</p>
         </div>
       </div>
     </section>
 
-    <section id="mission" class="mission">
-      <div class="mission-overlay"></div>
-      <div class="mission-content">
-        <div class="section-label">04 // MISSION</div>
-        <div class="mission-code">CLOUD CITADEL / TRAINING // 04:50Z</div>
+    <!-- ═══════════ CTA finale sull'artwork ═══════════ -->
+    <section class="mission-art">
+      <img src="assets/mission.jpg" loading="lazy" alt="The Spire on the horizon as hostile drones descend over the cloud ocean">
+      <div class="mission-art-copy">
+        <div class="section-label">FINAL CHECK</div>
         <h2>THE SIGNATURE<br><span>WILL NOT WAIT.</span></h2>
-        <p>A fictional exercise in the AETHER-9 system: a handful of seconds, incomplete information, and a sequence that punishes every skipped step.</p>
-        <a class="btn btn-primary" href="https://angelorepository.github.io/operazionescudo/game" target="_blank" rel="noopener">▶ LAUNCH THE OPERATION</a>
-      </div>
-    </section>
-
-    <section class="cta-section">
-      <div class="cta-box">
-        <div>
-          <div class="section-label">FINAL CHECK</div>
-          <h2>READY FOR<br><span>CONTACT?</span></h2>
-        </div>
-        <a class="btn btn-primary btn-big" href="https://angelorepository.github.io/operazionescudo/game" target="_blank" rel="noopener">PLAY FREE →</a>
+        <p>A handful of seconds, incomplete information, and a sequence that punishes every skipped step.</p>
+        <a class="btn btn-primary btn-big" href="https://angeloig.itch.io/lancefall" target="_blank" rel="noopener">PLAY FREE ON ITCH.IO →</a>
       </div>
     </section>
   </main>
@@ -204,7 +180,7 @@
     <div class="footer-links" aria-label="Legal information">
       <a href="privacy.html">PRIVACY</a>
       <a href="cookie.html">COOKIES</a>
-      <a href="https://angelorepository.github.io/operazionescudo/game" target="_blank" rel="noopener">PLAY</a>
+      <a href="https://angeloig.itch.io/lancefall" target="_blank" rel="noopener">ITCH.IO</a>
     </div>
   </footer>
 
@@ -212,10 +188,7 @@
     document.querySelectorAll('a[href^="#"]').forEach(link => {
       link.addEventListener('click', event => {
         const target = document.querySelector(link.getAttribute('href'));
-        if (target) {
-          event.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        if (target) { event.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
       });
     });
   </script>
